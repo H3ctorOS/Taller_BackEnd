@@ -1,4 +1,4 @@
-package com.TallerWapo.utiles;
+package com.TallerWapo.dominio.utiles;
 
 public class LoggerUtil {
 

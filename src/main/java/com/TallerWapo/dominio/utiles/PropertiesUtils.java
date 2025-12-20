@@ -1,4 +1,4 @@
-package com.TallerWapo.utiles;
+package com.TallerWapo.dominio.utiles;
 
 import java.io.IOException;
 import java.io.InputStream;
