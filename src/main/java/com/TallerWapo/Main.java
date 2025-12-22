@@ -5,12 +5,8 @@ import com.TallerWapo.Adaptadores.sparkApiRest.SparkApiRestAdaptador;
 import com.TallerWapo.dominio.servicios.aplicacion.InterfazService;
 import com.TallerWapo.dominio.servicios.aplicacion.MainService;
 import com.TallerWapo.dominio.servicios.aplicacion.PuertosService;
-import com.TallerWapo.dominio.utiles.PropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.sql.SQLException;
 
 
 public class Main {
@@ -23,15 +19,15 @@ public class Main {
         }
 
         arrancarAdaptadores();
-        InterfazService.arrancarInterfazLocal();
+       // InterfazService.arrancarInterfazLocal();
     }
 
 
     private static void hacerCosasPrimerArranque()  {
         logger.info("haciendo cosas del primer arranque");
 
-        //TODO: construir directorio carpetas
-        String dbPath = PropertiesUtils.getString("config.properties", "db.path", "db/taller.db");
+        //Construir ficheros
+        MainService.construirStructuraCarpetas();
 
         //Construir base datos
         try {
@@ -47,7 +43,7 @@ public class Main {
         logger.info("Arrancando adaptadores");
 
         //iniciar Base datos con SQLITE
-        PuertosService.arrancarBaseDatosLocalSQL(new SQliteAdaptador());
+        //PuertosService.arrancarBaseDatosLocalSQL(new SQliteAdaptador());
 
         //iniciar ApiRest con Spark
         PuertosService.arrancarApiRest(new SparkApiRestAdaptador());

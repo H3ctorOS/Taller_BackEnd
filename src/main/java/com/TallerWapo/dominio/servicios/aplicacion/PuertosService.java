@@ -26,7 +26,7 @@ public class PuertosService {
         logger.info("Arrancando servidor peticiones: " +  apiRest.getNombreAdaptador());
 
         // Carga configs (puerto, etc.)
-        int serverPort = PropertiesUtils.getInt("constantes/server-config.properties", "server.port", 8080);
+        int serverPort = PropertiesUtils.getInt("config.properties", "puerto.ApiRest", 8080);
         apiRest.setPuerto(serverPort);
 
         //Arrancar

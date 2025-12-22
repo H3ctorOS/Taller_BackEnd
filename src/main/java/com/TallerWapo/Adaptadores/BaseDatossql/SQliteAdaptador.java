@@ -2,6 +2,7 @@ package com.TallerWapo.Adaptadores.BaseDatossql;
 
 
 import com.TallerWapo.dominio.Puertos.baseDatos.BaseDatosSQLPort;
+import com.TallerWapo.dominio.servicios.aplicacion.FicherosService;
 import com.TallerWapo.dominio.utiles.FileUtil;
 import com.TallerWapo.dominio.utiles.PropertiesUtils;
 import org.slf4j.Logger;
@@ -11,6 +12,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,7 +23,9 @@ import java.sql.Statement;
 public class SQliteAdaptador implements BaseDatosSQLPort {
     static final Logger logger = LoggerFactory.getLogger(SQliteAdaptador.class);
 
-    private static final String DB_RUTA = PropertiesUtils.getString("constantes/db-config.properties", "db.path", "db/taller.db");
+    private static final String RUTA_BASEDATOS = PropertiesUtils.getString("config.properties", "ruta.BaseDatosSQL", null);
+    private static final String NOMBRE_ARCHIVO_BASEDATOS = PropertiesUtils.getString("sql.properties", "sql.fileName", null);
+    private static final String FICHERO_BASEDATOS = RUTA_BASEDATOS + "/" + NOMBRE_ARCHIVO_BASEDATOS;
     private static final String CLASS_NAME = "org.sqlite.JDBC";
     private Connection conexion;
     private String nombreAdaptador = "Adaptador base datos SQLite";
@@ -39,7 +45,7 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
     @Override
     public boolean iniciar() {
         try {
-            crearConexion();
+            this.conexion = crearConexion();
 
         } catch (Exception e) {
             logger.info("Conexion no creada", e);
@@ -54,58 +60,69 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
     }
 
 
-    private void crearConexion() throws Exception{
+    private static Connection crearConexion() throws Exception{
         Class.forName(CLASS_NAME);  // Carga driver (sqlite-jdbc)
-        conexion = DriverManager.getConnection(CLASS_NAME + DB_RUTA);
+        Connection conexion = DriverManager.getConnection("jdbc:sqlite:" + FICHERO_BASEDATOS);
 
-        logger.info("Conexión BD SQLite establecida en: {}", DB_RUTA);
+        logger.info("Conexion BD SQLite establecida en: {}", FICHERO_BASEDATOS);
+
+        return conexion;
     }
+
 
     /**
      * Monta la base de datos en la ruta por defecto
      */
-    public static boolean crearBaseDatos() throws SQLException, ClassNotFoundException, IOException {
-        logger.info("Construyendo archivo BD en: " + DB_RUTA);  // Azul para info
+    public static boolean crearBaseDatos() throws Exception {
+        logger.info("Construyendo archivo BD en: " + FICHERO_BASEDATOS);  // Azul para info
 
         // Crea archivo implícitamente al conectar
-        Class.forName("org.sqlite.JDBC");  // Carga driver (sqlite-jdbc)
-        Connection conexion = DriverManager.getConnection(CLASS_NAME + DB_RUTA);
+        Connection conexion = crearConexion();
 
-
-        // Opcional: Verifica existencia del archivo post-conexión
-        if (!FileUtil.fileExists(DB_RUTA)) {
-            throw new IOException("Fallo al crear archivo BD: " + DB_RUTA);
+        //Verificar existencia del archivo
+        if (!FileUtil.fileExists(FICHERO_BASEDATOS)) {
+            throw new IOException("Fallo al crear archivo BD: " + FICHERO_BASEDATOS);
         }
+
         logger.info("Archivo BD creado/existente.");
 
-        // Carga y ejecuta schema.sql
-        String schemaFile = PropertiesUtils.getString("constantes/db-config.properties", "db.schema.file", "constantes/schema.sql");
-        InputStream input = SQliteAdaptador.class.getClassLoader().getResourceAsStream(schemaFile);
-        if (input == null) {
-            throw new IOException("Schema file no encontrado: " + schemaFile);
-        }
-
-        try (Statement stmt = conexion.createStatement();
-             BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
-            StringBuilder sqlBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sqlBuilder.append(line);
-                if (line.trim().endsWith(";")) {
-                    stmt.execute(sqlBuilder.toString());
-                    sqlBuilder.setLength(0);
-                }
-            }
-            logger.info("Schema cargado y ejecutado correctamente.");  // Azul para éxito
-
-        } catch (SQLException e) {
-            logger.info("Error ejecutando schema.sql", e);  // Rojo para error
-            throw e;
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //Montar el esquema de la base de datos
+        crearEsquemaBaseDatos(conexion);
 
         return true;
     }
+
+
+
+    private static void crearEsquemaBaseDatos(Connection conexion) throws IOException, SQLException {
+        logger.info("Creando el esquema de la base de datos");
+
+        try {
+            // Carga y ejecuta schema.sql
+            String rutaEsquema = PropertiesUtils.getString("sql.properties", "sql.dbEsquema", null);
+            String esquemaSql = FicherosService.leerArchivoDeResources(rutaEsquema);
+
+            // Separar sentencias
+            String[] sentencias = esquemaSql.split(";");
+            Statement stmt = conexion.createStatement();
+
+            for (String sentencia : sentencias) {
+                sentencia = sentencia.trim();
+                if (!sentencia.isEmpty()) {
+                    logger.info(sentencia);
+                    stmt.execute(sentencia);
+                }
+            }
+
+            logger.info("Esquema cargado y ejecutado correctamente.");  // Azul para éxito
+
+            stmt.close();
+            conexion.close();
+
+        } catch (Exception e) {
+            logger.info("Error ejecutando schema.sql", e);  // Rojo para error
+            throw e;
+        }
+    }
+
 }

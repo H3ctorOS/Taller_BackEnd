@@ -56,7 +56,7 @@ public class PropertiesUtils {
     public static String getString(String fileName, String key, String defaultValue) {
         try {
             Properties props = loadProperties(fileName);
-            return props.getProperty(key, defaultValue);
+            return props.getProperty(key);
 
         } catch (IOException e) {
             // Integra con LoggerUtil si existe
