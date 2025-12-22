@@ -1,38 +1,58 @@
 package com.TallerWapo;
 
-
-import com.TallerWapo.dominio.servicios.aplicacion.FachadasService;
+import com.TallerWapo.Adaptadores.BaseDatossql.SQliteAdaptador;
+import com.TallerWapo.Adaptadores.sparkApiRest.SparkApiRestAdaptador;
 import com.TallerWapo.dominio.servicios.aplicacion.InterfazService;
 import com.TallerWapo.dominio.servicios.aplicacion.MainService;
 import com.TallerWapo.dominio.servicios.aplicacion.PuertosService;
-import com.TallerWapo.dominio.utiles.LoggerUtil;
 import com.TallerWapo.dominio.utiles.PropertiesUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class Main {
+    static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        LoggerUtil.logInfo("Arrancando puta mierda de backEnd");
 
         if(MainService.esPrimerArranque()){
             hacerCosasPrimerArranque();
         }
 
-        FachadasService.arrancarFachadas();
-        PuertosService.arrancarPuertos();
+        arrancarAdaptadores();
         InterfazService.arrancarInterfazLocal();
     }
 
 
-    private static void hacerCosasPrimerArranque(){
-        LoggerUtil.logInfo("Haciendo cosas de primer arranque");
+    private static void hacerCosasPrimerArranque()  {
+        logger.info("haciendo cosas del primer arranque");
 
         //TODO: construir directorio carpetas
         String dbPath = PropertiesUtils.getString("config.properties", "db.path", "db/taller.db");
 
-        //TODO: construir base datos
-        LoggerUtil.logInfo("Ruta bbdd = " + dbPath);
+        //Construir base datos
+        try {
+            SQliteAdaptador.crearBaseDatos();
 
+        }catch (Exception e){
+            logger.error(e.getMessage());
+        }
+
+    }
+
+    private static void arrancarAdaptadores(){
+        logger.info("Arrancando adaptadores");
+
+        //iniciar Base datos con SQLITE
+        PuertosService.arrancarBaseDatosLocalSQL(new SQliteAdaptador());
+
+        //iniciar ApiRest con Spark
+        PuertosService.arrancarApiRest(new SparkApiRestAdaptador());
+
+        logger.info("todos los puertos arrancados");
     }
 
 }

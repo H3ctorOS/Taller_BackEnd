@@ -1,13 +1,15 @@
 package com.TallerWapo.dominio.servicios.aplicacion;
 
-import com.TallerWapo.dominio.utiles.LoggerUtil;
+import com.TallerWapo.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MainService {
 
     public static boolean esPrimerArranque(){
-        LoggerUtil.logInfo("Comprobando si es el primer arranque");
+        final Logger logger = LoggerFactory.getLogger(Main.class);
 
-        LoggerUtil.logInfo("Es el primer arranque");
+        logger.info("Es primer arranque");
         return true;
     }
 

@@ -1,5 +1,8 @@
 package com.TallerWapo.dominio.utiles;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -7,6 +10,8 @@ import java.util.Map;
 import java.util.Properties;
 
 public class PropertiesUtils {
+    static final Logger logger = LoggerFactory.getLogger(PropertiesUtils.class);
+
     // Cache para propiedades cargadas (genérico para múltiples archivos)
     private static final Map<String, Properties> cache = new HashMap<>();
 
@@ -31,7 +36,7 @@ public class PropertiesUtils {
         try (InputStream input = PropertiesUtils.class.getClassLoader().getResourceAsStream(rutaBase + fileName)) {
             if (input == null) {
                 String texto = "Archivo " + fileName + " no encontrado en resources";
-                LoggerUtil.logWarning(texto);
+
                 throw new IOException(texto);
             }
             props.load(input);
@@ -55,7 +60,7 @@ public class PropertiesUtils {
 
         } catch (IOException e) {
             // Integra con LoggerUtil si existe
-            LoggerUtil.logError("Error cargando " + fileName + ": " + e.getMessage() + ". Usando default.",e);
+            logger.error("Error cargando " + fileName + ": " + e.getMessage() + ". Usando default.",e);
             return defaultValue;
         }
     }
