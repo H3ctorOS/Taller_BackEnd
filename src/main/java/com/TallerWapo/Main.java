@@ -19,7 +19,7 @@ public class Main {
         }
 
         arrancarAdaptadores();
-       // InterfazService.arrancarInterfazLocal();
+        InterfazService.arrancarInterfazLocal();
     }
 
 
@@ -31,7 +31,7 @@ public class Main {
 
         //Construir base datos
         try {
-            SQliteAdaptador.crearBaseDatos();
+            SQliteAdaptador.construirBaseDatos();
 
         }catch (Exception e){
             logger.error(e.getMessage());
@@ -43,7 +43,7 @@ public class Main {
         logger.info("Arrancando adaptadores");
 
         //iniciar Base datos con SQLITE
-        //PuertosService.arrancarBaseDatosLocalSQL(new SQliteAdaptador());
+        PuertosService.arrancarBaseDatosLocalSQL(new SQliteAdaptador());
 
         //iniciar ApiRest con Spark
         PuertosService.arrancarApiRest(new SparkApiRestAdaptador());

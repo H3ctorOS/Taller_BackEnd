@@ -8,13 +8,7 @@ import com.TallerWapo.dominio.utiles.PropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -73,7 +67,7 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
     /**
      * Monta la base de datos en la ruta por defecto
      */
-    public static boolean crearBaseDatos() throws Exception {
+    public static boolean construirBaseDatos() throws Exception {
         logger.info("Construyendo archivo BD en: " + FICHERO_BASEDATOS);  // Azul para info
 
         // Crea archivo implícitamente al conectar
