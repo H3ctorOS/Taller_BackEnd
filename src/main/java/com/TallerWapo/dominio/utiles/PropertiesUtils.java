@@ -15,7 +15,6 @@ public class PropertiesUtils {
     // Cache para propiedades cargadas (genérico para múltiples archivos)
     private static final Map<String, Properties> cache = new HashMap<>();
 
-    private static String rutaBase = "constantes/";
 
     private PropertiesUtils() {
         throw new AssertionError("No se puede instanciar PropertiesLoader");
@@ -33,7 +32,7 @@ public class PropertiesUtils {
         }
 
         Properties props = new Properties();
-        try (InputStream input = PropertiesUtils.class.getClassLoader().getResourceAsStream(rutaBase + fileName)) {
+        try (InputStream input = PropertiesUtils.class.getClassLoader().getResourceAsStream(fileName)) {
             if (input == null) {
                 String texto = "Archivo " + fileName + " no encontrado en resources";
 

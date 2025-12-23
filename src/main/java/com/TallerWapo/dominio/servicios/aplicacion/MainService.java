@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public class MainService {
     static final Logger logger = LoggerFactory.getLogger(MainService.class);
-    static final String ARCHIVO_CONFIGURACION = "config.properties";
+    static final String ARCHIVO_CONFIGURACION = "constantes/config.properties";
 
     public static boolean esPrimerArranque(){
         logger.info("Este es el primer arranque");

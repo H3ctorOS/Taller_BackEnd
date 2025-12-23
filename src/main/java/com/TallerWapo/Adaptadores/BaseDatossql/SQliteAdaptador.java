@@ -17,8 +17,8 @@ import java.sql.SQLException;
 public class SQliteAdaptador implements BaseDatosSQLPort {
     static final Logger logger = LoggerFactory.getLogger(SQliteAdaptador.class);
 
-    private static final String RUTA_BASEDATOS = PropertiesUtils.getString("config.properties", "ruta.BaseDatosSQL", null);
-    private static final String NOMBRE_ARCHIVO_BASEDATOS = PropertiesUtils.getString("sql.properties", "sql.fileName", null);
+    private static final String RUTA_BASEDATOS = PropertiesUtils.getString("constantes/config.properties", "ruta.BaseDatosSQL", null);
+    private static final String NOMBRE_ARCHIVO_BASEDATOS = PropertiesUtils.getString("constantes/sql.properties", "sql.fileName", null);
     private static final String FICHERO_BASEDATOS = RUTA_BASEDATOS + "/" + NOMBRE_ARCHIVO_BASEDATOS;
     private static final String CLASS_NAME = "org.sqlite.JDBC";
     private Connection conexion;
@@ -122,7 +122,7 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
 
         try {
             // Carga y ejecuta schema.sql
-            String rutaEsquema = PropertiesUtils.getString("sql.properties", "sql.dbEsquema", null);
+            String rutaEsquema = PropertiesUtils.getString("constantes/sql.properties", "sql.dbEsquema", null);
             String esquemaSql = FicherosService.leerArchivoDeResources(rutaEsquema);
 
             BaseDatosSQLService.crearEsquema(conexion,esquemaSql);

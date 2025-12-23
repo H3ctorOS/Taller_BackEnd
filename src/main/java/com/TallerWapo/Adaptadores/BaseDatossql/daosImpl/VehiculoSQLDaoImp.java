@@ -3,6 +3,7 @@ package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.Puertos.baseDatos.Daos.vehiculoDao;
 import com.TallerWapo.dominio.contexto.ContextoGeneral;
+import com.TallerWapo.dominio.utiles.PropertiesUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,18 +16,15 @@ public class VehiculoSQLDaoImp implements vehiculoDao {
 
     private final Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
 
+    private final String VEHICULOS_SELECT_ALL = PropertiesUtils.getString("sentenciasSQL/vehiculosSQL.properties","VEHICULOS_SELECT_ALL",null);
 
     @Override
     public List<VehiculoBO> findAll() throws Exception {
-
         List<VehiculoBO> list = new ArrayList<>();
 
         Statement stmt = conexion.createStatement();
 
-        //TODO colocar en un properties
-        String query = "SELECT * FROM vehiculos";
-
-        ResultSet rs = stmt.executeQuery(query);{  // Asume tabla vehiculos
+        ResultSet rs = stmt.executeQuery(VEHICULOS_SELECT_ALL);{  // Asume tabla vehiculos
             while (rs.next()) {
                 VehiculoBO v = new VehiculoBO();
                 v.setMarca(rs.getString("marca"));

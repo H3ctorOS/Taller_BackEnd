@@ -1,7 +1,6 @@
 package com.TallerWapo.dominio.servicios.aplicacion;
 
 import com.TallerWapo.dominio.Puertos.ApiRest.ApiRestPort;
-import com.TallerWapo.dominio.Puertos.baseDatos.BaseDatosPort;
 import com.TallerWapo.dominio.Puertos.baseDatos.BaseDatosSQLPort;
 import com.TallerWapo.dominio.contexto.ContextoGeneral;
 import com.TallerWapo.dominio.utiles.PropertiesUtils;
@@ -23,10 +22,10 @@ public class PuertosService {
     }
 
     public static void arrancarApiRest(ApiRestPort apiRest) {
-        logger.info("Arrancando servidor peticiones: " +  apiRest.getNombreAdaptador());
+        logger.info("Arrancando servidor peticiones: {}", apiRest.getNombreAdaptador());
 
         // Carga configs (puerto, etc.)
-        int serverPort = PropertiesUtils.getInt("config.properties", "puerto.ApiRest", 8080);
+        int serverPort = PropertiesUtils.getInt("constantes/config.properties", "puerto.ApiRest", 8080);
         apiRest.setPuerto(serverPort);
 
         //Arrancar
@@ -35,6 +34,6 @@ public class PuertosService {
 
         ContextoGeneral.apiRest = apiRest;
 
-        logger.info("Servidor ApiRest iniciado en puerto " + serverPort );
+        logger.info("Servidor ApiRest iniciado en puerto {}", serverPort);
     }
 }
