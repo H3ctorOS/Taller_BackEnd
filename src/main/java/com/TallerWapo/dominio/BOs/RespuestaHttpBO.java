@@ -2,25 +2,25 @@ package com.TallerWapo.dominio.BOs;
 
 import com.TallerWapo.dominio.Puertos.ApiRest.EstadoRespuestaHTTP;
 
-public class RespuestaRestBO {
+public class RespuestaHttpBO {
     private int status = EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo();
     private String mensaje;
     private Object BoRespuesta;
     private boolean isOk = false;
 
 
-    public RespuestaRestBO(int status, String mensaje, Object BoRespuesta) {
+    public RespuestaHttpBO(int status, String mensaje, Object BoRespuesta) {
         this.status = status;
         this.mensaje = mensaje;
         this.BoRespuesta = BoRespuesta;
     }
 
-    public RespuestaRestBO(int status, String mensaje) {
+    public RespuestaHttpBO(int status, String mensaje) {
         this.status = status;
         this.mensaje = mensaje;
     }
 
-    public RespuestaRestBO() {}
+    public RespuestaHttpBO() {}
 
     public void setObjeto(Object boRespuesta) {
         BoRespuesta = boRespuesta;

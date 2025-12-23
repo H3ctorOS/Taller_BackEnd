@@ -10,9 +10,9 @@ public interface vehiculoDao extends DaoBase {
 
     VehiculoBO findByMatricula(String matricula) throws Exception;
 
-    void save(VehiculoBO vehiculo) throws Exception;
+    void guardarNuevoVehiculo(VehiculoBO vehiculo) throws Exception;
 
-    void update(VehiculoBO vehiculo) throws Exception;
+    void actualizarVehiculo(VehiculoBO vehiculo) throws Exception;
 
-    void deleteByMatricula(String matricula) throws Exception;
+    void borrarVehiculo(VehiculoBO vehiculo) throws Exception;
 }

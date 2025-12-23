@@ -26,7 +26,7 @@ public class Main {
     private static void hacerCosasPrimerArranque()  {
         logger.info("haciendo cosas del primer arranque");
 
-        //Construir ficheros
+        //Construir estructura de ficheros
         MainService.construirStructuraCarpetas();
 
         //Construir base datos
@@ -34,7 +34,7 @@ public class Main {
             SQliteAdaptador.construirBaseDatos();
 
         }catch (Exception e){
-            logger.error(e.getMessage());
+            logger.error("Error creando la base de datos",e);
         }
 
     }

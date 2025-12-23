@@ -13,14 +13,15 @@ import java.util.List;
 
 public class VehiculoSQLDaoImp implements vehiculoDao {
 
-    private final Connection conn = ContextoGeneral.baseDatosSQL.getConnection();
+    private final Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
+
 
     @Override
     public List<VehiculoBO> findAll() throws Exception {
 
         List<VehiculoBO> list = new ArrayList<>();
 
-        Statement stmt = conn.createStatement();
+        Statement stmt = conexion.createStatement();
 
         //TODO colocar en un properties
         String query = "SELECT * FROM vehiculos";
@@ -41,7 +42,7 @@ public class VehiculoSQLDaoImp implements vehiculoDao {
     public VehiculoBO findByMatricula(String matricula) throws Exception {
         List<VehiculoBO> list = new ArrayList<>();
 
-        Statement stmt = conn.createStatement();
+        Statement stmt = conexion.createStatement();
 
         //TODO colocar en un properties
         String query = "SELECT * FROM vehiculos where matricula ='" + matricula + "'";
@@ -67,18 +68,17 @@ public class VehiculoSQLDaoImp implements vehiculoDao {
     }
 
     @Override
-    public void save(VehiculoBO vehiculo) throws Exception {
+    public void guardarNuevoVehiculo(VehiculoBO vehiculo) throws Exception {
 
     }
 
     @Override
-    public void update(VehiculoBO vehiculo) throws Exception {
+    public void actualizarVehiculo(VehiculoBO vehiculo) throws Exception {
 
     }
 
     @Override
-    public void deleteByMatricula(String matricula) throws Exception {
+    public void borrarVehiculo(VehiculoBO vehiculo) throws Exception {
 
     }
-
 }

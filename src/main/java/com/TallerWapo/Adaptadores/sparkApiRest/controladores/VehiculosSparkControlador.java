@@ -3,7 +3,7 @@ package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 import com.TallerWapo.dominio.Puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.Puertos.ApiRest.controladores.VehiculosControlador;
-import com.TallerWapo.dominio.BOs.RespuestaRestBO;
+import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +29,7 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
                     //Rescatar objeto
                     VehiculoBO vehiculo = SparkController.JsonToBO(req, VehiculoBO.class);
 
-                    //llamar a metodo padre
-                    RespuestaRestBO respuesta = crearVehiculo(vehiculo);
+                    RespuestaHttpBO respuesta = crearVehiculo(vehiculo);
 
                     //Dar respuesta Ok
                     res.status(respuesta.getStatus());
@@ -54,8 +53,7 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
                     //rescatar json
                     VehiculoBO vehiculo = SparkController.JsonToBO(req, VehiculoBO.class);
 
-                    //llamar a metodo padre
-                    RespuestaRestBO respuesta = actualizarVehiculo(vehiculo);
+                    RespuestaHttpBO respuesta = actualizarVehiculo(vehiculo);
 
                     //Dar respuesta Ok
                     res.status(respuesta.getStatus());
@@ -79,7 +77,7 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
                 try {
                     String matricula = req.queryParams("matricula");  // Rescata el parámetro de query
 
-                    RespuestaRestBO respuesta = eliminarVehiculo(matricula);
+                    RespuestaHttpBO respuesta = eliminarVehiculo(matricula);
 
                     //Dar respuesta Ok
                     res.status(respuesta.getStatus());
@@ -102,7 +100,7 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
                 try {
                     String matricula = req.queryParams("matricula");  // Rescata el parámetro de query
 
-                    RespuestaRestBO respuesta = buscarVehiculoPorMatricula(matricula);
+                    RespuestaHttpBO respuesta = buscarVehiculoPorMatricula(matricula);
 
                     //Dar respuesta Ok y retornar vehiculo encontrado
                     res.status(respuesta.getStatus());
