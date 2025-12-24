@@ -8,6 +8,7 @@ public class VehiculoBO implements BoBase {
     private String matricula;
     private String marca;
     private String modelo;
+    private String codidoEstado;
 
 
     @Override
@@ -24,4 +25,7 @@ public class VehiculoBO implements BoBase {
 
     public String getModelo() {return this.modelo;}
     public void setModelo(String modelo) {this.modelo = modelo;}
+
+    public String getCodidoEstado() {return this.codidoEstado;}
+    public void setCodidoEstado(String codidoEstado) {this.codidoEstado = codidoEstado;}
 }

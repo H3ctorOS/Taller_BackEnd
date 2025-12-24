@@ -3,7 +3,8 @@
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             matricula TEXT UNIQUE NOT NULL,
             modelo TEXT NOT NULL,
-            cod_estado INTEGER NOT NULL,
+            marca TEXT NOT NULL,
+            cod_estado TEXT NOT NULL,
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
      );
 
@@ -58,4 +59,6 @@
 --INDICES
     CREATE INDEX IF NOT EXISTS idx_vehiculos_matricula ON vehiculos (matricula);
 
-
+--INSERT
+    INSERT INTO estados (codigo,descripcion)VALUES ('ACTI', 'Estado del elemento activo');
+    INSERT INTO estados (codigo,descripcion)VALUES ('BAJA', 'Estado del elemento de baja');

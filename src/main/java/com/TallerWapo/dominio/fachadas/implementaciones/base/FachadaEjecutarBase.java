@@ -2,13 +2,18 @@ package com.TallerWapo.dominio.fachadas.implementaciones.base;
 
 
 import com.TallerWapo.dominio.contexto.ContextoGeneral;
+import com.TallerWapo.dominio.fachadas.implementaciones.VehiculosFachadaEjecutarImpl;
 import com.TallerWapo.dominio.fachadas.interfaces.FachadasBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class FachadaEjecutarBase implements FachadasBase {
+    static final Logger logger = LoggerFactory.getLogger(FachadaEjecutarBase.class);
 
     protected <T> T ejecutarEnTransaccion(Supplier<T> accion) {
         //Genera la nueva conexion
@@ -21,6 +26,8 @@ public class FachadaEjecutarBase implements FachadasBase {
             return resultado;
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error("Error en transacción", e);
             rollbackSilencioso(conexionEscritura);
             throw new RuntimeException("Error en transacción", e);
 
@@ -42,7 +49,9 @@ public class FachadaEjecutarBase implements FachadasBase {
     private void rollbackSilencioso(Connection conexionEscritura) {
         try {
             conexionEscritura.rollback();
-        } catch (SQLException ignored) {
+
+        } catch (SQLException e) {
+            logger.error(Arrays.toString(e.getStackTrace()));
         }
     }
 }

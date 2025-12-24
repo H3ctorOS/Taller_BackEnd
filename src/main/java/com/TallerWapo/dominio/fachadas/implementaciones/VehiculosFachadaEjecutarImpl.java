@@ -1,28 +1,35 @@
 package com.TallerWapo.dominio.fachadas.implementaciones;
 
-
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.Puertos.baseDatos.Daos.vehiculoDao;
 import com.TallerWapo.dominio.contexto.ContextoDaos;
 import com.TallerWapo.dominio.fachadas.implementaciones.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.servicios.negocio.VehiculosService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
+    static final Logger logger = LoggerFactory.getLogger(VehiculosFachadaEjecutarImpl.class);
 
     private final vehiculoDao  vehiculoDao = ContextoDaos.getVehiculoDao();
 
     public void crearNuevoVehiculo(VehiculoBO vehiculo) throws Exception {
         VehiculosService.validarVehiculo(vehiculo);
 
+        logger.info("Creando nuevo vehiculo: {}", vehiculo.toString());
+
         ejecutarEnTransaccion(() -> {
             try {
+                vehiculo.setCodidoEstado("ACTI");
                 vehiculoDao.guardarNuevoVehiculo(vehiculo);
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Error interno al crear vehiculo",e);
             }
         });
+
+        logger.info("Vehiculo creado");
     }
 
 
@@ -34,7 +41,7 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
                 vehiculoDao.actualizarVehiculo(vehiculo);
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Error interno al actualizar vehiculo",e);
             }
         });
     }
@@ -52,7 +59,7 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
                 vehiculoDao.borrarVehiculo(vehiculo);
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Error interno al eliminar vehiculo",e);
             }
         });
     }
@@ -63,7 +70,7 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
                 vehiculoDao.borrarVehiculo(vehiculo);
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Error interno al eliminar vehiculo",e);
             }
         });
     }
