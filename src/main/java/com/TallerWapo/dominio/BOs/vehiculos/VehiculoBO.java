@@ -1,10 +1,11 @@
 package com.TallerWapo.dominio.BOs.vehiculos;
 
-import com.TallerWapo.dominio.interfacez.base.BoBase;
+import com.TallerWapo.dominio.interfaces.base.BoBase;
 
 public class VehiculoBO implements BoBase {
 
     private int uuid;
+    private int uuidPropietario;
     private String matricula;
     private String marca;
     private String modelo;
@@ -28,4 +29,7 @@ public class VehiculoBO implements BoBase {
 
     public String getCodidoEstado() {return this.codidoEstado;}
     public void setCodidoEstado(String codidoEstado) {this.codidoEstado = codidoEstado;}
+
+    public  int getUuidPropietario() {return this.uuidPropietario;}
+    public void setUuidPropietario(int uuid) {this.uuidPropietario = uuid;}
 }

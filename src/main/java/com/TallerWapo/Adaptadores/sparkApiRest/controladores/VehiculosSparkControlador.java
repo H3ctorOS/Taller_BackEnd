@@ -1,12 +1,14 @@
 package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 
-import com.TallerWapo.dominio.Puertos.ApiRest.EstadoRespuestaHTTP;
-import com.TallerWapo.dominio.Puertos.ApiRest.controladores.VehiculosControlador;
+import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
+import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.VehiculosControlador;
 import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static spark.Spark.*;
 
 
 

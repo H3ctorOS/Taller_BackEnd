@@ -2,9 +2,9 @@ package com.TallerWapo;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.SQliteAdaptador;
 import com.TallerWapo.Adaptadores.sparkApiRest.SparkApiRestAdaptador;
-import com.TallerWapo.dominio.servicios.aplicacion.InterfazService;
-import com.TallerWapo.dominio.servicios.aplicacion.MainService;
-import com.TallerWapo.dominio.servicios.aplicacion.PuertosService;
+import com.TallerWapo.dominio.utiles.InterfazGraficaUtils;
+import com.TallerWapo.dominio.utiles.MainUtil;
+import com.TallerWapo.dominio.utiles.PuertosUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,13 +15,12 @@ public class Main {
     public static void main(String[] args) {
         logger.info("Servidor SUPER TALLER arrancando");
 
-        if(MainService.esPrimerArranque()){
+        if(MainUtil.esPrimerArranque()){
             hacerCosasPrimerArranque();
         }
 
         arrancarAdaptadores();
-
-        InterfazService.arrancarInterfazLocal();
+        InterfazGraficaUtils.arrancarInterfazLocal();
     }
 
 
@@ -29,7 +28,7 @@ public class Main {
         logger.info("haciendo cosas del primer arranque");
 
         //Construir estructura de ficheros
-        MainService.construirStructuraCarpetas();
+        MainUtil.construirStructuraCarpetas();
 
         //Construir base datos
         SQliteAdaptador.construirBaseDatos();
@@ -41,10 +40,10 @@ public class Main {
         logger.info("Arrancando adaptadores");
 
         //iniciar Base datos SQL con SQLITE
-        PuertosService.arrancarBaseDatosLocalSQL(new SQliteAdaptador());
+        PuertosUtil.arrancarBaseDatosLocalSQL(new SQliteAdaptador());
 
         //iniciar ApiRest con Spark
-        PuertosService.arrancarApiRest(new SparkApiRestAdaptador());
+        PuertosUtil.arrancarApiRest(new SparkApiRestAdaptador());
 
         logger.info("todos los arrancadores en servicio");
     }

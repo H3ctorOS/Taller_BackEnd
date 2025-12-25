@@ -1,6 +1,6 @@
 package com.TallerWapo.dominio.BOs;
 
-import com.TallerWapo.dominio.Puertos.ApiRest.EstadoRespuestaHTTP;
+import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 
 public class RespuestaHttpBO {
     private int status = EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo();

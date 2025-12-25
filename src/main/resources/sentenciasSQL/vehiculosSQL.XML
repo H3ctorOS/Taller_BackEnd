@@ -19,5 +19,4 @@
     <query id="VEHICULOS_DELETE"><![CDATA[
         DELETE FROM vehiculos WHERE id = ?
     ]]></query>
-
 </queries>

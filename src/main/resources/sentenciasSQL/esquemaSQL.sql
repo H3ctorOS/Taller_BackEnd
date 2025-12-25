@@ -22,6 +22,10 @@
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             dni TEXT NOT NULL,
             nombre TEXT NOT NULL,
+            apellidos TEXT,
+            direccion TEXT,
+            telefono INTEGER,
+            email TEXT,
             cod_estado INTEGER NOT NULL,
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );

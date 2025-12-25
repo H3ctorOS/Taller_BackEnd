@@ -1,10 +1,9 @@
 package com.TallerWapo.Adaptadores.BaseDatossql;
 
 
-import com.TallerWapo.dominio.Puertos.baseDatos.BaseDatosSQLPort;
-import com.TallerWapo.dominio.servicios.aplicacion.BaseDatosSQLService;
-import com.TallerWapo.dominio.servicios.aplicacion.FicherosService;
-import com.TallerWapo.dominio.utiles.FileUtil;
+import com.TallerWapo.dominio.interfaces.puertos.baseDatos.BaseDatosSQLPort;
+import com.TallerWapo.dominio.utiles.BaseDatosSqlUtils;
+import com.TallerWapo.dominio.utiles.FicherosUtil;
 import com.TallerWapo.dominio.utiles.PropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,7 +103,7 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
             Connection conexion = crearConexion();
 
             //Verificar existencia del archivo
-            if (!FileUtil.fileExists(FICHERO_BASEDATOS)) {
+            if (!FicherosUtil.fileExists(FICHERO_BASEDATOS)) {
                 throw new IOException("Fallo al crear archivo BD: " + FICHERO_BASEDATOS);
             }
 
@@ -116,7 +115,6 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
             conexion.close();
 
         }catch (Exception e){
-
             logger.error("Error creando la base de datos",e);
         }
 
@@ -130,9 +128,9 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
         try {
             // Carga y ejecuta schema.sql
             String rutaEsquema = PropertiesUtils.getString("constantes/sql.properties", "sql.dbEsquema", null);
-            String esquemaSql = FicherosService.leerArchivoDeResources(rutaEsquema);
+            String esquemaSql = FicherosUtil.leerArchivoDeResources(rutaEsquema);
 
-            BaseDatosSQLService.crearEsquema(conexion,esquemaSql);
+            BaseDatosSqlUtils.crearEsquema(conexion,esquemaSql);
 
             conexion.close();
 

@@ -1,7 +1,7 @@
 package com.TallerWapo.Adaptadores.sparkApiRest;
 
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.VehiculosSparkControlador;
-import com.TallerWapo.dominio.Puertos.ApiRest.ApiRestPort;
+import com.TallerWapo.dominio.interfaces.puertos.ApiRest.ApiRestPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

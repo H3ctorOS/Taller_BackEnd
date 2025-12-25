@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <query id="CLIENTES_SELECT_ALL"><![CDATA[
+        SELECT * FROM CLIENTES
+    ]]></query>
+
+    <query id="CLIENTES_SELECT_DNI"><![CDATA[
+        SELECT * FROM CLIENTES WHERE DNI = ?
+    ]]></query>
+
+    <query id="CLIENTES_INSERT"><![CDATA[
+        INSERT INTO CLIENTES (dni, nombre, apellidos, direccion,telefono,email,cod_estado),
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ]]></query>
+
+    <query id="CLIENTES_UPDATE"><![CDATA[
+        UPDATE CLIENTES SET dni = ?, nombre = ?, apellidos = ?, direccion = ?,telefono = ?,email = ?,cod_estado = ?
+        WHERE id = ?
+    ]]></query>
+
+    <query id="CLIENTES_DELETE"><![CDATA[
+        DELETE FROM CLIENTES WHERE id = ?
+    ]]></query>
+</queries>
