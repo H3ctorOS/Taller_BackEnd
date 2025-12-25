@@ -8,7 +8,7 @@ import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static spark.Spark.*;
+
 
 public class VehiculosSparkControlador extends VehiculosControlador implements SparkController{
     static final Logger logger = LoggerFactory.getLogger(VehiculosSparkControlador.class);

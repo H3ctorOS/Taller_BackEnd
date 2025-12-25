@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <query id="VEHICULOS_SELECT_ALL"><![CDATA[
+        SELECT * FROM VEHICULOS
+    ]]></query>
+
+    <query id="VEHICULOS_SELECT_MATRICULA"><![CDATA[
+        SELECT * FROM VEHICULOS WHERE MATRICULA = ?
+    ]]></query>
+
+    <query id="VEHICULOS_INSERT"><![CDATA[
+        INSERT INTO vehiculos (matricula, modelo, marca, cod_estado) VALUES (?, ?, ?, ?)
+    ]]></query>
+
+    <query id="VEHICULOS_UPDATE"><![CDATA[
+        UPDATE vehiculos SET marca = ?, modelo = ?, matricula = ? WHERE id = ?
+    ]]></query>
+
+    <query id="VEHICULOS_DELETE"><![CDATA[
+        DELETE FROM vehiculos WHERE id = ?
+    ]]></query>
+
+</queries>

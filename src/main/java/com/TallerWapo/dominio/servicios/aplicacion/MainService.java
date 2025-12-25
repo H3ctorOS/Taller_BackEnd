@@ -19,7 +19,7 @@ public class MainService {
         return true;
     }
 
-    public static boolean construirStructuraCarpetas(){
+    public static void construirStructuraCarpetas(){
         logger.info("Creando estructura de carpetas del proyecto...");
 
         //Listado con rutas a crear
@@ -42,10 +42,7 @@ public class MainService {
 
         } catch (IOException e) {
             logger.error("Error creando estructura de carpetas", e);  // Rojo para error
-            return false;
         }
 
-        return true;
     }
-
 }

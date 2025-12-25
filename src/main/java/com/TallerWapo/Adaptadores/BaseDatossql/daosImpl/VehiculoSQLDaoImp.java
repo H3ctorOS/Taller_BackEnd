@@ -3,22 +3,20 @@ package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.Puertos.baseDatos.Daos.vehiculoDao;
 import com.TallerWapo.dominio.contexto.ContextoGeneral;
-import com.TallerWapo.dominio.utiles.PropertiesUtils;
+import com.TallerWapo.dominio.utiles.XML.SqlXmlLoader;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VehiculoSQLDaoImp implements vehiculoDao {
-    private final String ARCHIVO_SENTENCIAS_SQL = "sentenciasSQL/vehiculosSQL.properties";
+    private final String ARCHIVO_SQL = "sentenciasSQL/vehiculosSQL.XML";
 
-
-    private final String VEHICULOS_SELECT_ALL = PropertiesUtils.getString(ARCHIVO_SENTENCIAS_SQL,"VEHICULOS_SELECT_ALL",null);
-    private final String VEHICULOS_SELECT_MATRICULA = PropertiesUtils.getString(ARCHIVO_SENTENCIAS_SQL,"VEHICULOS_SELECT_MATRICULA",null);
-
-    private final String VEHICULOS_INSERT = PropertiesUtils.getString(ARCHIVO_SENTENCIAS_SQL,"VEHICULOS_INSERT",null);
-    private final String VEHICULOS_UPDATE = PropertiesUtils.getString(ARCHIVO_SENTENCIAS_SQL,"VEHICULOS_INSERT",null);
-    private final String VEHICULOS_DELETE = PropertiesUtils.getString(ARCHIVO_SENTENCIAS_SQL,"VEHICULOS_DELETE",null);
+    private final String VEHICULOS_SELECT_ALL = SqlXmlLoader.load(ARCHIVO_SQL, "VEHICULOS_SELECT_ALL");
+    private final String VEHICULOS_SELECT_MATRICULA = SqlXmlLoader.load(ARCHIVO_SQL, "VEHICULOS_SELECT_MATRICULA");
+    private final String VEHICULOS_INSERT = SqlXmlLoader.load(ARCHIVO_SQL, "VEHICULOS_INSERT");
+    private final String VEHICULOS_UPDATE = SqlXmlLoader.load(ARCHIVO_SQL, "VEHICULOS_UPDATE");
+    private final String VEHICULOS_DELETE = SqlXmlLoader.load(ARCHIVO_SQL, "VEHICULOS_DELETE");
 
     @Override
     public List<VehiculoBO> findAll() throws Exception {
