@@ -13,12 +13,14 @@ public class Main {
     static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
+        logger.info("Servidor SUPER TALLER arrancando");
 
         if(MainService.esPrimerArranque()){
             hacerCosasPrimerArranque();
         }
 
         arrancarAdaptadores();
+
         InterfazService.arrancarInterfazLocal();
     }
 
@@ -30,25 +32,20 @@ public class Main {
         MainService.construirStructuraCarpetas();
 
         //Construir base datos
-        try {
-            SQliteAdaptador.construirBaseDatos();
+        SQliteAdaptador.construirBaseDatos();
 
-        }catch (Exception e){
-            logger.error("Error creando la base de datos",e);
-        }
-
+        logger.info("Terminadas cosas del primer arranque");
     }
 
     private static void arrancarAdaptadores(){
         logger.info("Arrancando adaptadores");
 
-        //iniciar Base datos con SQLITE
+        //iniciar Base datos SQL con SQLITE
         PuertosService.arrancarBaseDatosLocalSQL(new SQliteAdaptador());
 
         //iniciar ApiRest con Spark
         PuertosService.arrancarApiRest(new SparkApiRestAdaptador());
 
-        logger.info("todos los puertos arrancados");
+        logger.info("todos los arrancadores en servicio");
     }
-
 }

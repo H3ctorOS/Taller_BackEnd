@@ -96,23 +96,30 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
     /**
      * Monta la base de datos en la ruta por defecto
      */
-    public static void construirBaseDatos() throws Exception {
+    public static void construirBaseDatos(){
         logger.info("Construyendo archivo BD en: " + FICHERO_BASEDATOS);  // Azul para info
 
-        // Crea archivo implícitamente al conectar
-        Connection conexion = crearConexion();
+        try {
+            // Crea archivo implícitamente al conectar
+            Connection conexion = crearConexion();
 
-        //Verificar existencia del archivo
-        if (!FileUtil.fileExists(FICHERO_BASEDATOS)) {
-            throw new IOException("Fallo al crear archivo BD: " + FICHERO_BASEDATOS);
+            //Verificar existencia del archivo
+            if (!FileUtil.fileExists(FICHERO_BASEDATOS)) {
+                throw new IOException("Fallo al crear archivo BD: " + FICHERO_BASEDATOS);
+            }
+
+            logger.info("Archivo BD creado/existente.");
+
+            //Montar el esquema de la base de datos
+            crearEsquemaBaseDatos(conexion);
+
+            conexion.close();
+
+        }catch (Exception e){
+
+            logger.error("Error creando la base de datos",e);
         }
 
-        logger.info("Archivo BD creado/existente.");
-
-        //Montar el esquema de la base de datos
-        crearEsquemaBaseDatos(conexion);
-
-        conexion.close();
     }
 
 
