@@ -73,7 +73,7 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
              */
             post(eliminarCliente, (req, res) -> {
                 res.type(tipoJSON);
-                logger.info("Eliminando vehiculo");
+                logger.info("Eliminando cliente");
 
                 try {
                     String dni = req.queryParams("dni");  // Rescata el parámetro de query
@@ -96,12 +96,33 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
              */
             get(buscarClienteDni, (req, res) -> {
                 res.type(tipoJSON);
-                logger.info("Buscando vehiculo");
+                logger.info("Buscando cliente");
 
                 try {
                     String dni = req.queryParams("dni");  // Rescata el parámetro de query
 
                     RespuestaHttpBO respuesta = buscarClientePorDni(dni);
+
+                    //Dar respuesta Ok y retornar vehiculo encontrado
+                    res.status(respuesta.getStatus());
+                    return gson.toJson(respuesta.getObjeto());
+
+                } catch (Exception e) {
+                    res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
+                    return gson.toJson(e.getMessage());
+                }
+            });
+
+            /**
+             *  Buscar todos los clientes
+             */
+            get(buscarTodosLosClientes, (req, res) -> {
+                res.type(tipoJSON);
+                logger.info("Buscando todos los clientes");
+
+                try {
+
+                    RespuestaHttpBO respuesta = buscarTodos();
 
                     //Dar respuesta Ok y retornar vehiculo encontrado
                     res.status(respuesta.getStatus());

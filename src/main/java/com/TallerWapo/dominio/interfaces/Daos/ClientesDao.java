@@ -1,11 +1,10 @@
 package com.TallerWapo.dominio.interfaces.Daos;
 
 import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.interfaces.base.DaoBase;
 
 import java.util.List;
 
-public interface ClientesDao extends DaoBase {
+public interface ClientesDao {
 
     List<ClienteBO> buscarTodos() throws Exception;
     ClienteBO buscarPorDni(String matricula) throws Exception;

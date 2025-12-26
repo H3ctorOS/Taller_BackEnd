@@ -2,14 +2,14 @@ package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
-import com.TallerWapo.dominio.contexto.ContextoGeneral;
+import com.TallerWapo.dominio.interfaces.base.DaoSQLBase;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VehiculoSQLDaoImp implements VehiculosDao {
+public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
     private final String ARCHIVO_SQL = "sentenciasSQL/vehiculosSQL.XML";
 
     private final String VEHICULOS_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_SELECT_ALL");
@@ -18,11 +18,14 @@ public class VehiculoSQLDaoImp implements VehiculosDao {
     private final String VEHICULOS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_UPDATE");
     private final String VEHICULOS_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_DELETE");
 
+    public VehiculoSQLDaoImp(Connection conexion) {
+        super(conexion);
+    }
+
     @Override
     public List<VehiculoBO> buscarTodos() throws Exception {
         List<VehiculoBO> list = new ArrayList<>();
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         Statement stmt = conexion.createStatement();
 
         ResultSet rs = stmt.executeQuery(VEHICULOS_SELECT_ALL);
@@ -38,7 +41,6 @@ public class VehiculoSQLDaoImp implements VehiculosDao {
     public VehiculoBO buscarPorMatricula(String matricula) throws Exception {
         List<VehiculoBO> list = new ArrayList<>();
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(VEHICULOS_SELECT_MATRICULA);
 
         ps.setString(1, matricula);
@@ -62,7 +64,6 @@ public class VehiculoSQLDaoImp implements VehiculosDao {
     @Override
     public boolean guardarNuevo(VehiculoBO vehiculo) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(VEHICULOS_INSERT);
 
         setearVehiculo(ps, vehiculo);
@@ -79,7 +80,6 @@ public class VehiculoSQLDaoImp implements VehiculosDao {
     @Override
     public boolean actualizar(VehiculoBO vehiculo) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(VEHICULOS_UPDATE);
         setearVehiculo(ps, vehiculo);
 
@@ -99,7 +99,6 @@ public class VehiculoSQLDaoImp implements VehiculosDao {
     @Override
     public boolean borrar(VehiculoBO vehiculo) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(VEHICULOS_DELETE);
         ps.setInt(1, vehiculo.getUuid());
 

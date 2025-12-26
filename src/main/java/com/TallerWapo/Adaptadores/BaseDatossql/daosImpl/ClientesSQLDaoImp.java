@@ -1,15 +1,15 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.contexto.ContextoGeneral;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
+import com.TallerWapo.dominio.interfaces.base.DaoSQLBase;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientesSQLDaoImp implements ClientesDao {
+public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
     private final String ARCHIVO_SQL = "sentenciasSQL/clientesSQL.XML";
 
     private final String CLIENTES_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_ALL");
@@ -22,7 +22,6 @@ public class ClientesSQLDaoImp implements ClientesDao {
     public List<ClienteBO> buscarTodos() throws Exception {
         List<ClienteBO> list = new ArrayList<>();
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         Statement stmt = conexion.createStatement();
 
         ResultSet rs = stmt.executeQuery(CLIENTES_SELECT_ALL);
@@ -38,7 +37,6 @@ public class ClientesSQLDaoImp implements ClientesDao {
     public ClienteBO buscarPorDni(String dni) throws Exception {
         List<ClienteBO> list = new ArrayList<>();
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(CLIENTES_SELECT_DNI);
 
         ps.setString(1, dni);
@@ -62,7 +60,6 @@ public class ClientesSQLDaoImp implements ClientesDao {
     @Override
     public boolean guardarNuevo(ClienteBO cliente) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(CLIENTES_INSERT);
 
         setearCliente(ps, cliente);
@@ -79,7 +76,6 @@ public class ClientesSQLDaoImp implements ClientesDao {
     @Override
     public boolean actualizar(ClienteBO cliente) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(CLIENTES_UPDATE);
         setearCliente(ps, cliente);
 
@@ -99,7 +95,6 @@ public class ClientesSQLDaoImp implements ClientesDao {
     @Override
     public boolean borrar(ClienteBO cliente) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(CLIENTES_DELETE);
         ps.setInt(1, cliente.getUuid());
 

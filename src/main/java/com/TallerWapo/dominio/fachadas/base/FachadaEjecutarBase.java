@@ -8,49 +8,43 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.function.Supplier;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FachadaEjecutarBase implements FachadasBase {
     static final Logger logger = LoggerFactory.getLogger(FachadaEjecutarBase.class);
 
-    protected <T> T ejecutarEnTransaccion(Supplier<T> accion) {
-        //Genera la nueva conexion
-        ContextoGeneral.baseDatosSQL.generarConexionEscritura();
-        Connection conexionEscritura = ContextoGeneral.baseDatosSQL.getConexion();
+
+    protected <T> T ejecutarEnTransaccion(Function<Connection, T> accion) {
+        Connection conexion = ContextoGeneral.baseDatosSQL.getNuevaConexionEscritura();
 
         try {
-            T resultado = accion.get();
-            conexionEscritura.commit();
+            T resultado = accion.apply(conexion);
+            conexion.commit();
             return resultado;
 
         } catch (Exception e) {
-            logger.error(e.getMessage());
             logger.error("Error en transacción", e);
-            rollbackSilencioso(conexionEscritura);
+            rollbackSilencioso(conexion);
             throw new RuntimeException("Error en transacción", e);
 
         } finally {
-            //Terminar la conexion
-            ContextoGeneral.baseDatosSQL.finalizarConexion();
+            ContextoGeneral.baseDatosSQL.finalizarConexion(conexion);
         }
     }
 
-
-    protected void ejecutarEnTransaccion(Runnable accion) {
-        ejecutarEnTransaccion(() -> {
-            accion.run();
+    protected void ejecutarEnTransaccion(Consumer<Connection> accion) {
+        ejecutarEnTransaccion(conexion -> {
+            accion.accept(conexion);
             return null;
         });
     }
 
-
-    private void rollbackSilencioso(Connection conexionEscritura) {
+    private void rollbackSilencioso(Connection conexion) {
         try {
-            conexionEscritura.rollback();
-
+            conexion.rollback();
         } catch (SQLException e) {
-            logger.error(Arrays.toString(e.getStackTrace()));
+            logger.error("Error al hacer rollback", e);
         }
     }
 }

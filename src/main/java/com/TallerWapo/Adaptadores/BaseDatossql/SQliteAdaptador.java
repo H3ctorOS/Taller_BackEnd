@@ -20,7 +20,8 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
     private static final String NOMBRE_ARCHIVO_BASEDATOS = PropertiesUtils.getString("constantes/sql.properties", "sql.fileName", null);
     private static final String FICHERO_BASEDATOS = RUTA_BASEDATOS + "/" + NOMBRE_ARCHIVO_BASEDATOS;
     private static final String CLASS_NAME = "org.sqlite.JDBC";
-    private Connection conexion;
+
+    private Connection conexionLectura;
     private String nombreAdaptador = "Adaptador base datos SQLite";
 
 
@@ -39,49 +40,64 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
 
     @Override
     public boolean iniciar() {
+        this.conexionLectura = crearConexionLectura();
         return true;
     }
 
 
     @Override
-    public Connection getConexion() {
-        return conexion;
+    public Connection getConexionLectura() {
+        return conexionLectura;
     }
 
     @Override
-    public void generarConexionEscritura() {
+    public Connection getNuevaConexionEscritura() {
+        return crearConexionEscritura();
+    }
+
+
+    private Connection crearConexionEscritura() {
         try {
+            Connection conexion;
             conexion = crearConexion();
             conexion.setAutoCommit(false);
+            return conexion;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Override
-    public void generarConexionLectura() {
+
+    private Connection crearConexionLectura() {
         try {
+            Connection conexion;
             conexion = crearConexion();
             conexion.isReadOnly();
+            return conexion;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+
     @Override
-    public void finalizarConexion() {
+    public void finalizarConexion(Connection conexion) {
         try {
             conexion.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        conexion = null;
     }
 
 
+    /**
+     * Metodo para crear conexiones base tanto de escritura como de lectura
+     * @return
+     * @throws Exception
+     */
     private static Connection crearConexion() throws Exception{
         Class.forName(CLASS_NAME);  // Carga driver (sqlite-jdbc)
         Connection conexion = DriverManager.getConnection("jdbc:sqlite:" + FICHERO_BASEDATOS);

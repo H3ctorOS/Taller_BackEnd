@@ -5,6 +5,7 @@
             modelo TEXT NOT NULL,
             marca TEXT NOT NULL,
             cod_estado TEXT NOT NULL,
+
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
      );
 
@@ -14,6 +15,7 @@
             dni TEXT NOT NULL,
             nombre TEXT NOT NULL,
             cod_estado INTEGER NOT NULL,
+
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
 
@@ -27,6 +29,7 @@
             telefono INTEGER,
             email TEXT,
             cod_estado INTEGER NOT NULL,
+
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
 
@@ -38,6 +41,7 @@
             mecanico_id INTEGER,
             fechaInicio DATE,
             fechaFin DATE,
+
             FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
             FOREIGN KEY (mecanico_id) REFERENCES mecanicos(id)
     );
@@ -50,8 +54,23 @@
             fechaAlta DATE NOT NULL,
             fechaBaja DATE,
             cod_estado INTEGER NOT NULL,
+
             FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
             FOREIGN KEY (cliente_id) REFERENCES clientes(id),
+            FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
+    );
+
+    CREATE TABLE IF NOT EXISTS citas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            vehiculo_id INTEGER NOT NULL,
+            cliente_id INTEGER NOT NULL,
+            reparacion_id INTEGER,
+            fecha DATE NOT NULL,
+            cod_estado INTEGER NOT NULL,
+
+            FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
+            FOREIGN KEY (cliente_id) REFERENCES clientes(id),
+            FOREIGN KEY (reparacion_id) REFERENCES reparaciones(id),
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
 

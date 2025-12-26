@@ -2,11 +2,10 @@ package com.TallerWapo.dominio.interfaces.Daos;
 
 import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
-import com.TallerWapo.dominio.interfaces.base.DaoBase;
 
 import java.util.List;
 
-public interface ReparacionesDao extends DaoBase {
+public interface ReparacionesDao {
     List<ReparacionBO> buscarTodas() throws Exception;
     List<ReparacionBO> buscarPorVehiculo(VehiculoBO vehiculo) throws Exception;
     boolean guardarNueva(ReparacionBO reparacion) throws Exception;

@@ -2,15 +2,15 @@ package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
-import com.TallerWapo.dominio.contexto.ContextoGeneral;
 import com.TallerWapo.dominio.interfaces.Daos.ReparacionesDao;
+import com.TallerWapo.dominio.interfaces.base.DaoSQLBase;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReparacionesSQLDaoImp implements ReparacionesDao {
+public class ReparacionesSQLDaoImp extends DaoSQLBase implements ReparacionesDao {
     private final String ARCHIVO_SQL = "sentenciasSQL/reparacionesSQL.XML";
 
     private final String REPARACIONES_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "REPARACIONES_SELECT_ALL");
@@ -23,7 +23,6 @@ public class ReparacionesSQLDaoImp implements ReparacionesDao {
     public List<ReparacionBO> buscarTodas() throws Exception {
         List<ReparacionBO> list = new ArrayList<>();
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         Statement stmt = conexion.createStatement();
 
         ResultSet rs = stmt.executeQuery(REPARACIONES_SELECT_ALL);
@@ -39,7 +38,6 @@ public class ReparacionesSQLDaoImp implements ReparacionesDao {
     public List<ReparacionBO> buscarPorVehiculo(VehiculoBO vehiculo) throws Exception {
         List<ReparacionBO> list = new ArrayList<>();
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(REPARACIONES_SELECT_VEHICULO);
 
         ps.setString(1, vehiculo.getMatricula());
@@ -55,7 +53,6 @@ public class ReparacionesSQLDaoImp implements ReparacionesDao {
     @Override
     public boolean guardarNueva(ReparacionBO reparacion) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(REPARACIONES_INSERT);
 
         setearReparacion(ps, reparacion);
@@ -72,7 +69,6 @@ public class ReparacionesSQLDaoImp implements ReparacionesDao {
     @Override
     public boolean actualizar(ReparacionBO reparacion) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(REPARACIONES_UPDATE);
         setearReparacion(ps, reparacion);
 
@@ -92,7 +88,6 @@ public class ReparacionesSQLDaoImp implements ReparacionesDao {
     @Override
     public boolean borrar(ReparacionBO reparacion) throws Exception {
 
-        Connection conexion = ContextoGeneral.baseDatosSQL.getConexion();
         PreparedStatement ps = conexion.prepareStatement(REPARACIONES_DELETE);
         ps.setInt(1, reparacion.getUuid());
 

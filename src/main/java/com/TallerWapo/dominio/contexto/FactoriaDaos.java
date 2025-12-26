@@ -5,13 +5,13 @@ import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.VehiculoSQLDaoImp;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 
-public class ContextoDaos {
+import java.sql.Connection;
 
-    public static VehiculosDao getVehiculoDao() {
-        return new VehiculoSQLDaoImp();
+public class FactoriaDaos {
+
+    public static VehiculosDao getVehiculoDao(Connection conexion) {
+        return new VehiculoSQLDaoImp(conexion);
     }
-    public static ClientesDao getClienteDao() {
-        return new ClientesSQLDaoImp();
-    }
+    public static ClientesDao getClienteDao(Connection conexion) {return new ClientesSQLDaoImp();}
 
 }
