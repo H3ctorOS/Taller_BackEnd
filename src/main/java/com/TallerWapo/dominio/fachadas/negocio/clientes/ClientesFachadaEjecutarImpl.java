@@ -65,7 +65,7 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
         });
     }
 
-    public void eliminarVehiculo(ClienteBO cliente) {
+    public void eliminarCliente(ClienteBO cliente) {
         ejecutarEnTransaccion(() -> {
             try {
                 clientesDao.borrar(cliente);

@@ -1,5 +1,6 @@
 package com.TallerWapo.Adaptadores.sparkApiRest;
 
+import com.TallerWapo.Adaptadores.sparkApiRest.controladores.ClientesSparkControlador;
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.VehiculosSparkControlador;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.ApiRestPort;
 import org.slf4j.Logger;
@@ -40,5 +41,6 @@ public class SparkApiRestAdaptador implements ApiRestPort  {
     @Override
     public void iniciarControllers() {
         VehiculosSparkControlador.init();
+        ClientesSparkControlador.init();
     }
 }
