@@ -8,6 +8,10 @@
         SELECT * FROM VEHICULOS WHERE MATRICULA = ?
     ]]></query>
 
+    <query id="VEHICULOS_SELECT_ID"><![CDATA[
+        SELECT * FROM VEHICULOS WHERE id = ?
+    ]]></query>
+
     <query id="VEHICULOS_INSERT"><![CDATA[
         INSERT INTO vehiculos (matricula, modelo, marca, cod_estado) VALUES (?, ?, ?, ?)
     ]]></query>

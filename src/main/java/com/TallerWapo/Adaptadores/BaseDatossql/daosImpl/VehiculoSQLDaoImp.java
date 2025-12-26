@@ -15,6 +15,7 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
 
     private final String VEHICULOS_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_SELECT_ALL");
     private final String VEHICULOS_SELECT_MATRICULA = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_SELECT_MATRICULA");
+    private final String VEHICULOS_SELECT_ID = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_SELECT_ID");
     private final String VEHICULOS_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_INSERT");
     private final String VEHICULOS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_UPDATE");
     private final String VEHICULOS_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_DELETE");
@@ -53,6 +54,30 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
 
         if (list.size() > 1) {
             throw  new SQLException("Se han encontrado varios vehiculos para la misma matricula") ;
+        }
+
+        if (list.size() == 1) {
+            return list.getFirst();
+        }
+
+        return null;
+    }
+
+    @Override
+    public VehiculoBO buscarPorId(int id) throws Exception {
+        List<VehiculoBO> list = new ArrayList<>();
+
+        PreparedStatement ps = conexion.prepareStatement(VEHICULOS_SELECT_ID);
+
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            list.add(mapearVehiculo(rs));
+        }
+
+        if (list.size() > 1) {
+            throw  new SQLException("Se han encontrado varios vehiculos para el mismo id");
         }
 
         if (list.size() == 1) {

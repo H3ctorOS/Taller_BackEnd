@@ -7,6 +7,7 @@ import java.util.List;
 public interface VehiculosDao {
     List<VehiculoBO> buscarTodos() throws Exception;
     VehiculoBO buscarPorMatricula(String matricula) throws Exception;
+    VehiculoBO buscarPorId(int id) throws Exception;
     boolean guardarNuevo(VehiculoBO vehiculo) throws Exception;
     boolean actualizar(VehiculoBO vehiculo) throws Exception;
     boolean borrar(VehiculoBO vehiculo) throws Exception;

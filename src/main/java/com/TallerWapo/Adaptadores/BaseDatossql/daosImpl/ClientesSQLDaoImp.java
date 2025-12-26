@@ -15,6 +15,7 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
 
     private final String CLIENTES_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_ALL");
     private final String CLIENTES_SELECT_DNI = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_DNI");
+    private final String CLIENTES_SELECT_ID = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_ID");
     private final String CLIENTES_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_INSERT");
     private final String CLIENTES_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_UPDATE");
     private final String CLIENTES_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_DELETE");
@@ -45,6 +46,30 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
         PreparedStatement ps = conexion.prepareStatement(CLIENTES_SELECT_DNI);
 
         ps.setString(1, dni);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            list.add(mapearCliente(rs));
+        }
+
+        if (list.size() > 1) {
+            throw  new SQLException("Se han encontrado varios clientes para el mismo dni") ;
+        }
+
+        if (list.size() == 1) {
+            return list.getFirst();
+        }
+
+        return null;
+    }
+
+    @Override
+    public ClienteBO buscarPorId(int id) throws Exception {
+        List<ClienteBO> list = new ArrayList<>();
+
+        PreparedStatement ps = conexion.prepareStatement(CLIENTES_SELECT_DNI);
+
+        ps.setInt(1,id);
 
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {

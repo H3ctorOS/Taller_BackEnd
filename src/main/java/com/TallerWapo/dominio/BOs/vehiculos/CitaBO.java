@@ -37,4 +37,19 @@ public class CitaBO implements BoBase {
 
     public String getCodigoEstado() {return codigoEstado;}
     public void setCodigoEstado(String codigoEstado) {this.codigoEstado = codigoEstado;}
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("CitaBO{");
+        sb.append("uuid=").append(uuid);
+        sb.append(", vehiculoUuid=").append(vehiculoUuid);
+        sb.append(", clienteUuid=").append(clienteUuid);
+        sb.append(", reparacionUuid=").append(reparacionUuid);
+        sb.append(", concepto=").append(concepto);
+        sb.append(", fecha=").append(fecha);
+        sb.append(", codigoEstado=").append(codigoEstado);
+        sb.append("}");
+        return sb.toString();
+    }
 }
