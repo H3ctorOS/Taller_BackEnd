@@ -1,7 +1,7 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
-import com.TallerWapo.dominio.interfaces.Daos.vehiculosDao;
+import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.contexto.ContextoGeneral;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VehiculoSQLDaoImp implements vehiculosDao {
+public class VehiculoSQLDaoImp implements VehiculosDao {
     private final String ARCHIVO_SQL = "sentenciasSQL/vehiculosSQL.XML";
 
     private final String VEHICULOS_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_SELECT_ALL");

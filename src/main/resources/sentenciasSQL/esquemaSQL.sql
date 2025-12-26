@@ -33,10 +33,11 @@
 
     CREATE TABLE IF NOT EXISTS reparaciones (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            descripcion TEXT NOT NULL,
+            concepto TEXT NOT NULL,
             vehiculo_id INTEGER NOT NULL,
             mecanico_id INTEGER,
-            fecha DATE,
+            fechaInicio DATE,
+            fechaFin DATE,
             FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
             FOREIGN KEY (mecanico_id) REFERENCES mecanicos(id)
     );

@@ -5,7 +5,7 @@ import com.TallerWapo.dominio.interfaces.base.DaoBase;
 
 import java.util.List;
 
-public interface clientesDao extends DaoBase {
+public interface ClientesDao extends DaoBase {
 
     List<ClienteBO> buscarTodos() throws Exception;
     ClienteBO buscarPorDni(String matricula) throws Exception;

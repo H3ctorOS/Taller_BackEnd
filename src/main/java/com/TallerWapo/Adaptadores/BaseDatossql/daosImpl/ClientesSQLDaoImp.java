@@ -2,14 +2,14 @@ package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
 import com.TallerWapo.dominio.contexto.ContextoGeneral;
-import com.TallerWapo.dominio.interfaces.Daos.clientesDao;
+import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientesSQLDaoImp implements clientesDao {
+public class ClientesSQLDaoImp implements ClientesDao {
     private final String ARCHIVO_SQL = "sentenciasSQL/clientesSQL.XML";
 
     private final String CLIENTES_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_ALL");

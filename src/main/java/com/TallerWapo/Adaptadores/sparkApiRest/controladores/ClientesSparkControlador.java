@@ -21,7 +21,7 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
     public static void init() {
         path(rutaBase, () -> {
             /**
-             *  crear vehiculo
+             *  crear cliente
              */
             post(crearCliente, (req, res) -> {
                 res.type(tipoJSON);  // Siempre setea JSON
@@ -44,7 +44,7 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
             });
 
             /**
-             *  Actualizar vehiculo
+             *  Actualizar cliente
              */
             post(actualizarCliente, (req, res) -> {
                 res.type(tipoJSON);
@@ -69,7 +69,7 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
 
 
             /**
-             *  Eliminar vehiculo
+             *  Eliminar cliente
              */
             post(eliminarCliente, (req, res) -> {
                 res.type(tipoJSON);
@@ -92,7 +92,7 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
 
 
             /**
-             *  Buscar vehiculos segun matricula
+             *  Buscar cliente por dni
              */
             get(buscarClienteDni, (req, res) -> {
                 res.type(tipoJSON);

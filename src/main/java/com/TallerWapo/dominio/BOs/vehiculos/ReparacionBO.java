@@ -7,6 +7,7 @@ import java.util.Date;
 public class ReparacionBO implements BoBase {
     int uuid;
     int vehiculoUuid;
+    int mecanicoUuid;
     String concepto;
     Date fechaInicio;
     Date fechaFin;
@@ -20,6 +21,9 @@ public class ReparacionBO implements BoBase {
 
     public int getVehiculoUuid() {return vehiculoUuid;}
     public void setVehiculoUuid(int vehiculoUuid) {this.vehiculoUuid = vehiculoUuid;}
+
+    public int getMecanicoUuid() {return mecanicoUuid;}
+    public void setMecanicoUuid(int mecanicoUuid) {this.mecanicoUuid = mecanicoUuid;}
 
     public String getConcepto() {return concepto;}
     public void setConcepto(String concepto) {this.concepto = concepto;}

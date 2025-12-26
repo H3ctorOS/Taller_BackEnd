@@ -1,7 +1,7 @@
 package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
-import com.TallerWapo.dominio.interfaces.Daos.vehiculosDao;
+import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.contexto.ContextoDaos;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.servicios.VehiculosService;
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
     static final Logger logger = LoggerFactory.getLogger(VehiculosFachadaEjecutarImpl.class);
 
-    private final vehiculosDao vehiculoDao = ContextoDaos.getVehiculoDao();
+    private final VehiculosDao vehiculoDao = ContextoDaos.getVehiculoDao();
 
     public void crearNuevoVehiculo(VehiculoBO vehiculo) throws Exception {
         VehiculosService.validarVehiculo(vehiculo);

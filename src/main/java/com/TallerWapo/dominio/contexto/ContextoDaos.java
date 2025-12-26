@@ -2,15 +2,15 @@ package com.TallerWapo.dominio.contexto;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.ClientesSQLDaoImp;
 import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.VehiculoSQLDaoImp;
-import com.TallerWapo.dominio.interfaces.Daos.clientesDao;
-import com.TallerWapo.dominio.interfaces.Daos.vehiculosDao;
+import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
+import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 
 public class ContextoDaos {
 
-    public static vehiculosDao getVehiculoDao() {
+    public static VehiculosDao getVehiculoDao() {
         return new VehiculoSQLDaoImp();
     }
-    public static clientesDao getClienteDao() {
+    public static ClientesDao getClienteDao() {
         return new ClientesSQLDaoImp();
     }
 

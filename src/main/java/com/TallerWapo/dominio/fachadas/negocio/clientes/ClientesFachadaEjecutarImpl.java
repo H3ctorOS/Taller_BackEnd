@@ -3,7 +3,7 @@ package com.TallerWapo.dominio.fachadas.negocio.clientes;
 import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
 import com.TallerWapo.dominio.contexto.ContextoDaos;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
-import com.TallerWapo.dominio.interfaces.Daos.clientesDao;
+import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.servicios.ClientesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
     static final Logger logger = LoggerFactory.getLogger(ClientesFachadaEjecutarImpl.class);
 
-    private final clientesDao clientesDao = ContextoDaos.getClienteDao();
+    private final ClientesDao clientesDao = ContextoDaos.getClienteDao();
 
     public void crearNuevoCliente(ClienteBO cliente) throws Exception {
         ClientesService.validarCliente(cliente);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <query id="REPARACIONES_SELECT_ALL"><![CDATA[
+        SELECT * FROM REPARACIONES
+    ]]></query>
+
+    <query id="REPARACIONES_SELECT_VEHICULO"><![CDATA[
+        SELECT * FROM REPARACIONES
+        WHERE MATRICULA = ?
+    ]]></query>
+
+    <query id="REPARACIONES_INSERT"><![CDATA[
+        INSERT INTO REPARACIONES (concepto, vehiculo_id, mecanico_id, fechaInicio, fechaFin)
+        VALUES (?, ?, ?, ?, ?)
+    ]]></query>
+
+    <query id="REPARACIONES_UPDATE"><![CDATA[
+        UPDATE REPARACIONES
+        SET concepto = ?, vehiculo_id = ?, mecanico_id = ? , fechaInicio = ? , fechaFin = ?
+        WHERE id = ?
+    ]]></query>
+
+    <query id="REPARACIONES_DELETE"><![CDATA[
+        DELETE FROM REPARACIONES
+        WHERE id = ?
+    ]]></query>
+</queries>
