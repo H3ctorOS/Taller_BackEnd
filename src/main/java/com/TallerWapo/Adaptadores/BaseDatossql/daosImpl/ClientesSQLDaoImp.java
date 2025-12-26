@@ -1,8 +1,9 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
+import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
 import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
+import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
-import com.TallerWapo.dominio.interfaces.base.DaoSQLBase;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
@@ -17,6 +18,10 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
     private final String CLIENTES_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_INSERT");
     private final String CLIENTES_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_UPDATE");
     private final String CLIENTES_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_DELETE");
+
+    public ClientesSQLDaoImp(Sesion sesion) {
+        super(sesion);
+    }
 
     @Override
     public List<ClienteBO> buscarTodos() throws Exception {

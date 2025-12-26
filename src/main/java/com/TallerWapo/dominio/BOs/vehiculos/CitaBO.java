@@ -8,8 +8,10 @@ public class CitaBO implements BoBase {
     int uuid;
     int vehiculoUuid;
     int clienteUuid;
+    int reparacionUuid;
     String concepto;
     Date fecha;
+    String codigoEstado;
 
 
     @Override
@@ -30,4 +32,9 @@ public class CitaBO implements BoBase {
     public int getClienteUuid() {return clienteUuid;}
     public void setClienteUuid(int clienteUuid) {this.clienteUuid = clienteUuid;}
 
+    public int getReparacionUuid() {return reparacionUuid;}
+    public void setReparacionUuid(int reparacionUuid) {this.reparacionUuid = reparacionUuid;}
+
+    public String getCodigoEstado() {return codigoEstado;}
+    public void setCodigoEstado(String codigoEstado) {this.codigoEstado = codigoEstado;}
 }

@@ -2,7 +2,7 @@ package com.TallerWapo.dominio.utiles;
 
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.ApiRestPort;
 import com.TallerWapo.dominio.interfaces.puertos.baseDatos.BaseDatosSQLPort;
-import com.TallerWapo.dominio.contexto.ContextoGeneral;
+import com.TallerWapo.dominio.contexto.Contexto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ public class PuertosUtil {
 
         //Arrancar la base de datos
         baseDatos.iniciar();
-        ContextoGeneral.baseDatosSQL = baseDatos;
+        Contexto.baseDatosSQL = baseDatos;
 
         logger.info("BaseDatos local arrancada");
     }
@@ -31,7 +31,7 @@ public class PuertosUtil {
         apiRest.iniciar();
         apiRest.iniciarControllers();
 
-        ContextoGeneral.apiRest = apiRest;
+        Contexto.apiRest = apiRest;
 
         logger.info("Servidor ApiRest iniciado en puerto {}", serverPort);
     }

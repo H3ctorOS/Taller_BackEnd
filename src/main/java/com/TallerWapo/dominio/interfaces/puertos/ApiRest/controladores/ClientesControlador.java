@@ -14,8 +14,6 @@ import java.util.List;
 
 public abstract class ClientesControlador implements ControladoresBase {
     static final Logger logger = LoggerFactory.getLogger(ClientesControlador.class);
-    static final ClientesFachadaConsultasImpl fachadaConsultas = new ClientesFachadaConsultasImpl();
-    static final ClientesFachadaEjecutarImpl fachadaEjecutar  = new ClientesFachadaEjecutarImpl();
 
     //RUTAS
     protected static final String rutaBase = "/api/clientes";
@@ -29,7 +27,7 @@ public abstract class ClientesControlador implements ControladoresBase {
     protected static RespuestaHttpBO buscarTodos() {
         logger.info("Buscando todos los clientes");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
-
+        ClientesFachadaConsultasImpl fachadaConsultas = new ClientesFachadaConsultasImpl();
         List<ClienteBO> clientes = fachadaConsultas.buscarTodosLosClientes();
 
         if (clientes != null && !clientes.isEmpty()) {
@@ -51,7 +49,7 @@ public abstract class ClientesControlador implements ControladoresBase {
     protected static RespuestaHttpBO buscarClientePorDni(String dni) {
         logger.info("Buscando cliente por dni");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
-
+        ClientesFachadaConsultasImpl fachadaConsultas = new ClientesFachadaConsultasImpl();
         ClienteBO cliente = fachadaConsultas.buscarClienteDni(dni);
 
         if (cliente != null) {
@@ -73,6 +71,7 @@ public abstract class ClientesControlador implements ControladoresBase {
     protected static RespuestaHttpBO crearCliente(ClienteBO cliente){
         logger.info("Creando vehiculo");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
+        ClientesFachadaEjecutarImpl fachadaEjecutar  = new ClientesFachadaEjecutarImpl();
 
         try {
             fachadaEjecutar.crearNuevoCliente(cliente);
@@ -93,6 +92,7 @@ public abstract class ClientesControlador implements ControladoresBase {
     protected static RespuestaHttpBO actualizarCliente(ClienteBO cliente){
         logger.info("Actualizando vehiculo");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
+        ClientesFachadaEjecutarImpl fachadaEjecutar  = new ClientesFachadaEjecutarImpl();
 
         try {
             fachadaEjecutar.actualizarCliente(cliente);
@@ -113,6 +113,7 @@ public abstract class ClientesControlador implements ControladoresBase {
     protected static RespuestaHttpBO eliminarCliente(String dni){
         logger.info("Eliminando cliente");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
+        ClientesFachadaEjecutarImpl fachadaEjecutar  = new ClientesFachadaEjecutarImpl();
 
         try {
             fachadaEjecutar.eliminarCliente(dni);

@@ -1,7 +1,8 @@
 package com.TallerWapo.dominio.fachadas.base;
 
 
-import com.TallerWapo.dominio.contexto.ContextoGeneral;
+import com.TallerWapo.dominio.contexto.Contexto;
+import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.fachadas.FachadasBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,27 +16,27 @@ public class FachadaEjecutarBase implements FachadasBase {
     static final Logger logger = LoggerFactory.getLogger(FachadaEjecutarBase.class);
 
 
-    protected <T> T ejecutarEnTransaccion(Function<Connection, T> accion) {
-        Connection conexion = ContextoGeneral.baseDatosSQL.getNuevaConexionEscritura();
+    protected <T> T ejecutarEnTransaccion(Function<Sesion, T> accion) {
+        Sesion sesion = new Sesion(Contexto.baseDatosSQL.getNuevaConexionEscritura());
 
         try {
-            T resultado = accion.apply(conexion);
-            conexion.commit();
+            T resultado = accion.apply(sesion);
+            sesion.getConexion().commit();
             return resultado;
 
         } catch (Exception e) {
             logger.error("Error en transacción", e);
-            rollbackSilencioso(conexion);
+            rollbackSilencioso(sesion.getConexion());
             throw new RuntimeException("Error en transacción", e);
 
         } finally {
-            ContextoGeneral.baseDatosSQL.finalizarConexion(conexion);
+            Contexto.baseDatosSQL.finalizarConexion(sesion.getConexion());
         }
     }
 
-    protected void ejecutarEnTransaccion(Consumer<Connection> accion) {
-        ejecutarEnTransaccion(conexion -> {
-            accion.accept(conexion);
+    protected void ejecutarEnTransaccion(Consumer<Sesion> accion) {
+        ejecutarEnTransaccion(sesion -> {
+            accion.accept(sesion);
             return null;
         });
     }

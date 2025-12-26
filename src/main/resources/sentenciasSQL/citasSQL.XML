@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <query id="CITAS_SELECT_ALL"><![CDATA[
+        SELECT * FROM CITAS
+    ]]></query>
+
+    <query id="CITAS_SELECT_VEHICULOID"><![CDATA[
+        SELECT * FROM CITAS WHERE vehiculo_id = ?
+    ]]></query>
+
+    <query id="CITAS_SELECT_CLIENTEID"><![CDATA[
+        SELECT * FROM CITAS WHERE cliente_id = ?
+    ]]></query>
+
+    <query id="CITAS_INSERT"><![CDATA[
+        INSERT INTO CITAS (vehiculo_id, cliente_id, reparacion_id, fecha, cod_estado)
+        VALUES (?, ?, ?, ?, ?)
+    ]]></query>
+
+    <query id="CITAS_UPDATE"><![CDATA[
+        UPDATE CITAS SET vehiculo_id = ?, cliente_id = ?, reparacion_id = ?, concepto = ?, fecha = ?, cod_estado = ?
+        WHERE id = ?
+    ]]></query>
+
+    <query id="CITAS_DELETE"><![CDATA[
+        DELETE FROM CITAS WHERE id = ?
+    ]]></query>
+</queries>

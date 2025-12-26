@@ -2,7 +2,7 @@ package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
-import com.TallerWapo.dominio.contexto.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.FactoriaDaos;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.servicios.VehiculosService;
 import org.slf4j.Logger;
@@ -17,9 +17,9 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
 
         VehiculosService.validarVehiculo(vehiculo);
 
-        ejecutarEnTransaccion(conexion ->{
+        ejecutarEnTransaccion(sesion ->{
             try {
-                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(conexion);
+                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(sesion);
                 vehiculo.setCodidoEstado("ACTI");
                 vehiculoDao.guardarNuevo(vehiculo);
 
@@ -37,9 +37,9 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
 
         VehiculosService.validarVehiculo(vehiculo);
 
-        ejecutarEnTransaccion(conexion ->{
+        ejecutarEnTransaccion(sesion ->{
             try {
-                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(conexion);
+                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(sesion);
                 vehiculoDao.actualizar(vehiculo);
 
             } catch (Exception e) {
@@ -53,9 +53,9 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
     public void eliminarVehiculo(String matricula) {
         logger.info("Eliminando vehiculo: {}", matricula);
 
-        ejecutarEnTransaccion(conexion ->{
+        ejecutarEnTransaccion(sesion ->{
             try {
-                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(conexion);
+                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(sesion);
                 VehiculoBO vehiculo = vehiculoDao.buscarPorMatricula(matricula);
 
                 if(vehiculo == null){
@@ -75,9 +75,9 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
     public void eliminarVehiculo(VehiculoBO vehiculo) {
         logger.info("Eliminando vehiculo: {}", vehiculo.toString());
 
-        ejecutarEnTransaccion(conexion ->{
+        ejecutarEnTransaccion(sesion ->{
             try {
-                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(conexion);
+                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(sesion);
                 vehiculoDao.borrar(vehiculo);
 
             } catch (Exception e) {

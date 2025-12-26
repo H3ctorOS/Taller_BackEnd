@@ -14,7 +14,7 @@
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             dni TEXT NOT NULL,
             nombre TEXT NOT NULL,
-            cod_estado INTEGER NOT NULL,
+            cod_estado TEXT NOT NULL,
 
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
@@ -28,7 +28,7 @@
             direccion TEXT,
             telefono INTEGER,
             email TEXT,
-            cod_estado INTEGER NOT NULL,
+            cod_estado TEXT NOT NULL,
 
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
@@ -53,20 +53,21 @@
             cliente_id INTEGER NOT NULL,
             fechaAlta DATE NOT NULL,
             fechaBaja DATE,
-            cod_estado INTEGER NOT NULL,
+            cod_estado TEXT NOT NULL,
 
             FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
             FOREIGN KEY (cliente_id) REFERENCES clientes(id),
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
 
-    CREATE TABLE IF NOT EXISTS citas (
+    CREATE TABLE IF NOT EXISTS CITAS (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             vehiculo_id INTEGER NOT NULL,
             cliente_id INTEGER NOT NULL,
             reparacion_id INTEGER,
+            concepto TEXT NOT NULL,
             fecha DATE NOT NULL,
-            cod_estado INTEGER NOT NULL,
+            cod_estado TEXT NOT NULL,
 
             FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
             FOREIGN KEY (cliente_id) REFERENCES clientes(id),
@@ -74,9 +75,9 @@
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
 
-    CREATE TABLE IF NOT EXISTS estados (
+    CREATE TABLE IF NOT EXISTS ESTADOS (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            codigo INTEGER NOT NULL,
+            codigo TEXT NOT NULL,
             descripcion TEXT NOT NULL
     );
 

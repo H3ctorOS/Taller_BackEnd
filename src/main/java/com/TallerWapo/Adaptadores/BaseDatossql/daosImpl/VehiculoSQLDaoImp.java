@@ -1,8 +1,9 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
+import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
-import com.TallerWapo.dominio.interfaces.base.DaoSQLBase;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
@@ -18,8 +19,8 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
     private final String VEHICULOS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_UPDATE");
     private final String VEHICULOS_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "VEHICULOS_DELETE");
 
-    public VehiculoSQLDaoImp(Connection conexion) {
-        super(conexion);
+    public VehiculoSQLDaoImp(Sesion sesion) {
+        super(sesion);
     }
 
     @Override

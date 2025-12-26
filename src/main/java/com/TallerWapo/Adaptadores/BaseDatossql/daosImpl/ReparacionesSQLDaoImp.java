@@ -1,9 +1,10 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
+import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
 import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.Daos.ReparacionesDao;
-import com.TallerWapo.dominio.interfaces.base.DaoSQLBase;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
@@ -18,6 +19,10 @@ public class ReparacionesSQLDaoImp extends DaoSQLBase implements ReparacionesDao
     private final String REPARACIONES_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "REPARACIONES_INSERT");
     private final String REPARACIONES_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "REPARACIONES_UPDATE");
     private final String REPARACIONES_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "REPARACIONES_DELETE");
+
+    public ReparacionesSQLDaoImp(Sesion sesion) {
+        super(sesion);
+    }
 
     @Override
     public List<ReparacionBO> buscarTodas() throws Exception {

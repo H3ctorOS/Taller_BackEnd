@@ -1,7 +1,7 @@
 package com.TallerWapo.dominio.fachadas.negocio.clientes;
 
 import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.contexto.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.FactoriaDaos;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.servicios.ClientesService;
@@ -16,9 +16,10 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
         logger.info("Creando nuevo cliente: {}", cliente.toString());
 
         ClientesService.validarCliente(cliente);
-        ejecutarEnTransaccion(conexion -> {
+
+        ejecutarEnTransaccion(sesion -> {
             try {
-                ClientesDao clientesDao = FactoriaDaos.getClienteDao(conexion);
+                ClientesDao clientesDao = FactoriaDaos.getClienteDao(sesion);
                 cliente.setEstado("ACTI");
                 clientesDao.guardarNuevo(cliente);
 
@@ -35,9 +36,9 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
         logger.info("Actualizando cliente: {}", cliente.toString());
 
         ClientesService.validarCliente(cliente);
-        ejecutarEnTransaccion(conexion -> {
+        ejecutarEnTransaccion(sesion -> {
             try {
-                ClientesDao clientesDao = FactoriaDaos.getClienteDao(conexion);
+                ClientesDao clientesDao = FactoriaDaos.getClienteDao(sesion);
                 clientesDao.actualizar(cliente);
 
             } catch (Exception e) {
@@ -51,9 +52,9 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
     public void eliminarCliente(String dni) {
         logger.info("Eliminando cliente: {}", dni);
 
-        ejecutarEnTransaccion(conexion -> {
+        ejecutarEnTransaccion(sesion -> {
             try {
-                ClientesDao clientesDao = FactoriaDaos.getClienteDao(conexion);
+                ClientesDao clientesDao = FactoriaDaos.getClienteDao(sesion);
                 ClienteBO cliente = clientesDao.buscarPorDni(dni);
 
                 if(cliente == null){

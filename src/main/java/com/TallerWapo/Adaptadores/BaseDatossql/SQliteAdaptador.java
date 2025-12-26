@@ -25,7 +25,6 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
     private String nombreAdaptador = "Adaptador base datos SQLite";
 
 
-
     @Override
     public void setNombreAdaptador(String nombre) {
         nombreAdaptador = nombre;
@@ -137,7 +136,6 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
     }
 
 
-
     private static void crearEsquemaBaseDatos(Connection conexion) throws IOException, SQLException {
         logger.info("Creando el esquema de la base de datos");
 
@@ -155,5 +153,4 @@ public class SQliteAdaptador implements BaseDatosSQLPort {
             throw e;
         }
     }
-
 }
