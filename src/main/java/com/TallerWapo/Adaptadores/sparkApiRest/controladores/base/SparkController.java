@@ -1,4 +1,4 @@
-package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
+package com.TallerWapo.Adaptadores.sparkApiRest.controladores.base;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

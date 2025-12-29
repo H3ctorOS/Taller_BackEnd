@@ -6,6 +6,4 @@ public interface ApiRestPort extends PuertosBase {
     void setPuerto(int puerto);
     int getPuerto();
 
-    void iniciarControllers();
-
 }

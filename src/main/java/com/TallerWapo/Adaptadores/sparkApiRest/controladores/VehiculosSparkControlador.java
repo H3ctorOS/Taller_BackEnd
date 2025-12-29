@@ -1,6 +1,7 @@
 package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 
+import com.TallerWapo.Adaptadores.sparkApiRest.controladores.base.SparkController;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.VehiculosControlador;
 import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
@@ -12,7 +13,7 @@ import static spark.Spark.*;
 
 
 
-public class VehiculosSparkControlador extends VehiculosControlador implements SparkController{
+public class VehiculosSparkControlador extends VehiculosControlador implements SparkController {
     static final Logger logger = LoggerFactory.getLogger(VehiculosSparkControlador.class);
 
     private VehiculosSparkControlador() {

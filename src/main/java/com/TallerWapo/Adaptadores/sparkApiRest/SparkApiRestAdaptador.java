@@ -1,5 +1,6 @@
 package com.TallerWapo.Adaptadores.sparkApiRest;
 
+import com.TallerWapo.Adaptadores.sparkApiRest.controladores.CitasSparkControlador;
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.ClientesSparkControlador;
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.VehiculosSparkControlador;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.ApiRestPort;
@@ -34,13 +35,13 @@ public class SparkApiRestAdaptador implements ApiRestPort  {
     public boolean iniciar() {
         //seter el puertro del SPARK, estatico
         port(puerto);
-
+        iniciarControladores();
         return true;
     }
 
-    @Override
-    public void iniciarControllers() {
+    private void iniciarControladores() {
         VehiculosSparkControlador.init();
         ClientesSparkControlador.init();
+        CitasSparkControlador.init();
     }
 }

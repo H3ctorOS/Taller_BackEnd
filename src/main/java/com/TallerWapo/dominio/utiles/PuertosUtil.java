@@ -29,8 +29,6 @@ public class PuertosUtil {
 
         //Arrancar
         apiRest.iniciar();
-        apiRest.iniciarControllers();
-
         Contexto.apiRest = apiRest;
 
         logger.info("Servidor ApiRest iniciado en puerto {}", serverPort);

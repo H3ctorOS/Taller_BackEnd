@@ -8,6 +8,7 @@ public class ReparacionBO implements BoBase {
     int uuid;
     int vehiculoUuid;
     int mecanicoUuid;
+    String codigoEstado;
     String concepto;
     Date fechaInicio;
     Date fechaFin;
@@ -33,4 +34,7 @@ public class ReparacionBO implements BoBase {
 
     public Date getFechaFin() {return fechaFin;}
     public void setFechaFin(Date fechaFin) {this.fechaFin = fechaFin;}
+
+    public void setCodigoEstado(String codigoEstado) {this.codigoEstado = codigoEstado;}
+    public String getCodigoEstado() {return codigoEstado;}
 }

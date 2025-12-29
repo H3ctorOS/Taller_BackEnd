@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class CitasFachadaEjecutarImpl extends FachadaEjecutarBase {
     static final Logger logger = LoggerFactory.getLogger(CitasFachadaEjecutarImpl.class);
 
-    public void crearNuevaCita(CitaBO cita) throws Exception {
+    public void guardarNuevaCita(CitaBO cita) throws Exception {
         logger.info("Creando nueva cita: {}", cita.toString());
 
         ejecutarEnTransaccion(sesion ->{
