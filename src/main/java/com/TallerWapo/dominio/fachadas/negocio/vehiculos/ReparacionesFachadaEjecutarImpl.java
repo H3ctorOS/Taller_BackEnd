@@ -3,7 +3,7 @@ package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
-import com.TallerWapo.dominio.factorias.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.ReparacionesDao;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.servicios.ReparacionesService;
@@ -22,7 +22,7 @@ public class ReparacionesFachadaEjecutarImpl extends FachadaEjecutarBase {
             try {
                 ReparacionesService.validarReparacion(sesion,reparacion);
 
-                ReparacionesDao reparacionesDao = FactoriaDaos.getReparacionesDao(sesion);
+                ReparacionesDao reparacionesDao = ContextoDaos.getReparacionesDao(sesion);
                 reparacion.setCodigoEstado("ACTI");
                 reparacionesDao.guardarNueva(reparacion);
 
@@ -41,8 +41,9 @@ public class ReparacionesFachadaEjecutarImpl extends FachadaEjecutarBase {
         VehiculosService.validarVehiculo(vehiculo);
 
         ejecutarEnTransaccion(sesion ->{
+
             try {
-                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(sesion);
+                VehiculosDao vehiculoDao = ContextoDaos.getVehiculoDao(sesion);
                 vehiculoDao.actualizar(vehiculo);
 
             } catch (Exception e) {
@@ -58,7 +59,7 @@ public class ReparacionesFachadaEjecutarImpl extends FachadaEjecutarBase {
 
         ejecutarEnTransaccion(sesion ->{
             try {
-                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(sesion);
+                VehiculosDao vehiculoDao = ContextoDaos.getVehiculoDao(sesion);
                 VehiculoBO vehiculo = vehiculoDao.buscarPorMatricula(matricula);
 
                 if(vehiculo == null){
@@ -80,7 +81,7 @@ public class ReparacionesFachadaEjecutarImpl extends FachadaEjecutarBase {
 
         ejecutarEnTransaccion(sesion ->{
             try {
-                VehiculosDao vehiculoDao = FactoriaDaos.getVehiculoDao(sesion);
+                VehiculosDao vehiculoDao = ContextoDaos.getVehiculoDao(sesion);
                 vehiculoDao.borrar(vehiculo);
 
             } catch (Exception e) {

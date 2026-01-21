@@ -1,7 +1,10 @@
 package com.TallerWapo.dominio.utiles;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.SQliteAdaptador;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -9,8 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Map;
+import java.util.Properties;
 
 public class FicherosUtil {
+
+    static final Logger logger = LoggerFactory.getLogger(FicherosUtil.class);
 
     /**
      * Crea un fichero nuevo o sobrescribe si existe. Opcional: agrega contenido.
@@ -65,4 +72,36 @@ public class FicherosUtil {
             throw new IOException("Error al leer archivo: " + ruta, e);
         }
     }
+
+    /**
+     * Método estático para crear un fichero .properties en una carpeta determinada.
+     * Crea la carpeta si no existe, y el fichero con contenido inicial opcional (Map de claves-valores).
+     * Idempotente: Si fichero existe, sobrescribe si content no null.
+     * @param ruta Ruta de la carpeta (relativa o absoluta, e.g., "config/custom")
+     * @param nombreFichero Nombre del fichero (e.g., "mi-config.properties")
+     * @param contenidoInicial Map<String, String> con claves-valores iniciales (opcional, null para vacío)
+     * @throws IOException si error en creación (e.g., permisos)
+     */
+    public static void createPropertiesFile(String ruta, String nombreFichero, Map<String, String> contenidoInicial) throws IOException {
+        Path dirPath = Paths.get(ruta);
+        Files.createDirectories(dirPath);  // Crea carpeta si no existe (idempotente)
+
+        Path filePath = dirPath.resolve(nombreFichero);  // Ruta completa: ruta/fileName
+        logger.info("Creando fichero .properties en: " + filePath.toAbsolutePath());
+
+        try (FileOutputStream fos = new FileOutputStream(filePath.toFile())) {
+            Properties props = new Properties();
+            if (contenidoInicial != null) {
+                props.putAll(contenidoInicial);  // Agrega contenido inicial
+            }
+            props.store(fos, "Fichero .properties creado automáticamente");  // Guarda con comentario
+            logger.info("Fichero .properties creado exitosamente.");
+
+        } catch (IOException e) {
+            logger.info("Error creando fichero .properties", e);
+            throw e;
+        }
+    }
+
+
 }

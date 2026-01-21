@@ -30,6 +30,12 @@ public class Main {
         //Construir estructura de ficheros
         MainUtil.construirStructuraCarpetas();
 
+        //Contruir archivos properties
+        MainUtil.construirFicherosProperties();
+
+        //Setear las properties base iniciales
+        MainUtil.guardarPropertiesBaseIniciales();
+
         //Construir base datos
         SQliteAdaptador.construirBaseDatos();
 

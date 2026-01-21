@@ -2,7 +2,7 @@ package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
 import com.TallerWapo.dominio.BOs.vehiculos.CitaBO;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
-import com.TallerWapo.dominio.factorias.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.CitasDao;
 import com.TallerWapo.dominio.servicios.CitasService;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ public class CitasFachadaEjecutarImpl extends FachadaEjecutarBase {
             try {
                 CitasService.validarCita(sesion,cita);
 
-                CitasDao citasDao = FactoriaDaos.getCitaDao(sesion);
+                CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
                 cita.setCodigoEstado("ACTI");
                 citasDao.guardarNueva(cita);
 
@@ -39,7 +39,7 @@ public class CitasFachadaEjecutarImpl extends FachadaEjecutarBase {
             try {
                 CitasService.validarCita(sesion,cita);
 
-                CitasDao citasDao = FactoriaDaos.getCitaDao(sesion);
+                CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
                 citasDao.actualizar(cita);
 
             } catch (Exception e) {
@@ -55,7 +55,7 @@ public class CitasFachadaEjecutarImpl extends FachadaEjecutarBase {
 
         ejecutarEnTransaccion(sesion ->{
             try {
-                CitasDao citasDao = FactoriaDaos.getCitaDao(sesion);
+                CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
                 citasDao.borrar(cita);
 
             } catch (Exception e) {

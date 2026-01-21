@@ -28,21 +28,21 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
             post(crearVehiculo, (req, res) -> {
                 res.type(tipoJSON);  // Siempre setea JSON
                 logger.info("Creando vehiculo");
+                RespuestaHttpBO respuesta;
+
                 try{
                     //Rescatar objeto
                     VehiculoBO vehiculo = SparkController.JsonToBO(req, VehiculoBO.class);
-
-                    RespuestaHttpBO respuesta = crearVehiculo(vehiculo);
-
-                    //Dar respuesta Ok
+                    respuesta = crearVehiculo(vehiculo);
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 }catch(Exception e){
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
 
+                return gson.toJson(respuesta);
             });
 
             /**
@@ -114,6 +114,26 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
                     return gson.toJson(e.getMessage());
                 }
             });
+
+            /**
+             *  Buscar todos los vehiculos
+             */
+            get(buscarTodos, (req, res) -> {
+                res.type(tipoJSON);
+                logger.info("Buscando todos los vehiculo");
+
+                try {
+                    RespuestaHttpBO respuesta = buscarTodos();
+                    //Dar respuesta Ok y retornar vehiculo encontrado
+                    res.status(respuesta.getStatus());
+                    return gson.toJson(respuesta.getObjeto());
+
+                } catch (Exception e) {
+                    res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
+                    return gson.toJson(e.getMessage());
+                }
+            });
+
 
         });
     }

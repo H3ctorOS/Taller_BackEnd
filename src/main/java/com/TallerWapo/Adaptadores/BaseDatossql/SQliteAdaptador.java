@@ -1,6 +1,8 @@
 package com.TallerWapo.Adaptadores.BaseDatossql;
 
 
+import com.TallerWapo.dominio.contexto.Contexto;
+import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.puertos.baseDatos.BaseDatosSQLPort;
 import com.TallerWapo.dominio.utiles.BaseDatosSqlUtils;
 import com.TallerWapo.dominio.utiles.FicherosUtil;

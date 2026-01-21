@@ -147,6 +147,7 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
         vehiculo.setModelo(rs.getString("modelo"));
         vehiculo.setMarca(rs.getString("marca"));
         vehiculo.setCodidoEstado(rs.getString("cod_estado"));
+        vehiculo.setUuid(rs.getInt("id"));
         return vehiculo;
     }
 

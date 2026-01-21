@@ -2,14 +2,14 @@ package com.TallerWapo.dominio.fachadas.negocio.clientes;
 
 
 import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.factorias.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.fachadas.base.FachadaConsultaBase;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 
 import java.util.List;
 
 public class ClientesFachadaConsultasImpl extends FachadaConsultaBase {
-    private final ClientesDao clientesDao = FactoriaDaos.getClienteDao(SESION);
+    private final ClientesDao clientesDao = ContextoDaos.getClienteDao(SESION);
 
     public ClienteBO buscarClienteDni(String dni) {
         try {

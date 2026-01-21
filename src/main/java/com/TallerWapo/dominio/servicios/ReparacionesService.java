@@ -3,12 +3,12 @@ package com.TallerWapo.dominio.servicios;
 import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.contexto.Sesion;
-import com.TallerWapo.dominio.factorias.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 
 public class ReparacionesService {
     public static void validarReparacion(Sesion sesion, ReparacionBO reparacion) throws Exception {
-        VehiculosDao vehiculosDao = FactoriaDaos.getVehiculoDao(sesion);
+        VehiculosDao vehiculosDao = ContextoDaos.getVehiculoDao(sesion);
 
         //
         if(reparacion.getConcepto() == null || reparacion.getConcepto().isEmpty()){

@@ -5,7 +5,7 @@ import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 public class RespuestaHttpBO {
     private int status = EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo();
     private String mensaje;
-    private Object BoRespuesta;
+    private Object BoRespuesta = null;
     private boolean isOk = false;
 
 

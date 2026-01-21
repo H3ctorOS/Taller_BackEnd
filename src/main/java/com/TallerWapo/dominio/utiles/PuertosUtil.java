@@ -1,5 +1,6 @@
 package com.TallerWapo.dominio.utiles;
 
+import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.ApiRestPort;
 import com.TallerWapo.dominio.interfaces.puertos.baseDatos.BaseDatosSQLPort;
 import com.TallerWapo.dominio.contexto.Contexto;
@@ -16,6 +17,7 @@ public class PuertosUtil {
         //Arrancar la base de datos
         baseDatos.iniciar();
         Contexto.baseDatosSQL = baseDatos;
+        Contexto.SESION_SOLO_LECTURA = new Sesion(Contexto.baseDatosSQL.getConexionLectura());
 
         logger.info("BaseDatos local arrancada");
     }

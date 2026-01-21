@@ -4,15 +4,15 @@ import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
 import com.TallerWapo.dominio.BOs.vehiculos.CitaBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.contexto.Sesion;
-import com.TallerWapo.dominio.factorias.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 
 public class CitasService {
 
     public static void validarCita(Sesion sesion, CitaBO cita) throws Exception {
-        ClientesDao clientesDao = FactoriaDaos.getClienteDao(sesion);
-        VehiculosDao vehiculosDao = FactoriaDaos.getVehiculoDao(sesion);
+        ClientesDao clientesDao = ContextoDaos.getClienteDao(sesion);
+        VehiculosDao vehiculosDao = ContextoDaos.getVehiculoDao(sesion);
 
         //el usuario debe de venir informado
         if(cita == null){

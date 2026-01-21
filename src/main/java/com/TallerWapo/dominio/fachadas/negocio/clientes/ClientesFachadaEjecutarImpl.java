@@ -1,7 +1,7 @@
 package com.TallerWapo.dominio.fachadas.negocio.clientes;
 
 import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.factorias.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.servicios.ClientesService;
@@ -19,12 +19,12 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
 
         ejecutarEnTransaccion(sesion -> {
             try {
-                ClientesDao clientesDao = FactoriaDaos.getClienteDao(sesion);
+                ClientesDao clientesDao = ContextoDaos.getClienteDao(sesion);
                 cliente.setEstado("ACTI");
                 clientesDao.guardarNuevo(cliente);
 
             } catch (Exception e) {
-                throw new RuntimeException("Error interno al crear cliente",e);
+                throw new RuntimeException("Error interno al crear cliente: ",e);
             }
         });
 
@@ -38,7 +38,7 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
         ClientesService.validarCliente(cliente);
         ejecutarEnTransaccion(sesion -> {
             try {
-                ClientesDao clientesDao = FactoriaDaos.getClienteDao(sesion);
+                ClientesDao clientesDao = ContextoDaos.getClienteDao(sesion);
                 clientesDao.actualizar(cliente);
 
             } catch (Exception e) {
@@ -54,7 +54,7 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
 
         ejecutarEnTransaccion(sesion -> {
             try {
-                ClientesDao clientesDao = FactoriaDaos.getClienteDao(sesion);
+                ClientesDao clientesDao = ContextoDaos.getClienteDao(sesion);
                 ClienteBO cliente = clientesDao.buscarPorDni(dni);
 
                 if(cliente == null){

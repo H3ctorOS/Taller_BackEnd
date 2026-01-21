@@ -82,7 +82,7 @@ public abstract class ClientesControlador implements ControladoresBase {
         } catch (Exception e) {
             respuesta.setIsOk(false);
             respuesta.setStatus(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-            respuesta.setMensaje("Error creando cliente" + e.getMessage());
+            respuesta.setMensaje("Error creando cliente: " + e.getMessage());
         }
 
         return respuesta;

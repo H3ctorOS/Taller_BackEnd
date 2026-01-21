@@ -2,8 +2,8 @@
     CREATE TABLE IF NOT EXISTS vehiculos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             matricula TEXT UNIQUE NOT NULL,
-            modelo TEXT NOT NULL,
-            marca TEXT NOT NULL,
+            modelo TEXT,
+            marca TEXT,
             cod_estado TEXT NOT NULL,
 
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)

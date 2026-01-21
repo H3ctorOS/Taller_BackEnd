@@ -10,7 +10,7 @@ import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.interfaces.Daos.ReparacionesDao;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 
-public class FactoriaDaos {
+public class ContextoDaos {
 
     public static VehiculosDao getVehiculoDao(Sesion sesion) {
         return new VehiculoSQLDaoImp(sesion);

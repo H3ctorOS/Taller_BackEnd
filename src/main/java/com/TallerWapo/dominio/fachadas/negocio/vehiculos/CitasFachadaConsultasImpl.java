@@ -5,13 +5,13 @@ import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
 import com.TallerWapo.dominio.BOs.vehiculos.CitaBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.fachadas.base.FachadaConsultaBase;
-import com.TallerWapo.dominio.factorias.FactoriaDaos;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.CitasDao;
 
 import java.util.List;
 
 public class CitasFachadaConsultasImpl extends FachadaConsultaBase {
-    private final CitasDao citasDao = FactoriaDaos.getCitaDao(SESION);
+    private final CitasDao citasDao = ContextoDaos.getCitaDao(SESION);
 
     public List<CitaBO> buscarPorVehiculo(VehiculoBO vehiculo) {
         try {

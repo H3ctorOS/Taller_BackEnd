@@ -32,4 +32,16 @@ public class VehiculoBO implements BoBase {
 
     public  int getUuidPropietario() {return this.uuidPropietario;}
     public void setUuidPropietario(int uuid) {this.uuidPropietario = uuid;}
+
+    @Override
+    public String toString() {
+        return "VehiculoBO{" +
+                "uuid=" + uuid +
+                ", uuidPropietario=" + uuidPropietario +
+                ", matricula='" + matricula + '\'' +
+                ", marca='" + marca + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", codigoEstado='" + codidoEstado + '\'' +
+                '}';
+    }
 }
