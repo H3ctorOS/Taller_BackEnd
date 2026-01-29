@@ -69,7 +69,7 @@ public abstract class ClientesControlador implements ControladoresBase {
 
 
     protected static RespuestaHttpBO crearCliente(ClienteBO cliente){
-        logger.info("Creando vehiculo");
+        logger.info("Creando cliente");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
         ClientesFachadaEjecutarImpl fachadaEjecutar  = new ClientesFachadaEjecutarImpl();
 

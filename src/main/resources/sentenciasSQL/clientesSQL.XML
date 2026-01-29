@@ -8,12 +8,16 @@
         SELECT * FROM CLIENTES WHERE DNI = ?
     ]]></query>
 
-    <query id="CLIENTES_SELECT_DNI"><![CDATA[
+    <query id="CLIENTES_SELECT_NOMBRE"><![CDATA[
+        SELECT * FROM CLIENTES WHERE nombre = ?
+    ]]></query>
+
+    <query id="CLIENTES_SELECT_id"><![CDATA[
         SELECT * FROM CLIENTES WHERE id = ?
     ]]></query>
 
     <query id="CLIENTES_INSERT"><![CDATA[
-        INSERT INTO CLIENTES (dni, nombre, apellidos, direccion,telefono,email,cod_estado),
+        INSERT INTO CLIENTES (dni, nombre, apellidos, direccion,telefono,email,cod_estado)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     ]]></query>
 

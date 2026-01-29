@@ -15,7 +15,7 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
 
     private final String CLIENTES_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_ALL");
     private final String CLIENTES_SELECT_DNI = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_DNI");
-    private final String CLIENTES_SELECT_ID = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_ID");
+    private final String CLIENTES_SELECT_NOMBRE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_NOMBRE");
     private final String CLIENTES_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_INSERT");
     private final String CLIENTES_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_UPDATE");
     private final String CLIENTES_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_DELETE");
@@ -64,6 +64,22 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
     }
 
     @Override
+    public List<ClienteBO> buscarPorNombre(String nombre) throws Exception {
+        List<ClienteBO> list = new ArrayList<>();
+
+        PreparedStatement ps = conexion.prepareStatement(CLIENTES_SELECT_NOMBRE);
+
+        ps.setString(1, nombre);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            list.add(mapearCliente(rs));
+        }
+
+        return list;
+    }
+
+    @Override
     public ClienteBO buscarPorId(int id) throws Exception {
         List<ClienteBO> list = new ArrayList<>();
 
@@ -89,16 +105,11 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
 
     @Override
     public boolean guardarNuevo(ClienteBO cliente) throws Exception {
-
         PreparedStatement ps = conexion.prepareStatement(CLIENTES_INSERT);
 
         setearCliente(ps, cliente);
-        ps.execute();
 
-        //TODO controlar que se inserta adecuadamente
-        if (false) {
-            throw new SQLException("No se pudo insertar el cliente");
-        }
+        ps.execute();
 
         return true;
     }
@@ -151,7 +162,7 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
         cliente.setDireccion(rs.getString("direccion"));
         cliente.setTelefono(rs.getInt("telefono"));
         cliente.setEmail(rs.getString("email"));
-        cliente.setEstado(rs.getString("estado"));
+        cliente.setEstado(rs.getString("cod_estado"));
 
         return cliente;
     }

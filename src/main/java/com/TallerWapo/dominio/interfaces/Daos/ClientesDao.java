@@ -8,6 +8,7 @@ public interface ClientesDao {
 
     List<ClienteBO> buscarTodos() throws Exception;
     ClienteBO buscarPorDni(String matricula) throws Exception;
+    List<ClienteBO> buscarPorNombre(String nombre) throws Exception;
     ClienteBO buscarPorId(int id) throws Exception;
     boolean guardarNuevo(ClienteBO vehiculo) throws Exception;
     boolean actualizar(ClienteBO vehiculo) throws Exception;

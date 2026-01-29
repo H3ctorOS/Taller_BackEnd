@@ -27,21 +27,22 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
             post(crearCliente, (req, res) -> {
                 res.type(tipoJSON);  // Siempre setea JSON
                 logger.info("Creando cliente");
+                RespuestaHttpBO respuesta;
+
                 try{
                     //Rescatar objeto
                     ClienteBO cliente = SparkController.JsonToBO(req, ClienteBO.class);
-
-                    RespuestaHttpBO respuesta = crearCliente(cliente);
-
+                    respuesta = crearCliente(cliente);
                     //Dar respuesta Ok
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 }catch(Exception e){
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
 
+                return gson.toJson(respuesta);
             });
 
             /**
@@ -50,22 +51,22 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
             post(actualizarCliente, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Actualizando cliente");
+                RespuestaHttpBO respuesta;
 
                 try {
                     //rescatar json
                     ClienteBO cliente = SparkController.JsonToBO(req, ClienteBO.class);
-
-                    RespuestaHttpBO respuesta = actualizarCliente(cliente);
-
+                    respuesta = actualizarCliente(cliente);
                     //Dar respuesta Ok
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
 
+                return gson.toJson(respuesta);
             });
 
 
@@ -75,20 +76,21 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
             post(eliminarCliente, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Eliminando cliente");
+                RespuestaHttpBO respuesta;
 
                 try {
                     String dni = req.queryParams("dni");  // Rescata el parámetro de query
-
-                    RespuestaHttpBO respuesta = eliminarCliente(dni);
-
+                    respuesta = eliminarCliente(dni);
                     //Dar respuesta Ok
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
 
@@ -98,20 +100,21 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
             get(buscarClienteDni, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando cliente");
+                RespuestaHttpBO respuesta;
 
                 try {
                     String dni = req.queryParams("dni");  // Rescata el parámetro de query
-
-                    RespuestaHttpBO respuesta = buscarClientePorDni(dni);
-
+                    respuesta = buscarClientePorDni(dni);
                     //Dar respuesta Ok y retornar vehiculo encontrado
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getObjeto());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
             /**
@@ -120,19 +123,20 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
             get(buscarTodosLosClientes, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando todos los clientes");
+                RespuestaHttpBO respuesta;
 
                 try {
-
-                    RespuestaHttpBO respuesta = buscarTodos();
-
+                    respuesta = buscarTodos();
                     //Dar respuesta Ok y retornar vehiculo encontrado
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getObjeto());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
         });
