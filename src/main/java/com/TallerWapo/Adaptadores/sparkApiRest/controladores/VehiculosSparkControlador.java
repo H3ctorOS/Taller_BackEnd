@@ -2,6 +2,7 @@ package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.base.SparkController;
+import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.VehiculosControlador;
 import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
@@ -28,6 +29,8 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
             post(crearVehiculo, (req, res) -> {
                 res.type(tipoJSON);  // Siempre setea JSON
                 logger.info("Creando vehiculo");
+                logger.info("Request:" + req.body());
+
                 RespuestaHttpBO respuesta;
 
                 try{
@@ -115,23 +118,52 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
                 }
             });
 
+
+            /**
+             *  Buscar vehiculos segun el cliente
+             */
+            get(buscarVehiculosCliente, (req, res) -> {
+                logger.info("Get recibido: " + req.toString());
+
+                res.type(tipoJSON);
+                RespuestaHttpBO respuesta;
+                int uuidCliente = Integer.parseInt(req.queryParams("clienteUuid"));  // Rescata el parámetro de query
+
+                logger.info("Buscando vehiculo del cliente con uuid: " + uuidCliente);
+                try {
+                    respuesta = buscarPorCliente(uuidCliente);
+                    //Dar respuesta Ok
+                    res.status(respuesta.getStatus());
+
+                } catch (Exception e) {
+                    res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
+                }
+
+                return gson.toJson(respuesta);
+            });
+
             /**
              *  Buscar todos los vehiculos
              */
             get(buscarTodos, (req, res) -> {
                 res.type(tipoJSON);
+                RespuestaHttpBO respuesta;
                 logger.info("Buscando todos los vehiculo");
 
                 try {
-                    RespuestaHttpBO respuesta = buscarTodos();
+                    respuesta = buscarTodos();
                     //Dar respuesta Ok y retornar vehiculo encontrado
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getObjeto());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
 

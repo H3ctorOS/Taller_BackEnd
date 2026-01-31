@@ -23,6 +23,7 @@ public abstract class VehiculosControlador implements ControladoresBase {
     protected static final String actualizarVehiculo = "/actualizarVehiculo";
     protected static  final String eliminarVehiculo = "/eliminarVehiculo";
     protected static  final String buscarVehiculoMatricula = "/buscarVehiculoPorMatricula";
+    protected static  final String buscarVehiculosCliente = "/buscarVehiculosCliente";
     protected static  final String buscarTodos = "/buscarTodosLosVehiculos";
 
 
@@ -46,6 +47,30 @@ public abstract class VehiculosControlador implements ControladoresBase {
 
         return respuesta;
     }
+
+    protected static RespuestaHttpBO buscarPorCliente(int clienteUuid) {
+        logger.info("Buscando todos los vehiculos del cliente uuid:" + clienteUuid);
+        RespuestaHttpBO respuesta = new RespuestaHttpBO();
+
+        List<VehiculoBO> listaVehiculos = vehiculosFachadaConsultas.buscarVehiculosPorCliente(clienteUuid);
+
+        if (listaVehiculos != null) {
+            respuesta.setObjeto(listaVehiculos);
+            respuesta.setIsOk(true);
+            respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
+            respuesta.setMensaje("Encontrados " +listaVehiculos.size() + " vehiculos");
+
+        }else {
+            respuesta.setObjeto(null);
+            respuesta.setIsOk(false);
+            respuesta.setStatus(EstadoRespuestaHTTP.NO_CONTENT.getCodigo());
+            respuesta.setMensaje("Vehiculos no encontrado");
+        }
+
+        return respuesta;
+    }
+
+
 
     protected static RespuestaHttpBO buscarTodos() {
         logger.info("Buscando todos los vehiculos");

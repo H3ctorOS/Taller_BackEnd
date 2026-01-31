@@ -77,7 +77,7 @@
 
     CREATE TABLE IF NOT EXISTS ESTADOS (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            codigo TEXT NOT NULL,
+            codigo TEXT NOT NULL UNIQUE,
             descripcion TEXT NOT NULL
     );
 

@@ -12,15 +12,45 @@
         SELECT * FROM VEHICULOS WHERE id = ?
     ]]></query>
 
+    <query id="VEHICULOS_SELECT_CLIENTE"><![CDATA[
+        SELECT v.*
+        FROM vehiculos v
+        INNER JOIN propietarios p ON v.id = p.vehiculo_id
+        WHERE p.cliente_id = ?
+    ]]></query>
+
+
+
+
+
     <query id="VEHICULOS_INSERT"><![CDATA[
         INSERT INTO vehiculos (matricula, modelo, marca, cod_estado) VALUES (?, ?, ?, ?)
     ]]></query>
+
+
+    <query id="VEHICULOS_PROPIETARIO_INSERT"><![CDATA[
+        INSERT INTO propietarios (
+            vehiculo_id,
+            cliente_id,
+            fechaAlta,
+            fechaBaja,
+            cod_estado
+        ) VALUES (
+            ?, ?, DATE('now'), NULL, ?
+        )
+    ]]></query>
+
+
+
 
     <query id="VEHICULOS_UPDATE"><![CDATA[
         UPDATE vehiculos SET marca = ?, modelo = ?, matricula = ? WHERE id = ?
     ]]></query>
 
+
+
     <query id="VEHICULOS_DELETE"><![CDATA[
         DELETE FROM vehiculos WHERE id = ?
     ]]></query>
+
 </queries>

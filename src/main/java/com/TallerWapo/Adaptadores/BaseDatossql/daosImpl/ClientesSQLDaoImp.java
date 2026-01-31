@@ -15,6 +15,7 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
 
     private final String CLIENTES_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_ALL");
     private final String CLIENTES_SELECT_DNI = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_DNI");
+    private final String CLIENTES_SELECT_id = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_id");
     private final String CLIENTES_SELECT_NOMBRE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_SELECT_NOMBRE");
     private final String CLIENTES_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_INSERT");
     private final String CLIENTES_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "CLIENTES_UPDATE");
@@ -83,7 +84,7 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
     public ClienteBO buscarPorId(int id) throws Exception {
         List<ClienteBO> list = new ArrayList<>();
 
-        PreparedStatement ps = conexion.prepareStatement(CLIENTES_SELECT_DNI);
+        PreparedStatement ps = conexion.prepareStatement(CLIENTES_SELECT_id);
 
         ps.setInt(1,id);
 
@@ -119,6 +120,7 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
 
         PreparedStatement ps = conexion.prepareStatement(CLIENTES_UPDATE);
         setearCliente(ps, cliente);
+        ps.setInt(8, cliente.getUuid());
 
         int filas = ps.executeUpdate();
 

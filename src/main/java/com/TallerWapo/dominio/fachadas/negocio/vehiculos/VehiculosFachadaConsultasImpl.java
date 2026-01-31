@@ -1,11 +1,12 @@
 package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
 
+import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.fachadas.base.FachadaConsultaBase;
-import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.VehiculosControlador;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class VehiculosFachadaConsultasImpl extends FachadaConsultaBase {
     private final VehiculosDao vehiculoDao = ContextoDaos.getVehiculoDao(SESION);
+    private final ClientesDao clientesDao = ContextoDaos.getClienteDao(SESION);
 
     static final Logger logger = LoggerFactory.getLogger(VehiculosFachadaConsultasImpl.class);
     public VehiculoBO buscarVehiculo(String matricula) {
@@ -28,6 +30,26 @@ public class VehiculosFachadaConsultasImpl extends FachadaConsultaBase {
         logger.info("Vehiculo encontrado: {}", vehiculo.toString() );
         return vehiculo;
     }
+
+    public List<VehiculoBO> buscarVehiculosPorCliente(int clienteUuid) {
+        logger.info("Buscando  todos los vehiculos del cliente : {}", clienteUuid);
+
+        List<VehiculoBO> listaVehiculos;
+
+        try {
+            ClienteBO cliente = clientesDao.buscarPorId(clienteUuid);
+
+            listaVehiculos = vehiculoDao.buscarPorCliente(cliente);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        logger.info("Encontrados {} vehiculos", listaVehiculos.size());
+
+        return listaVehiculos;
+    }
+
 
     public List<VehiculoBO> buscarTodosLosVehiculos() {
         logger.info("Buscando  todos los vehiculos");

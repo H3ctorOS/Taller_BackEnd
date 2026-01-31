@@ -1,5 +1,6 @@
 package com.TallerWapo.dominio.BOs.vehiculos;
 
+import com.TallerWapo.dominio.BOs.gestion.EstadoBO;
 import com.TallerWapo.dominio.interfaces.base.BoBase;
 
 public class VehiculoBO implements BoBase {
@@ -9,7 +10,7 @@ public class VehiculoBO implements BoBase {
     private String matricula;
     private String marca;
     private String modelo;
-    private String codidoEstado;
+    private EstadoBO estado;
 
 
     @Override
@@ -27,8 +28,8 @@ public class VehiculoBO implements BoBase {
     public String getModelo() {return this.modelo;}
     public void setModelo(String modelo) {this.modelo = modelo;}
 
-    public String getCodidoEstado() {return this.codidoEstado;}
-    public void setCodidoEstado(String codidoEstado) {this.codidoEstado = codidoEstado;}
+    public EstadoBO getEstado() {return this.estado;}
+    public void setEstado(EstadoBO estado) {this.estado = estado;}
 
     public  int getUuidPropietario() {return this.uuidPropietario;}
     public void setUuidPropietario(int uuid) {this.uuidPropietario = uuid;}
@@ -41,7 +42,6 @@ public class VehiculoBO implements BoBase {
                 ", matricula='" + matricula + '\'' +
                 ", marca='" + marca + '\'' +
                 ", modelo='" + modelo + '\'' +
-                ", codigoEstado='" + codidoEstado + '\'' +
                 '}';
     }
 }

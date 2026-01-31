@@ -15,7 +15,7 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
     public void crearNuevoCliente(ClienteBO cliente) throws Exception {
         logger.info("Creando nuevo cliente: {}", cliente.toString());
 
-        ClientesService.validarCliente(cliente);
+        ClientesService.validarCliente(cliente,false);
 
         ejecutarEnTransaccion(sesion -> {
             try {
@@ -24,7 +24,7 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
                 clientesDao.guardarNuevo(cliente);
 
             } catch (Exception e) {
-                throw new RuntimeException("Error interno al crear cliente: ",e);
+                throw new RuntimeException("Error interno al crear cliente: " + e.getMessage(),e);
             }
         });
 
@@ -35,7 +35,8 @@ public class ClientesFachadaEjecutarImpl extends FachadaEjecutarBase {
     public void actualizarCliente(ClienteBO cliente) throws Exception {
         logger.info("Actualizando cliente: {}", cliente.toString());
 
-        ClientesService.validarCliente(cliente);
+        ClientesService.validarCliente(cliente,true);
+
         ejecutarEnTransaccion(sesion -> {
             try {
                 ClientesDao clientesDao = ContextoDaos.getClienteDao(sesion);

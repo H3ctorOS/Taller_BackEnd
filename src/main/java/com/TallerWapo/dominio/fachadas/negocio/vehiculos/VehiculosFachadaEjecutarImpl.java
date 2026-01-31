@@ -1,5 +1,6 @@
 package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
+import com.TallerWapo.dominio.BOs.gestion.EstadoBO;
 import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
@@ -20,12 +21,20 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
         ejecutarEnTransaccion(sesion ->{
             try {
                 VehiculosDao vehiculoDao = ContextoDaos.getVehiculoDao(sesion);
+                VehiculosService vehiculosService = new VehiculosService(vehiculoDao);
 
-                vehiculo.setCodidoEstado("ACTI");
+                //El estado del nuevo vhiculo es activo
+                vehiculo.setEstado(EstadoBO.fromCodigo("ACTI"));
+
+                //Dar de alta el vehiculo
                 vehiculoDao.guardarNuevo(vehiculo);
 
+                //Crear relacion con el propietario
+                vehiculosService.darAltaPropietario(vehiculo);
+
+
             } catch (Exception e) {
-                throw new RuntimeException("Error interno al crear vehiculo",e);
+                throw new RuntimeException("Error en servidor al crear el nuevo vehiculo",e);
             }
         });
 
