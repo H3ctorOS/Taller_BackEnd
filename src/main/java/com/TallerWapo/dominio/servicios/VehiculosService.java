@@ -70,7 +70,8 @@ public class VehiculosService {
             throw new IllegalArgumentException("El propietario no existe en la base de datos");
         }
 
-        vehiculoDao.altaPropietario(vehiculo, cliente);
+        String observaciones = "Alta por nuevo vehiculo";
+        vehiculoDao.altaPropietario(vehiculo, cliente,observaciones);
 
     }
 

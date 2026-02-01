@@ -139,7 +139,7 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
 
         PreparedStatement ps = conexion.prepareStatement(VEHICULOS_UPDATE);
         setearVehiculo(ps, vehiculo);
-        ps.setInt(5 , vehiculo.getUuid());
+        ps.setInt(6 , vehiculo.getUuid());
 
         int filas = ps.executeUpdate();
 
@@ -175,12 +175,13 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
     }
 
     @Override
-    public boolean altaPropietario(VehiculoBO vehiculo, ClienteBO cliente) throws Exception {
+    public boolean altaPropietario(VehiculoBO vehiculo, ClienteBO cliente, String observaciones) throws Exception {
         PreparedStatement ps = conexion.prepareStatement(VEHICULOS_PROPIETARIO_INSERT);
 
         ps.setInt(1, vehiculo.getUuid());          // vehiculo_id
         ps.setInt(2, cliente.getUuid());           // cliente_id
-        ps.setString(3, ""); // cod_estado
+        ps.setString(3, "");                    // cod_estado
+        ps.setString(4, observaciones);            // observacioenes
 
         int filas = ps.executeUpdate();
 
@@ -203,6 +204,7 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
         vehiculo.setMarca(rs.getString("marca"));
         vehiculo.setEstado(EstadoBO.fromCodigo(rs.getString("cod_estado")));
         vehiculo.setUuid(rs.getInt("id"));
+        vehiculo.setObservaciones(rs.getString("observaciones"));
         return vehiculo;
     }
 
@@ -211,5 +213,6 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
         ps.setString(2, vehiculo.getModelo());
         ps.setString(3, vehiculo.getMarca());
         ps.setString(4, vehiculo.getEstado().getCodigo());
+        ps.setString(5, vehiculo.getObservaciones());
     }
 }

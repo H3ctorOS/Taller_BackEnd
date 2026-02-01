@@ -120,7 +120,7 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
 
         PreparedStatement ps = conexion.prepareStatement(CLIENTES_UPDATE);
         setearCliente(ps, cliente);
-        ps.setInt(8, cliente.getUuid());
+        ps.setInt(9, cliente.getUuid());
 
         int filas = ps.executeUpdate();
 
@@ -165,6 +165,7 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
         cliente.setTelefono(rs.getInt("telefono"));
         cliente.setEmail(rs.getString("email"));
         cliente.setEstado(rs.getString("cod_estado"));
+        cliente.setObservaciones(rs.getString("observaciones"));
 
         return cliente;
     }
@@ -177,5 +178,6 @@ public class ClientesSQLDaoImp extends DaoSQLBase implements ClientesDao {
         ps.setInt(5, cliente.getTelefono());
         ps.setString(6, cliente.getEmail());
         ps.setString(7, cliente.getEstado());
+        ps.setString(8, cliente.getObservaciones());
     }
 }

@@ -15,5 +15,5 @@ public interface VehiculosDao {
     boolean actualizar(VehiculoBO vehiculo) throws Exception;
     boolean borrar(VehiculoBO vehiculo) throws Exception;
 
-    boolean altaPropietario(VehiculoBO vehiculo, ClienteBO cliente) throws Exception;
+    boolean altaPropietario(VehiculoBO vehiculo, ClienteBO cliente,String observaciones) throws Exception;
 }

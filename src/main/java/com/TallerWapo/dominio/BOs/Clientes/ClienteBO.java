@@ -11,6 +11,7 @@ public class ClienteBO implements BoBase {
     int telefono;
     String email;
     String estado;
+    String observaciones;
 
     @Override
     public void setUuid(int uuid) {this.uuid = uuid;}
@@ -38,4 +39,8 @@ public class ClienteBO implements BoBase {
 
     public String getEstado() {return estado;}
     public void setEstado(String estado) {this.estado = estado;}
+
+
+    public String getObservaciones() {return observaciones;}
+    public void setObservaciones(String observaciones) {this.observaciones = observaciones;}
 }

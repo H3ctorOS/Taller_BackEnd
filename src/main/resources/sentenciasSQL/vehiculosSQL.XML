@@ -23,7 +23,7 @@
 
 
     <query id="VEHICULOS_INSERT"><![CDATA[
-        INSERT INTO vehiculos (matricula, modelo, marca, cod_estado) VALUES (?, ?, ?, ?)
+        INSERT INTO vehiculos (matricula, modelo, marca, cod_estado, observaciones) VALUES (?, ?, ?, ?, ?)
     ]]></query>
 
 
@@ -33,9 +33,10 @@
             cliente_id,
             fechaAlta,
             fechaBaja,
-            cod_estado
+            cod_estado,
+            observaciones
         ) VALUES (
-            ?, ?, DATE('now'), NULL, ?
+            ?, ?, DATE('now'), NULL, ?, ?
         )
     ]]></query>
 
@@ -47,7 +48,8 @@
         SET matricula = ?,
             modelo = ?,
             marca = ?,
-            cod_estado = ?
+            cod_estado = ?,
+            observaciones = ?
         WHERE id = ?
     ]]></query>
 

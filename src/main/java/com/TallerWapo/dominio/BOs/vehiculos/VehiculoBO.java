@@ -11,6 +11,7 @@ public class VehiculoBO implements BoBase {
     private String marca;
     private String modelo;
     private EstadoBO estado;
+    private String observaciones;
 
 
     @Override
@@ -33,6 +34,9 @@ public class VehiculoBO implements BoBase {
 
     public  int getUuidPropietario() {return this.uuidPropietario;}
     public void setUuidPropietario(int uuid) {this.uuidPropietario = uuid;}
+
+    public String getObservaciones() {return this.observaciones;}
+    public void setObservaciones(String observaciones) {this.observaciones = observaciones;}
 
     @Override
     public String toString() {
