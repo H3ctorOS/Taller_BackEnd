@@ -139,6 +139,7 @@ public class VehiculoSQLDaoImp extends DaoSQLBase implements VehiculosDao {
 
         PreparedStatement ps = conexion.prepareStatement(VEHICULOS_UPDATE);
         setearVehiculo(ps, vehiculo);
+        ps.setInt(5 , vehiculo.getUuid());
 
         int filas = ps.executeUpdate();
 

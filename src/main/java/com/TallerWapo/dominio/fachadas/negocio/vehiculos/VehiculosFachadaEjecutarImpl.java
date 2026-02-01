@@ -16,7 +16,7 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
     public void crearNuevoVehiculo(VehiculoBO vehiculo) throws Exception {
         logger.info("Creando nuevo vehiculo: {}", vehiculo.toString());
         
-        VehiculosService.validarVehiculo(vehiculo);
+        VehiculosService.validarVehiculo(vehiculo,false);
 
         ejecutarEnTransaccion(sesion ->{
             try {
@@ -45,7 +45,7 @@ public class VehiculosFachadaEjecutarImpl extends FachadaEjecutarBase {
     public void actualizarVehiculo(VehiculoBO vehiculo) {
         logger.info("Actualizando vehiculo: {}", vehiculo.toString());
 
-        VehiculosService.validarVehiculo(vehiculo);
+        VehiculosService.validarVehiculo(vehiculo,true);
 
         ejecutarEnTransaccion(sesion ->{
 

@@ -22,7 +22,6 @@
 
 
 
-
     <query id="VEHICULOS_INSERT"><![CDATA[
         INSERT INTO vehiculos (matricula, modelo, marca, cod_estado) VALUES (?, ?, ?, ?)
     ]]></query>
@@ -44,7 +43,12 @@
 
 
     <query id="VEHICULOS_UPDATE"><![CDATA[
-        UPDATE vehiculos SET marca = ?, modelo = ?, matricula = ? WHERE id = ?
+        UPDATE vehiculos
+        SET matricula = ?,
+            modelo = ?,
+            marca = ?,
+            cod_estado = ?
+        WHERE id = ?
     ]]></query>
 
 

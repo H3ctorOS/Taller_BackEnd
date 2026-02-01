@@ -54,22 +54,21 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
             post(actualizarVehiculo, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Actualizando vehiculo");
+                RespuestaHttpBO respuesta;
 
                 try {
                     //rescatar json
                     VehiculoBO vehiculo = SparkController.JsonToBO(req, VehiculoBO.class);
-
-                    RespuestaHttpBO respuesta = actualizarVehiculo(vehiculo);
-
-                    //Dar respuesta Ok
+                    respuesta = actualizarVehiculo(vehiculo);
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
 
+                return gson.toJson(respuesta);
             });
 
 
@@ -79,20 +78,20 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
             post(eliminarVehiculo, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Eliminando vehiculo");
+                RespuestaHttpBO respuesta;
 
                 try {
                     String matricula = req.queryParams("matricula");  // Rescata el parámetro de query
-
-                    RespuestaHttpBO respuesta = eliminarVehiculo(matricula);
-
-                    //Dar respuesta Ok
+                    respuesta = eliminarVehiculo(matricula);
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
 
@@ -102,20 +101,20 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
             get(buscarVehiculoMatricula, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando vehiculo");
+                RespuestaHttpBO respuesta;
 
                 try {
                     String matricula = req.queryParams("matricula");  // Rescata el parámetro de query
-
-                    RespuestaHttpBO respuesta = buscarVehiculoPorMatricula(matricula);
-
-                    //Dar respuesta Ok y retornar vehiculo encontrado
+                    respuesta = buscarVehiculoPorMatricula(matricula);
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getObjeto());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
 

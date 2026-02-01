@@ -21,7 +21,7 @@ public class VehiculosService {
     }
 
 
-    public static void validarVehiculo(VehiculoBO vehiculo){
+    public static void validarVehiculo(VehiculoBO vehiculo, Boolean isActializar) {
 
         //La matricula tiene que venir informada
         if (vehiculo.getMatricula() == null || "".equals (vehiculo.getMatricula()) ) {
@@ -36,6 +36,9 @@ public class VehiculosService {
             throw new RuntimeException(e);
         }
         if (vehiculoGemelo != null) {
+            if(isActializar && (vehiculoGemelo.getUuid() == vehiculo.getUuid())){
+                return;
+            }
             throw new IllegalArgumentException("Ya existe otro vehiculo con la misma matricula");
         }
 
