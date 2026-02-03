@@ -10,13 +10,13 @@
 
 
     <query id="CITAS_INSERT"><![CDATA[
-        INSERT INTO CITAS (vehiculo_id, cliente_id, reparacion_id, fecha, cod_estado)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO CITAS (vehiculo_id, concepto, fechaInicio, fechaFinalizada, cod_estado, observaciones)
+        VALUES (?, ?, ?, ?, ?, ?)
     ]]></query>
 
 
     <query id="CITAS_UPDATE"><![CDATA[
-        UPDATE CITAS SET vehiculo_id = ?, concepto = ?, fecha = ?, cod_estado = ?
+        UPDATE CITAS SET vehiculo_id = ?, concepto = ?, fechaInicio = ?,fechaFinalizada = ?, cod_estado = ?, observaciones = ?
         WHERE id = ?
     ]]></query>
 

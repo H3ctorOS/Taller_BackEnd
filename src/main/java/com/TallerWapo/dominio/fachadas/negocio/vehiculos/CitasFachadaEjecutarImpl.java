@@ -17,9 +17,10 @@ public class CitasFachadaEjecutarImpl extends FachadaEjecutarBase {
 
         ejecutarEnTransaccion(sesion ->{
             try {
+                CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
+
                 CitasService.validarCita(sesion,cita);
 
-                CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
                 cita.setCodigoEstado("ACTI");
                 citasDao.guardarNueva(cita);
 

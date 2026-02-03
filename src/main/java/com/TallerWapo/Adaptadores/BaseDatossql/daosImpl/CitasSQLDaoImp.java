@@ -16,7 +16,6 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
     private final String ARCHIVO_SQL = "sentenciasSQL/citasSQL.XML";
 
     private final String CITAS_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_SELECT_ALL");
-    private final String CITAS_SELECT_CLIENTEID = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_SELECT_CLIENTEID");
     private final String CITAS_SELECT_VEHICULOID = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_SELECT_VEHICULOID");
     private final String CITAS_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_INSERT");
     private final String CITAS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_UPDATE");
@@ -59,11 +58,10 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
     public boolean guardarNueva(CitaBO cita) throws Exception {
 
         PreparedStatement ps = conexion.prepareStatement(CITAS_INSERT);
-
         setearCita(ps, cita);
         ps.execute();
 
-        //TODO controlar que se inserta adecuadamente
+
         if (false) {
             throw new SQLException("No se pudo insertar la cita");
         }
@@ -115,17 +113,20 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
         cita.setUuid(rs.getInt("id"));
         cita.setVehiculoUuid(rs.getInt("vehiculo_id"));
         cita.setConcepto(rs.getString("concepto"));
-        cita.setFechaInicio(rs.getDate("fecha"));
+        cita.setFechaInicio(rs.getDate("fechaInicio"));
+        cita.setFechaInicio(rs.getDate("fechaFinalizada"));
         cita.setCodigoEstado(rs.getString("cod_estado"));
+        cita.setObservaciones(rs.getString("observaciones"));
 
         return cita;
     }
 
     private void setearCita(PreparedStatement ps, CitaBO cita) throws SQLException {
         ps.setInt(1, cita.getVehiculoUuid());
-        ps.setString(4, cita.getConcepto());
-        ps.setDate(5, new java.sql.Date(cita.getFechaInicio().getTime()));
-        ps.setString(6, cita.getCodigoEstado());
-        ps.setInt(7, cita.getUuid());
+        ps.setString(2, cita.getConcepto());
+        ps.setDate(3, new java.sql.Date(cita.getFechaInicio().getTime()));
+        ps.setDate(4, new java.sql.Date(cita.getFechaFinalizada().getTime()));
+        ps.setString(5, cita.getCodigoEstado());
+        ps.setString(6, cita.getObservaciones());
     }
 }
