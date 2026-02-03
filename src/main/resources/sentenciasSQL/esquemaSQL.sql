@@ -65,23 +65,20 @@
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
 
-    CREATE TABLE IF NOT EXISTS CITAS (
+    CREATE TABLE IF NOT EXISTS citas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             vehiculo_id INTEGER NOT NULL,
-            cliente_id INTEGER NOT NULL,
-            reparacion_id INTEGER,
             concepto TEXT NOT NULL,
-            fecha DATE NOT NULL,
+            fechaInicio DATE NOT NULL,
+            fechaFinalizada DATE NOT NULL,
             cod_estado TEXT NOT NULL,
             observaciones TEXT,
 
             FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
-            FOREIGN KEY (cliente_id) REFERENCES clientes(id),
-            FOREIGN KEY (reparacion_id) REFERENCES reparaciones(id),
             FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
     );
 
-    CREATE TABLE IF NOT EXISTS ESTADOS (
+    CREATE TABLE IF NOT EXISTS estados (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             codigo TEXT NOT NULL UNIQUE,
             descripcion TEXT NOT NULL

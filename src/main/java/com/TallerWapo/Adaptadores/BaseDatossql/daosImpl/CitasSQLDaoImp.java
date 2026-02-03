@@ -56,21 +56,6 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
     }
 
     @Override
-    public List<CitaBO> buscarPorCliente(ClienteBO cliente) throws Exception {
-        List<CitaBO> list = new ArrayList<>();
-
-        PreparedStatement ps = conexion.prepareStatement(CITAS_SELECT_CLIENTEID);
-        ps.setInt(1, cliente.getUuid());
-
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            list.add(mapearCita(rs));
-        }
-
-        return list;
-    }
-
-    @Override
     public boolean guardarNueva(CitaBO cita) throws Exception {
 
         PreparedStatement ps = conexion.prepareStatement(CITAS_INSERT);
@@ -129,10 +114,8 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
 
         cita.setUuid(rs.getInt("id"));
         cita.setVehiculoUuid(rs.getInt("vehiculo_id"));
-        cita.setClienteUuid(rs.getInt("cliente_id"));
-        cita.setReparacionUuid(rs.getInt("reparacion_id"));
         cita.setConcepto(rs.getString("concepto"));
-        cita.setFecha(rs.getDate("fecha"));
+        cita.setFechaInicio(rs.getDate("fecha"));
         cita.setCodigoEstado(rs.getString("cod_estado"));
 
         return cita;
@@ -140,10 +123,8 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
 
     private void setearCita(PreparedStatement ps, CitaBO cita) throws SQLException {
         ps.setInt(1, cita.getVehiculoUuid());
-        ps.setInt(2, cita.getClienteUuid());
-        ps.setInt(3, cita.getReparacionUuid());
         ps.setString(4, cita.getConcepto());
-        ps.setDate(5, new java.sql.Date(cita.getFecha().getTime()));
+        ps.setDate(5, new java.sql.Date(cita.getFechaInicio().getTime()));
         ps.setString(6, cita.getCodigoEstado());
         ps.setInt(7, cita.getUuid());
     }

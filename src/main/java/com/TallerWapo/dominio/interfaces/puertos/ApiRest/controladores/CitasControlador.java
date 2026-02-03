@@ -21,7 +21,6 @@ public abstract class CitasControlador implements ControladoresBase {
     protected static final String rutaBase = "/api/citas";
     protected static  final String buscarTodas = "/buscarTodas";
     protected static final String buscarPorVehiculo = "/buscarPorVehiculo";
-    protected static final String buscarPorCliente = "/buscarPorCliente";
     protected static  final String crearNuevaCita = "/crearNuevaCita";
     protected static  final String actualizarCita = "/actualizarCita";
     protected static  final String eliminarCita = "/eliminarCita";
@@ -53,28 +52,6 @@ public abstract class CitasControlador implements ControladoresBase {
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
         CitasFachadaConsultasImpl fachadaCitasConsulta = new CitasFachadaConsultasImpl();
         List<CitaBO> citas = fachadaCitasConsulta.buscarPorVehiculo(vehiculo);
-
-        if (citas != null) {
-            respuesta.setObjeto(citas);
-            respuesta.setIsOk(true);
-            respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
-            respuesta.setMensaje("Citas encontradas");
-
-        }else {
-            respuesta.setObjeto(null);
-            respuesta.setIsOk(false);
-            respuesta.setStatus(EstadoRespuestaHTTP.NO_CONTENT.getCodigo());
-            respuesta.setMensaje("Citas no encontradas");
-        }
-
-        return respuesta;
-    }
-
-    protected static RespuestaHttpBO buscarCitasPorCliente(ClienteBO cliente){
-        logger.info("Buscando citas por cliente");
-        RespuestaHttpBO respuesta = new RespuestaHttpBO();
-        CitasFachadaConsultasImpl fachadaCitasConsulta = new CitasFachadaConsultasImpl();
-        List<CitaBO> citas = fachadaCitasConsulta.buscarPorCliente(cliente);
 
         if (citas != null) {
             respuesta.setObjeto(citas);

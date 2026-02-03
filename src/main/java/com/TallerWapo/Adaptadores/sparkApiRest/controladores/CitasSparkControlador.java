@@ -29,21 +29,21 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             post(crearNuevaCita, (req, res) -> {
                 res.type(tipoJSON);  // Siempre setea JSON
                 logger.info("Guardando nueva cita");
+                RespuestaHttpBO respuesta;
+
                 try{
                     //Rescatar objeto
                     CitaBO cita = SparkController.JsonToBO(req, CitaBO.class);
-
-                    RespuestaHttpBO respuesta = guardarNuevaCita(cita);
-
-                    //Dar respuesta Ok
+                    respuesta = guardarNuevaCita(cita);
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 }catch(Exception e){
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
 
+                return gson.toJson(respuesta);
             });
 
             /**
@@ -52,21 +52,21 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             post(actualizarCita, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Actualizando cita");
+                RespuestaHttpBO respuesta;
 
                 try {
                     //rescatar json
                     CitaBO cita = SparkController.JsonToBO(req, CitaBO.class);
-
-                    RespuestaHttpBO respuesta = actualizarCita(cita);
-
-                    //Dar respuesta Ok
+                    respuesta = actualizarCita(cita);
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
             /**
@@ -75,21 +75,21 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             post(eliminarCita, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Eliminando cita");
+                RespuestaHttpBO respuesta;
 
                 try {
                     //Rescatar objeto
                     CitaBO cita = SparkController.JsonToBO(req, CitaBO.class);
-
-                    RespuestaHttpBO respuesta = eliminarCita(cita);
-
-                    //Dar respuesta Ok
+                    respuesta = eliminarCita(cita);
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getMensaje());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
             /**
@@ -98,44 +98,23 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             get(buscarPorVehiculo, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando citas por vehiculo");
+                RespuestaHttpBO respuesta;
 
                 try {
                     //Rescatar objeto
                     VehiculoBO vehiculo = SparkController.JsonToBO(req, VehiculoBO.class);
-
-                    RespuestaHttpBO respuesta = buscarCitasPorVehiculo(vehiculo);
-
-                    //Dar respuesta Ok y retornar
+                    respuesta = buscarCitasPorVehiculo(vehiculo);
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getObjeto());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
 
-            /**
-             *  Buscar cita por cliente
-             */
-            get(buscarPorCliente, (req, res) -> {
-                res.type(tipoJSON);
-                logger.info("Buscando citas por cliente");
-
-                try {
-                    //Rescatar objeto
-                    ClienteBO cliente = SparkController.JsonToBO(req, ClienteBO.class);
-                    RespuestaHttpBO respuesta = buscarCitasPorCliente(cliente);
-
-                    //Dar respuesta Ok y retornar
-                    res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getObjeto());
-
-                } catch (Exception e) {
-                    res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
-                }
-            });
 
             /**
              *  Buscar todas

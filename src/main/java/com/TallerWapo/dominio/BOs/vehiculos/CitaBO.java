@@ -7,11 +7,12 @@ import java.util.Date;
 public class CitaBO implements BoBase {
     int uuid;
     int vehiculoUuid;
-    int clienteUuid;
-    int reparacionUuid;
     String concepto;
-    Date fecha;
+    Date fechaInicio;
+    Date fechaFinalizada;
     String codigoEstado;
+
+    String observaciones;
 
 
     @Override
@@ -26,29 +27,28 @@ public class CitaBO implements BoBase {
     public String getConcepto() {return concepto;}
     public void setConcepto(String concepto) {this.concepto = concepto;}
 
-    public Date getFecha() {return fecha;}
-    public void setFecha(Date fecha) {this.fecha = fecha;}
+    public Date getFechaInicio() {return fechaInicio;}
+    public void setFechaInicio(Date fecha) {this.fechaInicio = fecha;}
 
-    public int getClienteUuid() {return clienteUuid;}
-    public void setClienteUuid(int clienteUuid) {this.clienteUuid = clienteUuid;}
-
-    public int getReparacionUuid() {return reparacionUuid;}
-    public void setReparacionUuid(int reparacionUuid) {this.reparacionUuid = reparacionUuid;}
+    public Date getFechaFinalizada() {return fechaFinalizada;}
+    public void setFechaFinalizada(Date fecha) {this.fechaFinalizada = fecha;}
 
     public String getCodigoEstado() {return codigoEstado;}
     public void setCodigoEstado(String codigoEstado) {this.codigoEstado = codigoEstado;}
+
+    public String getObservaciones() {return observaciones;}
+    public void setObservaciones(String observaciones) {this.observaciones = observaciones;}
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CitaBO{");
         sb.append("uuid=").append(uuid);
-        sb.append(", vehiculoUuid=").append(vehiculoUuid);
-        sb.append(", clienteUuid=").append(clienteUuid);
-        sb.append(", reparacionUuid=").append(reparacionUuid);
+        sb.append(", vehiculo Uuid=").append(vehiculoUuid);
         sb.append(", concepto=").append(concepto);
-        sb.append(", fecha=").append(fecha);
-        sb.append(", codigoEstado=").append(codigoEstado);
+        sb.append(", fecha inicio=").append(fechaInicio);
+        sb.append(", fecha fin =").append(fechaFinalizada);
+        sb.append(", codigo Estado=").append(codigoEstado);
         sb.append("}");
         return sb.toString();
     }

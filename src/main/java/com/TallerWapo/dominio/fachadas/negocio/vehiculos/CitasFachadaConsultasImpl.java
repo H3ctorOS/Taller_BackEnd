@@ -22,14 +22,6 @@ public class CitasFachadaConsultasImpl extends FachadaConsultaBase {
         }
     }
 
-    public List<CitaBO> buscarPorCliente(ClienteBO cliente) {
-        try {
-            return citasDao.buscarPorCliente(cliente);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public List<CitaBO> buscarTodas() {
         try {
