@@ -1,8 +1,8 @@
 package com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores;
 
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
-import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.RespuestaHttpBO;
+import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.fachadas.negocio.vehiculos.VehiculosFachadaEjecutarImpl;
 import com.TallerWapo.dominio.fachadas.negocio.vehiculos.VehiculosFachadaConsultasImpl;
 import com.TallerWapo.dominio.interfaces.base.ControladoresBase;

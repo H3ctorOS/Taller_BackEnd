@@ -1,7 +1,7 @@
 package com.TallerWapo.dominio.interfaces.Daos;
 
-import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.vehiculos.ReparacionBO;
+import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
 
 import java.util.List;
 

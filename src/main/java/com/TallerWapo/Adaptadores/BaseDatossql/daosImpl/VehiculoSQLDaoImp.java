@@ -1,9 +1,9 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
-import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.BOs.gestion.EstadoBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
+import com.TallerWapo.dominio.bo.gestion.EstadoBO;
+import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;

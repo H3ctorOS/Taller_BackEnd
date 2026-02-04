@@ -2,8 +2,8 @@ package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
 
 
-import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.vehiculos.ReparacionBO;
+import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.fachadas.base.FachadaConsultaBase;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.ReparacionesDao;

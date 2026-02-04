@@ -1,13 +1,10 @@
 package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
-import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.vehiculos.ReparacionBO;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.ReparacionesDao;
-import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.servicios.ReparacionesService;
-import com.TallerWapo.dominio.servicios.VehiculosService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

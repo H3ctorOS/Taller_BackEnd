@@ -1,8 +1,8 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
-import com.TallerWapo.dominio.BOs.vehiculos.ReparacionBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.vehiculos.ReparacionBO;
+import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.Daos.ReparacionesDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;

@@ -2,10 +2,8 @@ package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.base.SparkController;
-import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
-import com.TallerWapo.dominio.BOs.vehiculos.CitaBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.RespuestaHttpBO;
+import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.CitasControlador;
 import org.slf4j.Logger;
@@ -98,12 +96,15 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             get(buscarPorVehiculo, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando citas por vehiculo");
+                logger.info("Get recibido: {}", req.toString());
+
                 RespuestaHttpBO respuesta;
 
                 try {
-                    //Rescatar objeto
-                    VehiculoBO vehiculo = SparkController.JsonToBO(req, VehiculoBO.class);
-                    respuesta = buscarCitasPorVehiculo(vehiculo);
+                    // Rescata el parámetro de query
+                    String vehiculoUuid = req.queryParams("vehiculoUuid");
+
+                    respuesta = buscarCitasPorVehiculo(vehiculoUuid);
                     res.status(respuesta.getStatus());
 
                 } catch (Exception e) {
@@ -122,18 +123,18 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             get(buscarTodas, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando todas las citas");
-
+                RespuestaHttpBO respuesta;
                 try {
-                    RespuestaHttpBO respuesta = buscarTodas();
-
-                    //Dar respuesta Ok y retornar
+                    respuesta = buscarTodas();
                     res.status(respuesta.getStatus());
-                    return gson.toJson(respuesta.getObjeto());
 
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
-                    return gson.toJson(e.getMessage());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
                 }
+
+                return gson.toJson(respuesta);
             });
         });
     }

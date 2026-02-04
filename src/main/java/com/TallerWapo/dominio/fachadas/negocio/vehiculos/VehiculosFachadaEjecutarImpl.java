@@ -1,7 +1,7 @@
 package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
-import com.TallerWapo.dominio.BOs.gestion.EstadoBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.gestion.EstadoBO;
+import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;

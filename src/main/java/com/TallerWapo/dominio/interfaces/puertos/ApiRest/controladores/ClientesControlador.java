@@ -1,7 +1,7 @@
 package com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores;
 
-import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
+import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
+import com.TallerWapo.dominio.bo.RespuestaHttpBO;
 import com.TallerWapo.dominio.fachadas.negocio.clientes.ClientesFachadaConsultasImpl;
 import com.TallerWapo.dominio.fachadas.negocio.clientes.ClientesFachadaEjecutarImpl;
 import com.TallerWapo.dominio.interfaces.base.ControladoresBase;

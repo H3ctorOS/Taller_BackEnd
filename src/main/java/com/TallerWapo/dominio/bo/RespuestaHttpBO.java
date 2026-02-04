@@ -1,4 +1,4 @@
-package com.TallerWapo.dominio.BOs;
+package com.TallerWapo.dominio.bo;
 
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 

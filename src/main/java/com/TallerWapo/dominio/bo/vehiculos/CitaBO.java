@@ -1,4 +1,4 @@
-package com.TallerWapo.dominio.BOs.vehiculos;
+package com.TallerWapo.dominio.bo.vehiculos;
 
 import com.TallerWapo.dominio.interfaces.base.BoBase;
 
@@ -11,9 +11,7 @@ public class CitaBO implements BoBase {
     Date fechaInicio;
     Date fechaFinalizada;
     String codigoEstado;
-
     String observaciones;
-
 
     @Override
     public int getUuid() {return uuid;}

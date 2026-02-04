@@ -2,8 +2,8 @@ package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.base.SparkController;
-import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
+import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
+import com.TallerWapo.dominio.bo.RespuestaHttpBO;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.ClientesControlador;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.TallerWapo.dominio.BOs.gestion;
+package com.TallerWapo.dominio.bo.gestion;
 
 public enum EstadoBO {
 

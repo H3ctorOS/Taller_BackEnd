@@ -1,6 +1,6 @@
 package com.TallerWapo.dominio.interfaces.Daos;
 
-import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
+import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
 
 import java.util.List;
 

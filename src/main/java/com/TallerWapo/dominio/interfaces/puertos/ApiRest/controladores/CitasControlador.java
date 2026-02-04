@@ -1,9 +1,8 @@
 package com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores;
 
-import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
-import com.TallerWapo.dominio.BOs.RespuestaHttpBO;
-import com.TallerWapo.dominio.BOs.vehiculos.CitaBO;
-import com.TallerWapo.dominio.BOs.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.bo.RespuestaHttpBO;
+import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
+import com.TallerWapo.dominio.dto.CitaDTO;
 import com.TallerWapo.dominio.fachadas.negocio.vehiculos.CitasFachadaConsultasImpl;
 import com.TallerWapo.dominio.fachadas.negocio.vehiculos.CitasFachadaEjecutarImpl;
 import com.TallerWapo.dominio.interfaces.base.ControladoresBase;
@@ -29,7 +28,7 @@ public abstract class CitasControlador implements ControladoresBase {
         logger.info("Buscando todas las citas");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
         CitasFachadaConsultasImpl fachadaCitasConsulta = new CitasFachadaConsultasImpl();
-        List<CitaBO> citas = fachadaCitasConsulta.buscarTodas();
+        List<CitaDTO> citas = fachadaCitasConsulta.buscarTodas();
 
         if (citas != null && !citas.isEmpty()) {
             respuesta.setObjeto(citas);
@@ -47,11 +46,12 @@ public abstract class CitasControlador implements ControladoresBase {
         return respuesta;
     }
 
-    protected static RespuestaHttpBO buscarCitasPorVehiculo(VehiculoBO vehiculo){
-        logger.info("Buscando citas por vehiculo");
+    protected static RespuestaHttpBO buscarCitasPorVehiculo(String vehiculoUuid){
+        logger.info("Buscando citas por vehiculo uuid: " +vehiculoUuid);
+
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
         CitasFachadaConsultasImpl fachadaCitasConsulta = new CitasFachadaConsultasImpl();
-        List<CitaBO> citas = fachadaCitasConsulta.buscarPorVehiculo(vehiculo);
+        List<CitaDTO> citas = fachadaCitasConsulta.buscarPorVehiculo(vehiculoUuid);
 
         if (citas != null) {
             respuesta.setObjeto(citas);

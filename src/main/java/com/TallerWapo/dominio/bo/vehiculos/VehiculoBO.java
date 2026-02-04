@@ -1,6 +1,6 @@
-package com.TallerWapo.dominio.BOs.vehiculos;
+package com.TallerWapo.dominio.bo.vehiculos;
 
-import com.TallerWapo.dominio.BOs.gestion.EstadoBO;
+import com.TallerWapo.dominio.bo.gestion.EstadoBO;
 import com.TallerWapo.dominio.interfaces.base.BoBase;
 
 public class VehiculoBO implements BoBase {

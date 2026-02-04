@@ -1,7 +1,7 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
-import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
+import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
 import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;

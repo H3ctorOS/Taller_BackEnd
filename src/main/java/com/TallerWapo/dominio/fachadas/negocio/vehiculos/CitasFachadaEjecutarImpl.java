@@ -1,6 +1,6 @@
 package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
-import com.TallerWapo.dominio.BOs.vehiculos.CitaBO;
+import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.CitasDao;

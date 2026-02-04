@@ -1,4 +1,4 @@
-package com.TallerWapo.dominio.BOs.Clientes;
+package com.TallerWapo.dominio.bo.Clientes;
 
 import com.TallerWapo.dominio.interfaces.base.BoBase;
 

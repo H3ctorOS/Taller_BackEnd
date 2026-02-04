@@ -1,6 +1,6 @@
 package com.TallerWapo.dominio.servicios;
 
-import com.TallerWapo.dominio.BOs.Clientes.ClienteBO;
+import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
 import com.TallerWapo.dominio.contexto.Contexto;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
