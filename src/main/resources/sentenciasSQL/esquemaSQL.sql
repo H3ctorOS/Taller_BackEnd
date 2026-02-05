@@ -84,8 +84,47 @@
             descripcion TEXT NOT NULL
     );
 
+    CREATE TABLE IF NOT EXISTS gastos (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          descripcion TEXT NOT NULL,
+          importe REAL NOT NULL,
+          fecha DATE,
+          observaciones TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS ingresos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        concepto TEXT NOT NULL,
+        importe REAL NOT NULL,
+        fecha DATE NOT NULL,
+        cod_estado TEXT NOT NULL,
+        observaciones TEXT,
+
+        FOREIGN KEY (cod_estado) REFERENCES estados(codigo)
+    );
+
+    CREATE TABLE IF NOT EXISTS movimientos_asociaciones (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tipo_movimiento TEXT NOT NULL,     -- "GASTO" o "INGRESO"
+        movimiento_id INTEGER NOT NULL,    -- id del gasto o ingreso
+        tipo_entidad TEXT NOT NULL CHECK(tipo_entidad IN ('CITAS')),  -- limitar los tipos de entidad por ahora
+        -- Para añadir nuevas entidades permitidas en el futuro, simplemente incluirlas en la lista del CHECK:
+        -- Ejemplo: CHECK(tipo_entidad IN ('CITAS','REPARACIONES','CLIENTES'))
+        entidad_id INTEGER NOT NULL,       -- id del registro en la tabla relacionada
+        observaciones TEXT
+    );
+
+
+
 --INDICES
     CREATE INDEX IF NOT EXISTS idx_vehiculos_matricula ON vehiculos (matricula);
+
+    CREATE INDEX IF NOT EXISTS idx_movimientos_asociaciones_movimiento
+        ON movimientos_asociaciones (tipo_movimiento, movimiento_id);
+
+    CREATE INDEX IF NOT EXISTS idx_movimientos_asociaciones_entidad
+        ON movimientos_asociaciones (tipo_entidad, entidad_id);
+
 
 --INSERT
     INSERT INTO estados (codigo,descripcion)VALUES ('ACTI', 'Estado del elemento activo');

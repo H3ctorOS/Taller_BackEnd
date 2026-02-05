@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <query id="INGRESOS_SELECT_ALL"><![CDATA[
+        SELECT * FROM INGRESOS ingr
+    ]]></query>
+
+    <!-- Selecciona todos los ingresos asociados a una cita usando la tabla intermedia -->
+    <query id="INGRESOS_SELECT_CITAID"><![CDATA[
+        SELECT ingr.*
+        FROM INGRESOS ingr
+        INNER JOIN movimientos_asociaciones mvas
+            ON mvas.movimiento_id = ingr.id
+            AND mvas.tipo_movimiento = 'INGRESO'
+        WHERE mvas.tipo_entidad = 'CITAS'
+            AND mvas.entidad_id = ?
+    ]]></query>
+
+    <query id="INGRESOS_INSERT"><![CDATA[
+        INSERT INTO INGRESOS (concepto, importe, fecha, cod_estado, observaciones)
+        VALUES (?, ?, ?, ?, ?)
+    ]]></query>
+
+    <query id="INGRESOS_UPDATE"><![CDATA[
+        UPDATE INGRESOS
+        SET concepto = ?, importe = ?, fecha = ?, cod_estado = ?, observaciones = ?
+        WHERE id = ?
+    ]]></query>
+
+    <query id="INGRESOS_DELETE"><![CDATA[
+        DELETE FROM INGRESOS WHERE id = ?
+    ]]></query>
+</queries>

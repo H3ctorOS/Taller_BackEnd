@@ -1,14 +1,8 @@
 package com.TallerWapo.dominio.factorias;
 
-import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.CitasSQLDaoImp;
-import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.ClientesSQLDaoImp;
-import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.ReparacionesSQLDaoImp;
-import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.VehiculoSQLDaoImp;
+import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.*;
 import com.TallerWapo.dominio.contexto.Sesion;
-import com.TallerWapo.dominio.interfaces.Daos.CitasDao;
-import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
-import com.TallerWapo.dominio.interfaces.Daos.ReparacionesDao;
-import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
+import com.TallerWapo.dominio.interfaces.Daos.*;
 
 public class ContextoDaos {
 
@@ -19,5 +13,7 @@ public class ContextoDaos {
         return new ClientesSQLDaoImp(sesion);
     }
     public static CitasDao getCitaDao(Sesion sesion) {return new CitasSQLDaoImp(sesion);}
+    public static IngresosDao getIngresoDao(Sesion sesion) {return new IngresosSQLDaoImp(sesion);}
+    public static GastoDao getGastoDao(Sesion sesion) {return new GastosSQLDaoImp(sesion);}
     public static ReparacionesDao getReparacionesDao(Sesion sesion) {return new ReparacionesSQLDaoImp(sesion);}
 }

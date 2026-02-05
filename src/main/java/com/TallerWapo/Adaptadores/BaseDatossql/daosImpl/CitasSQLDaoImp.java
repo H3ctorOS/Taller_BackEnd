@@ -113,7 +113,7 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
         cita.setVehiculoUuid(rs.getInt("vehiculo_id"));
         cita.setConcepto(rs.getString("concepto"));
         cita.setFechaInicio(rs.getDate("fechaInicio"));
-        cita.setFechaInicio(rs.getDate("fechaFinalizada"));
+        cita.setFechaFinalizada(rs.getDate("fechaFinalizada"));
         cita.setCodigoEstado(rs.getString("cod_estado"));
         cita.setObservaciones(rs.getString("observaciones"));
 
