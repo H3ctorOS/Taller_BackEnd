@@ -1,8 +1,8 @@
 package com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores;
 
 import com.TallerWapo.dominio.bo.RespuestaHttpBO;
-import com.TallerWapo.dominio.bo.vehiculos.IngresoBO;
-import com.TallerWapo.dominio.dto.IngresoDTO;
+import com.TallerWapo.dominio.dto.contabilidad.IngresoConCitaDTO;
+import com.TallerWapo.dominio.dto.contabilidad.IngresoDTO;
 import com.TallerWapo.dominio.fachadas.negocio.contabilidad.IngresosFachadaConsultasImpl;
 import com.TallerWapo.dominio.fachadas.negocio.contabilidad.IngresosFachadaEjecutarImpl;
 import com.TallerWapo.dominio.interfaces.base.ControladoresBase;
@@ -19,7 +19,7 @@ public abstract class IngresosControlador implements ControladoresBase {
     protected static final String rutaBase = "/api/ingresos";
     protected static final String buscarTodos = "/buscarTodos";
     protected static final String buscarPorCita = "/buscarPorCita";
-    protected static final String crearNuevoIngreso = "/crearNuevoIngreso";
+    protected static final String crearNuevoIngresoCita = "/crearNuevoIngresoCita";
     protected static final String actualizarIngreso = "/actualizarIngreso";
     protected static final String eliminarIngreso = "/eliminarIngreso";
 
@@ -67,16 +67,17 @@ public abstract class IngresosControlador implements ControladoresBase {
         return respuesta;
     }
 
-    protected static RespuestaHttpBO guardarNuevoIngreso(IngresoBO ingreso) {
-        logger.info("Creando nuevo ingreso");
+    protected static RespuestaHttpBO guardarNuevoIngresoCita(IngresoConCitaDTO ingreso) {
+        logger.info("Creando nuevo ingreso en cita");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
         IngresosFachadaEjecutarImpl fachada = new IngresosFachadaEjecutarImpl();
 
         try {
-            fachada.guardarNuevoIngreso(ingreso);
+            fachada.guardarNuevoIngresoCita(ingreso); // ahora fachada acepta DTO
             respuesta.setIsOk(true);
             respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
             respuesta.setMensaje("Ingreso guardado correctamente");
+
         } catch (Exception e) {
             respuesta.setIsOk(false);
             respuesta.setStatus(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
@@ -86,13 +87,13 @@ public abstract class IngresosControlador implements ControladoresBase {
         return respuesta;
     }
 
-    protected static RespuestaHttpBO actualizarIngreso(IngresoBO ingreso) {
+    protected static RespuestaHttpBO actualizarIngreso(IngresoDTO ingreso) {
         logger.info("Actualizando ingreso");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
         IngresosFachadaEjecutarImpl fachada = new IngresosFachadaEjecutarImpl();
 
         try {
-            fachada.actualizarIngreso(ingreso);
+            fachada.actualizarIngreso(ingreso); // fachada acepta DTO
             respuesta.setIsOk(true);
             respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
             respuesta.setMensaje("Ingreso actualizado correctamente");
@@ -105,13 +106,13 @@ public abstract class IngresosControlador implements ControladoresBase {
         return respuesta;
     }
 
-    protected static RespuestaHttpBO eliminarIngreso(IngresoBO ingreso) {
+    protected static RespuestaHttpBO eliminarIngreso(IngresoDTO ingreso) {
         logger.info("Eliminando ingreso");
         RespuestaHttpBO respuesta = new RespuestaHttpBO();
         IngresosFachadaEjecutarImpl fachada = new IngresosFachadaEjecutarImpl();
 
         try {
-            fachada.eliminarIngreso(ingreso);
+            fachada.eliminarIngreso(ingreso); // fachada acepta DTO
             respuesta.setIsOk(true);
             respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
             respuesta.setMensaje("Ingreso eliminado correctamente");

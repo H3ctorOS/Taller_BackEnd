@@ -1,10 +1,11 @@
-package com.TallerWapo.dominio.bo.vehiculos;
+package com.TallerWapo.dominio.bo.contabilidad;
 
-import com.TallerWapo.dominio.interfaces.base.BoBase;
+import com.TallerWapo.dominio.dto.contabilidad.IngresoDTO;
 
 import java.util.Date;
 
-public class IngresoBO implements BoBase {
+public class IngresoBO {
+
     private int uuid;
     private String concepto;
     private double importe;
@@ -13,27 +14,26 @@ public class IngresoBO implements BoBase {
     private String observaciones;
 
     // Constructor vacío
-    public IngresoBO() {
+    public IngresoBO() {}
+
+    // Constructor a partir de un DTO
+    public IngresoBO(IngresoDTO dto) {
+        this.uuid = dto.getUuid();
+        this.concepto = dto.getConcepto();
+        this.importe = dto.getImporte();
+        this.fecha = dto.getFecha() > 0 ? new Date(dto.getFecha()) : null;
+        this.codEstado = dto.getCodEstado();
+        this.observaciones = dto.getObservaciones();
     }
 
-    // Constructor completo
-    public IngresoBO(int uuid, String concepto, double importe, Date fecha, String codEstado, String observaciones) {
-        this.uuid = uuid;
-        this.concepto = concepto;
-        this.importe = importe;
-        this.fecha = fecha;
-        this.codEstado = codEstado;
-        this.observaciones = observaciones;
+
+    // Getters y Setters
+    public int getUuid() {
+        return uuid;
     }
 
-    @Override
     public void setUuid(int uuid) {
         this.uuid = uuid;
-    }
-
-    @Override
-    public int getUuid() {
-        return this.uuid;
     }
 
     public String getConcepto() {
@@ -74,5 +74,17 @@ public class IngresoBO implements BoBase {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    @Override
+    public String toString() {
+        return "IngresoBO{" +
+                "uuid=" + uuid +
+                ", concepto='" + concepto + '\'' +
+                ", importe=" + importe +
+                ", fecha=" + fecha +
+                ", codEstado='" + codEstado + '\'' +
+                ", observaciones='" + observaciones + '\'' +
+                '}';
     }
 }

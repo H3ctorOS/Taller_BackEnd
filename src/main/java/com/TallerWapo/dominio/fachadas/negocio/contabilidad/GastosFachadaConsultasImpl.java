@@ -1,8 +1,8 @@
 package com.TallerWapo.dominio.fachadas.negocio.contabilidad;
 
 import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
-import com.TallerWapo.dominio.bo.vehiculos.GastoBO;
-import com.TallerWapo.dominio.dto.GastoDTO;
+import com.TallerWapo.dominio.bo.contabilidad.GastoBO;
+import com.TallerWapo.dominio.dto.contabilidad.GastoDTO;
 import com.TallerWapo.dominio.fachadas.base.FachadaConsultaBase;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.GastoDao;

@@ -31,7 +31,7 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
 
                 try{
                     //Rescatar objeto
-                    CitaBO cita = SparkController.JsonToBO(req, CitaBO.class);
+                    CitaBO cita = SparkController.JsonToDTO(req, CitaBO.class);
                     respuesta = guardarNuevaCita(cita);
                     res.status(respuesta.getStatus());
 
@@ -54,7 +54,7 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
 
                 try {
                     //rescatar json
-                    CitaBO cita = SparkController.JsonToBO(req, CitaBO.class);
+                    CitaBO cita = SparkController.JsonToDTO(req, CitaBO.class);
                     respuesta = actualizarCita(cita);
                     res.status(respuesta.getStatus());
 
@@ -77,7 +77,7 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
 
                 try {
                     //Rescatar objeto
-                    CitaBO cita = SparkController.JsonToBO(req, CitaBO.class);
+                    CitaBO cita = SparkController.JsonToDTO(req, CitaBO.class);
                     respuesta = eliminarCita(cita);
                     res.status(respuesta.getStatus());
 

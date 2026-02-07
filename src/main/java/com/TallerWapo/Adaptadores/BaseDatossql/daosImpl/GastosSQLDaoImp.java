@@ -2,7 +2,7 @@ package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
 import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
-import com.TallerWapo.dominio.bo.vehiculos.GastoBO;
+import com.TallerWapo.dominio.bo.contabilidad.GastoBO;
 import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.Daos.GastoDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;
@@ -20,6 +20,7 @@ public class GastosSQLDaoImp extends DaoSQLBase implements GastoDao {
     private final String GASTOS_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "GASTOS_INSERT");
     private final String GASTOS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "GASTOS_UPDATE");
     private final String GASTOS_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "GASTOS_DELETE");
+    private final String GASTOS_INSERT_CITA_RELACION = XmlUtil.loadSql(ARCHIVO_SQL, "GASTOS_INSERT_CITA_RELACION");
 
     public GastosSQLDaoImp(Sesion sesion) {
         super(sesion);
@@ -67,6 +68,22 @@ public class GastosSQLDaoImp extends DaoSQLBase implements GastoDao {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean guardarRelacionCita(GastoBO gasto, CitaBO cita) throws Exception {
+        if (gasto == null || cita == null) {
+            throw new IllegalArgumentException("Gasto y Cita no pueden ser nulos");
+        }
+
+        try (PreparedStatement ps = conexion.prepareStatement(GASTOS_INSERT_CITA_RELACION)) {
+            ps.setInt(1, gasto.getUuid());
+            ps.setInt(2, cita.getUuid());
+            ps.setString(3, gasto.getObservaciones());
+
+            int filas = ps.executeUpdate();
+            return filas > 0;
+        }
     }
 
     @Override

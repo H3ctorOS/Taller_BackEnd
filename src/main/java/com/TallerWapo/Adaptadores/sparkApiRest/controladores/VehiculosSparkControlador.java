@@ -34,7 +34,7 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
 
                 try{
                     //Rescatar objeto
-                    VehiculoBO vehiculo = SparkController.JsonToBO(req, VehiculoBO.class);
+                    VehiculoBO vehiculo = SparkController.JsonToDTO(req, VehiculoBO.class);
                     respuesta = crearVehiculo(vehiculo);
                     res.status(respuesta.getStatus());
 
@@ -57,7 +57,7 @@ public class VehiculosSparkControlador extends VehiculosControlador implements S
 
                 try {
                     //rescatar json
-                    VehiculoBO vehiculo = SparkController.JsonToBO(req, VehiculoBO.class);
+                    VehiculoBO vehiculo = SparkController.JsonToDTO(req, VehiculoBO.class);
                     respuesta = actualizarVehiculo(vehiculo);
                     res.status(respuesta.getStatus());
 

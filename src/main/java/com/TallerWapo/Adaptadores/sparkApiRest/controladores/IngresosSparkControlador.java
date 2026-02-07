@@ -1,8 +1,9 @@
 package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.base.SparkController;
+import com.TallerWapo.dominio.dto.contabilidad.IngresoConCitaDTO;
+import com.TallerWapo.dominio.dto.contabilidad.IngresoDTO;
 import com.TallerWapo.dominio.bo.RespuestaHttpBO;
-import com.TallerWapo.dominio.bo.vehiculos.IngresoBO;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.IngresosControlador;
 import org.slf4j.Logger;
@@ -20,18 +21,17 @@ public class IngresosSparkControlador extends IngresosControlador implements Spa
     public static void init() {
         path(rutaBase, () -> {
 
-            /**
-             * Crear nuevo ingreso
-             */
-            post(crearNuevoIngreso, (req, res) -> {
+            // Crear nuevo ingreso
+            post(crearNuevoIngresoCita, (req, res) -> {
                 res.type(tipoJSON);
-                logger.info("Guardando nuevo ingreso");
+                logger.info("Guardando nuevo ingreso en cita");
                 RespuestaHttpBO respuesta;
 
                 try {
-                    IngresoBO ingreso = SparkController.JsonToBO(req, IngresoBO.class);
-                    respuesta = guardarNuevoIngreso(ingreso);
+                    IngresoConCitaDTO ingresoCitaDTO = SparkController.JsonToDTO(req, IngresoConCitaDTO.class);
+                    respuesta = guardarNuevoIngresoCita(ingresoCitaDTO);
                     res.status(respuesta.getStatus());
+
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
                     respuesta = new RespuestaHttpBO();
@@ -41,17 +41,15 @@ public class IngresosSparkControlador extends IngresosControlador implements Spa
                 return gson.toJson(respuesta);
             });
 
-            /**
-             * Actualizar ingreso
-             */
+            // Actualizar ingreso
             post(actualizarIngreso, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Actualizando ingreso");
                 RespuestaHttpBO respuesta;
 
                 try {
-                    IngresoBO ingreso = SparkController.JsonToBO(req, IngresoBO.class);
-                    respuesta = actualizarIngreso(ingreso);
+                    IngresoDTO ingresoDTO = SparkController.JsonToDTO(req, IngresoDTO.class);
+                    respuesta = actualizarIngreso(ingresoDTO);
                     res.status(respuesta.getStatus());
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
@@ -62,17 +60,15 @@ public class IngresosSparkControlador extends IngresosControlador implements Spa
                 return gson.toJson(respuesta);
             });
 
-            /**
-             * Eliminar ingreso
-             */
+            // Eliminar ingreso
             post(eliminarIngreso, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Eliminando ingreso");
                 RespuestaHttpBO respuesta;
 
                 try {
-                    IngresoBO ingreso = SparkController.JsonToBO(req, IngresoBO.class);
-                    respuesta = eliminarIngreso(ingreso);
+                    IngresoDTO ingresoDTO = SparkController.JsonToDTO(req, IngresoDTO.class);
+                    respuesta = eliminarIngreso(ingresoDTO);
                     res.status(respuesta.getStatus());
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
@@ -83,9 +79,7 @@ public class IngresosSparkControlador extends IngresosControlador implements Spa
                 return gson.toJson(respuesta);
             });
 
-            /**
-             * Buscar ingreso por cita
-             */
+            // Buscar ingreso por cita
             get(buscarPorCita, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando ingresos por cita");
@@ -93,7 +87,7 @@ public class IngresosSparkControlador extends IngresosControlador implements Spa
 
                 try {
                     String citaUuid = req.queryParams("citaUuid");
-                    respuesta = buscarIngresosPorCita(citaUuid);
+                    respuesta = buscarIngresosPorCita(citaUuid); // asumir que ahora devuelve DTOs
                     res.status(respuesta.getStatus());
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
@@ -104,16 +98,14 @@ public class IngresosSparkControlador extends IngresosControlador implements Spa
                 return gson.toJson(respuesta);
             });
 
-            /**
-             * Buscar todos los ingresos
-             */
+            // Buscar todos los ingresos
             get(buscarTodos, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando todos los ingresos");
                 RespuestaHttpBO respuesta;
 
                 try {
-                    respuesta = buscarTodos();
+                    respuesta = buscarTodos(); // asumir que ahora devuelve DTOs
                     res.status(respuesta.getStatus());
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());

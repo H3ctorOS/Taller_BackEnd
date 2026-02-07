@@ -29,4 +29,9 @@
     <query id="GASTOS_DELETE"><![CDATA[
         DELETE FROM GASTOS WHERE id = ?
     ]]></query>
+
+    <query id="GASTOS_INSERT_CITA_RELACION"><![CDATA[
+        INSERT INTO movimientos_asociaciones (tipo_movimiento, movimiento_id, tipo_entidad, entidad_id, observaciones)
+        VALUES ('GASTO',?,'CITAS',?,?)
+    ]]></query>
 </queries>

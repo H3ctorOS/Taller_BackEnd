@@ -2,7 +2,8 @@ package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.base.SparkController;
 import com.TallerWapo.dominio.bo.RespuestaHttpBO;
-import com.TallerWapo.dominio.bo.vehiculos.GastoBO;
+import com.TallerWapo.dominio.dto.contabilidad.GastoDTO;
+import com.TallerWapo.dominio.dto.contabilidad.GastoConCitaDTO;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.GastosControlador;
 import org.slf4j.Logger;
@@ -21,16 +22,16 @@ public class GastosSparkControlador extends GastosControlador implements SparkCo
         path(rutaBase, () -> {
 
             /**
-             * Crear nuevo gasto
+             * Crear nuevo gasto con cita
              */
             post(crearNuevoGasto, (req, res) -> {
                 res.type(tipoJSON);
-                logger.info("Guardando nuevo gasto");
+                logger.info("Guardando nuevo gasto con cita");
                 RespuestaHttpBO respuesta;
 
                 try {
-                    GastoBO gasto = SparkController.JsonToBO(req, GastoBO.class);
-                    respuesta = guardarNuevoGasto(gasto);
+                    GastoConCitaDTO gastoDTO = SparkController.JsonToDTO(req, GastoConCitaDTO.class);
+                    respuesta = guardarNuevoGasto(gastoDTO);
                     res.status(respuesta.getStatus());
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
@@ -46,12 +47,12 @@ public class GastosSparkControlador extends GastosControlador implements SparkCo
              */
             post(actualizarGasto, (req, res) -> {
                 res.type(tipoJSON);
-                logger.info("Actualizando gasto");
+                logger.info("Actualizando gasto DTO");
                 RespuestaHttpBO respuesta;
 
                 try {
-                    GastoBO gasto = SparkController.JsonToBO(req, GastoBO.class);
-                    respuesta = actualizarGasto(gasto);
+                    GastoDTO gastoDTO = SparkController.JsonToDTO(req, GastoDTO.class);
+                    respuesta = actualizarGasto(gastoDTO);
                     res.status(respuesta.getStatus());
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
@@ -67,12 +68,12 @@ public class GastosSparkControlador extends GastosControlador implements SparkCo
              */
             post(eliminarGasto, (req, res) -> {
                 res.type(tipoJSON);
-                logger.info("Eliminando gasto");
+                logger.info("Eliminando gasto DTO");
                 RespuestaHttpBO respuesta;
 
                 try {
-                    GastoBO gasto = SparkController.JsonToBO(req, GastoBO.class);
-                    respuesta = eliminarGasto(gasto);
+                    GastoDTO gastoDTO = SparkController.JsonToDTO(req, GastoDTO.class);
+                    respuesta = eliminarGasto(gastoDTO);
                     res.status(respuesta.getStatus());
                 } catch (Exception e) {
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());

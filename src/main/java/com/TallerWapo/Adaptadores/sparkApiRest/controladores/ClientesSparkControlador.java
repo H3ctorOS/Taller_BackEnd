@@ -31,7 +31,7 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
 
                 try{
                     //Rescatar objeto
-                    ClienteBO cliente = SparkController.JsonToBO(req, ClienteBO.class);
+                    ClienteBO cliente = SparkController.JsonToDTO(req, ClienteBO.class);
                     respuesta = crearCliente(cliente);
                     //Dar respuesta Ok
                     res.status(respuesta.getStatus());
@@ -55,7 +55,7 @@ public class ClientesSparkControlador extends ClientesControlador implements Spa
 
                 try {
                     //rescatar json
-                    ClienteBO cliente = SparkController.JsonToBO(req, ClienteBO.class);
+                    ClienteBO cliente = SparkController.JsonToDTO(req, ClienteBO.class);
                     respuesta = actualizarCliente(cliente);
                     //Dar respuesta Ok
                     res.status(respuesta.getStatus());

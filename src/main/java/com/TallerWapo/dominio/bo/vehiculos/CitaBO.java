@@ -1,5 +1,6 @@
 package com.TallerWapo.dominio.bo.vehiculos;
 
+import com.TallerWapo.dominio.dto.CitaDTO;
 import com.TallerWapo.dominio.interfaces.base.BoBase;
 
 import java.util.Date;
@@ -12,6 +13,20 @@ public class CitaBO implements BoBase {
     Date fechaFinalizada;
     String codigoEstado;
     String observaciones;
+
+
+    public CitaBO() {}
+
+    public CitaBO(CitaDTO dto) {
+        this.uuid = dto.getUuid();
+        this.vehiculoUuid = dto.getVehiculoUuid();
+        this.concepto = dto.getConcepto();
+        this.fechaInicio = dto.getFechaInicio() > 0 ? new Date(dto.getFechaInicio()) : null;
+        this.fechaFinalizada = dto.getFechaFinalizada() != null ? new Date(dto.getFechaFinalizada()) : null;
+        this.codigoEstado = dto.getCodigoEstado();
+        this.observaciones = dto.getObservaciones();
+    }
+
 
     @Override
     public int getUuid() {return uuid;}

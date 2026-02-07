@@ -2,7 +2,7 @@ package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
 import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
-import com.TallerWapo.dominio.bo.vehiculos.IngresoBO;
+import com.TallerWapo.dominio.bo.contabilidad.IngresoBO;
 import com.TallerWapo.dominio.contexto.Sesion;
 import com.TallerWapo.dominio.interfaces.Daos.IngresosDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;
@@ -20,6 +20,8 @@ public class IngresosSQLDaoImp extends DaoSQLBase implements IngresosDao {
     private final String INGRESOS_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "INGRESOS_INSERT");
     private final String INGRESOS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "INGRESOS_UPDATE");
     private final String INGRESOS_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "INGRESOS_DELETE");
+
+    private final String INGRESOS_INSERT_CITA_RELACION = XmlUtil.loadSql(ARCHIVO_SQL, "INGRESOS_INSERT_CITA_RELACION");
 
     public IngresosSQLDaoImp(Sesion sesion) {
         super(sesion);
@@ -71,6 +73,25 @@ public class IngresosSQLDaoImp extends DaoSQLBase implements IngresosDao {
     }
 
     @Override
+    public boolean guardarRelacionCita(IngresoBO ingreso, CitaBO cita) throws Exception {
+        if (ingreso == null || cita == null) {
+            throw new IllegalArgumentException("Ingreso y Cita no pueden ser nulos");
+        }
+
+        try (PreparedStatement ps = conexion.prepareStatement(INGRESOS_INSERT_CITA_RELACION)) {
+            ps.setInt(1, ingreso.getUuid()); // movimiento_id
+            ps.setInt(2, cita.getUuid());    // entidad_id
+            ps.setString(3, ingreso.getObservaciones()); // observaciones, opcional
+
+            int filas = ps.executeUpdate();
+
+            //Confirmar que se inserto algo
+            return filas > 0;
+        }
+
+    }
+
+    @Override
     public boolean actualizar(IngresoBO ingreso) throws Exception {
         PreparedStatement ps = conexion.prepareStatement(INGRESOS_UPDATE);
         setearIngreso(ps, ingreso);
@@ -92,6 +113,10 @@ public class IngresosSQLDaoImp extends DaoSQLBase implements IngresosDao {
         if (filas > 1) throw new SQLException("Se borraron más de un ingreso con uuid: " + ingreso.getUuid());
         return true;
     }
+
+
+
+
 
     private IngresoBO mapearIngreso(ResultSet rs) throws SQLException {
         IngresoBO ingreso = new IngresoBO();

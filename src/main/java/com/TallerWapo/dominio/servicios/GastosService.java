@@ -1,8 +1,8 @@
 package com.TallerWapo.dominio.servicios;
 
-import com.TallerWapo.dominio.bo.vehiculos.GastoBO;
+import com.TallerWapo.dominio.bo.contabilidad.GastoBO;
 import com.TallerWapo.dominio.contexto.Sesion;
-import com.TallerWapo.dominio.dto.GastoDTO;
+import com.TallerWapo.dominio.dto.contabilidad.GastoDTO;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,6 @@
-package com.TallerWapo.dominio.dto;
+package com.TallerWapo.dominio.dto.contabilidad;
 
-import com.TallerWapo.dominio.bo.vehiculos.IngresoBO;
-
-import java.util.Date;
+import com.TallerWapo.dominio.bo.contabilidad.IngresoBO;
 
 public class IngresoDTO {
 

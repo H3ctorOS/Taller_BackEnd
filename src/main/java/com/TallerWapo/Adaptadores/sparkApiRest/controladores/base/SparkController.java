@@ -21,7 +21,7 @@ public interface SparkController {
      * @return T si éxito, o null si error (pero el caller debe manejar el return de error en ruta)
      * @throws RuntimeException si error (para propagar y catch en ruta)
      */
-    public static <T> T JsonToBO(Request req, Class<T> clazz) {
+    public static <T> T JsonToDTO(Request req, Class<T> clazz) {
 
 
         String body = req.body();
