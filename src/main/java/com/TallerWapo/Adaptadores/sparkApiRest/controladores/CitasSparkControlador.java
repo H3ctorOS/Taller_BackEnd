@@ -1,9 +1,8 @@
 package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
-
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.base.SparkController;
 import com.TallerWapo.dominio.bo.RespuestaHttpBO;
-import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
+import com.TallerWapo.dominio.dto.CitaDTO;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.CitasControlador;
 import org.slf4j.Logger;
@@ -11,31 +10,34 @@ import org.slf4j.LoggerFactory;
 
 import static spark.Spark.*;
 
-
 public class CitasSparkControlador extends CitasControlador implements SparkController {
-    static final Logger logger = LoggerFactory.getLogger(CitasSparkControlador.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(CitasSparkControlador.class);
 
     private CitasSparkControlador() {
-        throw new AssertionError("No se puede instanciar clientesSpark");
+        throw new AssertionError("No se puede instanciar CitasSparkControlador");
     }
 
     public static void init() {
+
         path(rutaBase, () -> {
+
             /**
-             *  crear nueva cita
+             * Crear nueva cita
              */
             post(crearNuevaCita, (req, res) -> {
-                res.type(tipoJSON);  // Siempre setea JSON
+                res.type(tipoJSON);
                 logger.info("Guardando nueva cita");
+
                 RespuestaHttpBO respuesta;
 
-                try{
-                    //Rescatar objeto
-                    CitaBO cita = SparkController.JsonToDTO(req, CitaBO.class);
-                    respuesta = guardarNuevaCita(cita);
+                try {
+                    CitaDTO citaDTO = SparkController.JsonToDTO(req, CitaDTO.class);
+                    respuesta = guardarNuevaCita(citaDTO);
                     res.status(respuesta.getStatus());
 
-                }catch(Exception e){
+                } catch (Exception e) {
+                    logger.error("Error creando cita", e);
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
                     respuesta = new RespuestaHttpBO();
                     respuesta.setMensaje(e.getMessage());
@@ -45,20 +47,21 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             });
 
             /**
-             *  Actualizar cita
+             * Actualizar cita
              */
             post(actualizarCita, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Actualizando cita");
+
                 RespuestaHttpBO respuesta;
 
                 try {
-                    //rescatar json
-                    CitaBO cita = SparkController.JsonToDTO(req, CitaBO.class);
-                    respuesta = actualizarCita(cita);
+                    CitaDTO citaDTO = SparkController.JsonToDTO(req, CitaDTO.class);
+                    respuesta = actualizarCita(citaDTO);
                     res.status(respuesta.getStatus());
 
                 } catch (Exception e) {
+                    logger.error("Error actualizando cita", e);
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
                     respuesta = new RespuestaHttpBO();
                     respuesta.setMensaje(e.getMessage());
@@ -68,20 +71,21 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             });
 
             /**
-             *  Eliminar cita
+             * Eliminar cita
              */
             post(eliminarCita, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Eliminando cita");
+
                 RespuestaHttpBO respuesta;
 
                 try {
-                    //Rescatar objeto
-                    CitaBO cita = SparkController.JsonToDTO(req, CitaBO.class);
-                    respuesta = eliminarCita(cita);
+                    CitaDTO citaDTO = SparkController.JsonToDTO(req, CitaDTO.class);
+                    respuesta = eliminarCita(citaDTO);
                     res.status(respuesta.getStatus());
 
                 } catch (Exception e) {
+                    logger.error("Error eliminando cita", e);
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
                     respuesta = new RespuestaHttpBO();
                     respuesta.setMensaje(e.getMessage());
@@ -91,23 +95,21 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
             });
 
             /**
-             *  Buscar cita por vehiculo
+             * Buscar citas por vehículo
              */
             get(buscarPorVehiculo, (req, res) -> {
                 res.type(tipoJSON);
-                logger.info("Buscando citas por vehiculo");
-                logger.info("Get recibido: {}", req.toString());
+                logger.info("Buscando citas por vehículo");
 
                 RespuestaHttpBO respuesta;
 
                 try {
-                    // Rescata el parámetro de query
                     String vehiculoUuid = req.queryParams("vehiculoUuid");
-
                     respuesta = buscarCitasPorVehiculo(vehiculoUuid);
                     res.status(respuesta.getStatus());
 
                 } catch (Exception e) {
+                    logger.error("Error buscando citas por vehículo", e);
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
                     respuesta = new RespuestaHttpBO();
                     respuesta.setMensaje(e.getMessage());
@@ -116,19 +118,21 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
                 return gson.toJson(respuesta);
             });
 
-
             /**
-             *  Buscar todas
+             * Buscar todas las citas
              */
             get(buscarTodas, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Buscando todas las citas");
+
                 RespuestaHttpBO respuesta;
+
                 try {
                     respuesta = buscarTodas();
                     res.status(respuesta.getStatus());
 
                 } catch (Exception e) {
+                    logger.error("Error buscando todas las citas", e);
                     res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
                     respuesta = new RespuestaHttpBO();
                     respuesta.setMensaje(e.getMessage());

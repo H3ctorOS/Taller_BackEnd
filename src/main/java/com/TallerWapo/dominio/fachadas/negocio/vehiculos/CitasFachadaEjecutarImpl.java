@@ -1,6 +1,7 @@
 package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
 
 import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
+import com.TallerWapo.dominio.dto.CitaDTO;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.CitasDao;
@@ -8,62 +9,98 @@ import com.TallerWapo.dominio.servicios.CitasService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 
 public class CitasFachadaEjecutarImpl extends FachadaEjecutarBase {
-    static final Logger logger = LoggerFactory.getLogger(CitasFachadaEjecutarImpl.class);
 
-    public void guardarNuevaCita(CitaBO cita) throws Exception {
-        logger.info("Creando nueva cita: {}", cita.toString());
+    private static final Logger logger = LoggerFactory.getLogger(CitasFachadaEjecutarImpl.class);
 
-        ejecutarEnTransaccion(sesion ->{
+    public void guardarNuevaCita(CitaDTO citaDTO) throws Exception {
+        logger.info("Creando nueva cita");
+
+        ejecutarEnTransaccion(sesion -> {
             try {
+                CitaBO citaBO = mapearABO(citaDTO);
+
                 CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
 
-                CitasService.validarCita(sesion,cita);
+                CitasService.validarCita(sesion, citaBO);
 
-                cita.setCodigoEstado("ACTI");
-                citasDao.guardarNueva(cita);
+                citaBO.setCodigoEstado("ACTI");
+                citasDao.guardarNueva(citaBO);
 
             } catch (Exception e) {
-                throw new RuntimeException("Error interno al crear nueva cita",e);
+                throw new RuntimeException("Error interno al crear nueva cita", e);
             }
         });
 
         logger.info("Cita creada");
     }
 
+    public void actualizarCita(CitaDTO citaDTO) {
+        logger.info("Actualizando cita");
 
-    public void actualizarCita(CitaBO cita) {
-        logger.info("Actualizando cita: {}", cita.toString());
-
-        ejecutarEnTransaccion(sesion ->{
+        ejecutarEnTransaccion(sesion -> {
             try {
-                CitasService.validarCita(sesion,cita);
+                CitaBO citaBO = mapearABO(citaDTO);
+
+                CitasService.validarCita(sesion, citaBO);
 
                 CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
-                citasDao.actualizar(cita);
+                citasDao.actualizar(citaBO);
 
             } catch (Exception e) {
-                throw new RuntimeException("Error interno al actualizar cita",e);
+                throw new RuntimeException("Error interno al actualizar cita", e);
             }
         });
 
         logger.info("Cita actualizada");
     }
 
-    public void eliminarCita(CitaBO cita){
-        logger.info("Eliminando cita: {}", cita.getUuid());
+    public void eliminarCita(CitaDTO citaDTO) {
+        logger.info("Eliminando cita: {}", citaDTO.getUuid());
 
-        ejecutarEnTransaccion(sesion ->{
+        ejecutarEnTransaccion(sesion -> {
             try {
                 CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
-                citasDao.borrar(cita);
+
+                CitaBO citaBO = new CitaBO();
+                citaBO.setUuid(citaDTO.getUuid());
+
+                citasDao.borrar(citaBO);
 
             } catch (Exception e) {
-                throw new RuntimeException("Error interno al eliminar cita",e);
+                throw new RuntimeException("Error interno al eliminar cita", e);
             }
         });
 
         logger.info("Cita eliminada");
+    }
+
+    /**
+     * Mapper DTO → BO (privado a la fachada)
+     */
+    private CitaBO mapearABO(CitaDTO dto) {
+        CitaBO bo = new CitaBO();
+
+        bo.setUuid(dto.getUuid());
+        bo.setVehiculoUuid(dto.getVehiculoUuid());
+        bo.setConcepto(dto.getConcepto());
+        bo.setCodigoEstado(dto.getCodigoEstado());
+        bo.setObservaciones(dto.getObservaciones());
+
+        bo.setFechaInicio(
+                dto.getFechaInicio() > 0
+                        ? new Date(dto.getFechaInicio())
+                        : null
+        );
+
+        bo.setFechaFinalizada(
+                dto.getFechaFinalizada() != null
+                        ? new Date(dto.getFechaFinalizada())
+                        : null
+        );
+
+        return bo;
     }
 }
