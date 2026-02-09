@@ -19,6 +19,7 @@ public abstract class SistemaControlador implements ControladoresBase {
     // RUTAS
     protected static final String rutaBase = "/api/gestion/sistema";
     protected static final String apagarEquipo = "/apagarEquipo";
+    protected static final String estado = "/estado";
 
     protected static RespuestaHttpBO apagarEquipo() {
         logger.info("Orden apagar equipo");
@@ -28,6 +29,22 @@ public abstract class SistemaControlador implements ControladoresBase {
 
         try {
             fachadaSistema.ordenApagar();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return respuesta;
+    }
+
+    protected static RespuestaHttpBO estadoSistema() {
+        logger.info("Buscando estado del sistema");
+
+        RespuestaHttpBO respuesta = new RespuestaHttpBO();
+
+
+        try {
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);

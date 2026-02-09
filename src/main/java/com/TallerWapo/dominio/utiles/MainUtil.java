@@ -16,14 +16,14 @@ public class MainUtil {
     static final String nomnbreProperties = PropertiesUtils.getString(ARCHIVO_CONFIGURACION, "properties.nombreArhivoConfiguracionBase", null);
     static final String rutaCompletaProperties = rutaProperties+"/"+nomnbreProperties;
 
+
+
     public static boolean esPrimerArranque(){
 
         try {
             if(FicherosUtil.fileExists(rutaCompletaProperties)){
-                String version = PropertiesUtils.leerPropiedadDeFichero(rutaCompletaProperties,"Version");
-                String cantidadArranques = PropertiesUtils.leerPropiedadDeFichero(rutaCompletaProperties,"cantidadArranques");
-
-                int cantidad =  Integer.parseInt(cantidadArranques)+1;
+                String version = getVersion();
+                int cantidad = getCantidadArranques();
                 PropertiesUtils.setPropertyDeFichero(rutaCompletaProperties,"cantidadArranques", String.valueOf(cantidad));
 
                 logger.info("Version: "+version);
@@ -85,5 +85,15 @@ public class MainUtil {
             throw new RuntimeException(e);
         }
 
+    }
+
+
+    public static String getVersion() throws IOException {
+        return PropertiesUtils.leerPropiedadDeFichero(rutaCompletaProperties,"Version");
+    }
+
+    public static int getCantidadArranques() throws IOException {
+        String cantidadArranques = PropertiesUtils.leerPropiedadDeFichero(rutaCompletaProperties,"cantidadArranques");
+        return Integer.parseInt(cantidadArranques)+1;
     }
 }
