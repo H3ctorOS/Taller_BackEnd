@@ -2,8 +2,6 @@ package com.TallerWapo.dominio.dto;
 
 import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
 
-import java.util.Date;
-
 public class CitaDTO {
 
     int uuid;
