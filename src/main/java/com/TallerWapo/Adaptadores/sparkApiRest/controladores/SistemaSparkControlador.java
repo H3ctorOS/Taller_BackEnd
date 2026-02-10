@@ -43,6 +43,30 @@ public class SistemaSparkControlador extends SistemaControlador implements Spark
             });
 
 
+            /**
+             * Buscar citas por vehículo
+             */
+            get(estadoSistema, (req, res) -> {
+                res.type(tipoJSON);
+                logger.info("Dar resumen del sistema");
+
+                RespuestaHttpBO respuesta;
+
+                try {
+                    respuesta = estadoSistema();
+                    res.status(respuesta.getStatus());
+
+                } catch (Exception e) {
+                    logger.error("Error buscando el estado del sistema", e);
+                    res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
+                }
+
+                return gson.toJson(respuesta);
+            });
+
+
         });//el del init
     }
 }

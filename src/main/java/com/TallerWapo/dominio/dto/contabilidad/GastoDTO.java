@@ -1,8 +1,9 @@
 package com.TallerWapo.dominio.dto.contabilidad;
 
 import com.TallerWapo.dominio.bo.contabilidad.GastoBO;
+import com.TallerWapo.dominio.interfaces.base.DTOBase;
 
-public class GastoDTO {
+public class GastoDTO implements DTOBase {
 
     int uuid;
     String descripcion;

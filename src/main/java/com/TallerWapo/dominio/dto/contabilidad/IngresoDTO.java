@@ -1,8 +1,10 @@
 package com.TallerWapo.dominio.dto.contabilidad;
 
 import com.TallerWapo.dominio.bo.contabilidad.IngresoBO;
+import com.TallerWapo.dominio.interfaces.base.DTOBase;
 
-public class IngresoDTO {
+
+public class IngresoDTO implements DTOBase {
 
     int uuid;
     String concepto;
@@ -10,6 +12,7 @@ public class IngresoDTO {
     long fecha;
     String codEstado;
     String observaciones;
+
 
     // Constructor a partir de IngresoBO
     public IngresoDTO(IngresoBO ingresoBO) {

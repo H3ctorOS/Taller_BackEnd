@@ -24,7 +24,7 @@ public class GastosSparkControlador extends GastosControlador implements SparkCo
             /**
              * Crear nuevo gasto con cita
              */
-            post(crearNuevoGasto, (req, res) -> {
+            post(crearNuevoGastoCita, (req, res) -> {
                 res.type(tipoJSON);
                 logger.info("Guardando nuevo gasto con cita");
                 RespuestaHttpBO respuesta;

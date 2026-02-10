@@ -30,8 +30,9 @@
     ]]></query>
 
     <!-- Nueva sentencia: Guardar relación entre un ingreso y una cita -->
-    <query id="INGRESOS_INSERT_RELACION_CITA"><![CDATA[
+    <query id="INGRESOS_INSERT_CITA_RELACION"><![CDATA[
         INSERT INTO movimientos_asociaciones (tipo_movimiento, movimiento_id, tipo_entidad, entidad_id, observaciones)
-        VALUES ('INGRESO',?,'CITAS',?,)
+        VALUES ('INGRESO',?,'CITAS',?,?)
     ]]></query>
+
 </queries>

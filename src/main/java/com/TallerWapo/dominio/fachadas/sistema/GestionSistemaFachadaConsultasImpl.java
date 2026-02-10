@@ -1,18 +1,53 @@
 package com.TallerWapo.dominio.fachadas.sistema;
 
-import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
-import com.TallerWapo.dominio.utiles.SistemaUtils;
+import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
+import com.TallerWapo.dominio.bo.contabilidad.GastoBO;
+import com.TallerWapo.dominio.bo.contabilidad.IngresoBO;
+import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.dto.gestion.ResumenDatosAppDTO;
+import com.TallerWapo.dominio.fachadas.base.FachadaConsultaBase;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
+import com.TallerWapo.dominio.interfaces.Daos.ClientesDao;
+import com.TallerWapo.dominio.interfaces.Daos.GastoDao;
+import com.TallerWapo.dominio.interfaces.Daos.IngresosDao;
+import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
+import com.TallerWapo.dominio.utiles.MainUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GestionSistemaFachadaConsultasImpl extends FachadaEjecutarBase {
+import java.util.List;
+
+public class GestionSistemaFachadaConsultasImpl extends FachadaConsultaBase {
     static final Logger logger = LoggerFactory.getLogger(GestionSistemaFachadaConsultasImpl.class);
 
-    public int vecesArrancado(){
-       return 22;
+    private final ClientesDao clientesDao = ContextoDaos.getClienteDao(SESION);
+    private final VehiculosDao vehiculoDao = ContextoDaos.getVehiculoDao(SESION);
+    private final IngresosDao ingresosDao = ContextoDaos.getIngresoDao(SESION);
+
+    private final GastoDao gastoDao = ContextoDaos.getGastoDao(SESION);
+
+    public ResumenDatosAppDTO estadoDelSistema() throws Exception {
+
+        ResumenDatosAppDTO  resumenDatosAppDTO = new ResumenDatosAppDTO();
+
+        resumenDatosAppDTO.setCantidadArranques(MainUtil.getCantidadArranques());
+        resumenDatosAppDTO.setVersion(MainUtil.getVersion());
+
+        List<ClienteBO>  listaClientes = clientesDao.buscarTodos();
+        resumenDatosAppDTO.setTotalClientes(listaClientes.size());
+
+        List<VehiculoBO>  listaVehiculos = vehiculoDao.buscarTodos();
+        resumenDatosAppDTO.setTotalVehiculos(listaVehiculos.size());
+
+        List<IngresoBO> listaIngresos = ingresosDao.buscarTodos();
+        resumenDatosAppDTO.setTotalIngresos(listaIngresos.size());
+
+        List<GastoBO>  listaGastos = gastoDao.buscarTodos();
+        resumenDatosAppDTO.setTotalGastos(listaGastos.size());
+
+
+        return  resumenDatosAppDTO;
     }
 
-    public String versionApp(){
-        return "0.0.00";
-    }
+
 }

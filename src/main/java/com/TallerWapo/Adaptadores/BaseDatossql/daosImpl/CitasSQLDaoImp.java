@@ -1,10 +1,15 @@
 package com.TallerWapo.Adaptadores.BaseDatossql.daosImpl;
 
 import com.TallerWapo.Adaptadores.BaseDatossql.daosImpl.base.DaoSQLBase;
+import com.TallerWapo.dominio.bo.contabilidad.GastoBO;
+import com.TallerWapo.dominio.bo.contabilidad.IngresoBO;
 import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
 import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.contexto.Sesion;
+import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.CitasDao;
+import com.TallerWapo.dominio.interfaces.Daos.GastoDao;
+import com.TallerWapo.dominio.interfaces.Daos.IngresosDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
@@ -12,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
+
+    private final IngresosDao ingresosDao;
+    private final GastoDao gastoDao;
+
     private final String ARCHIVO_SQL = "sentenciasSQL/citasSQL.XML";
 
     private final String CITAS_SELECT_ALL = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_SELECT_ALL");
@@ -22,6 +31,8 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
 
     public CitasSQLDaoImp(Sesion sesion) {
         super(sesion);
+        ingresosDao = ContextoDaos.getIngresoDao(sesion);
+        gastoDao = ContextoDaos.getGastoDao(sesion);
     }
 
     @Override
@@ -106,7 +117,7 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
         return true;
     }
 
-    private CitaBO mapearCita(ResultSet rs) throws SQLException {
+    private CitaBO mapearCita(ResultSet rs) throws Exception {
         CitaBO cita = new CitaBO();
 
         cita.setUuid(rs.getInt("id"));
@@ -116,6 +127,10 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
         cita.setFechaFinalizada(rs.getDate("fechaFinalizada"));
         cita.setCodigoEstado(rs.getString("cod_estado"));
         cita.setObservaciones(rs.getString("observaciones"));
+
+        //Setear ingresos y gatos
+        cita.setGastos(gastoDao.buscarPorCita(cita));
+        cita.setIngresos(ingresosDao.buscarPorCita(cita));
 
         return cita;
     }

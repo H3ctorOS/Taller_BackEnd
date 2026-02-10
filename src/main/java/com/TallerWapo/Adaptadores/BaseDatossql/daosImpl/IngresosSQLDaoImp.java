@@ -118,7 +118,7 @@ public class IngresosSQLDaoImp extends DaoSQLBase implements IngresosDao {
 
 
 
-    private IngresoBO mapearIngreso(ResultSet rs) throws SQLException {
+    public IngresoBO mapearIngreso(ResultSet rs) throws SQLException {
         IngresoBO ingreso = new IngresoBO();
         ingreso.setUuid(rs.getInt("id"));
         ingreso.setConcepto(rs.getString("concepto"));

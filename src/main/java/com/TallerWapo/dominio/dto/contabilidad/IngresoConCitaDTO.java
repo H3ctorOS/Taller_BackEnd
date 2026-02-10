@@ -1,8 +1,9 @@
 package com.TallerWapo.dominio.dto.contabilidad;
 
 import com.TallerWapo.dominio.dto.CitaDTO;
+import com.TallerWapo.dominio.interfaces.base.DTOBase;
 
-public class IngresoConCitaDTO {
+public class IngresoConCitaDTO implements DTOBase {
     IngresoDTO ingreso;
     CitaDTO cita;
 

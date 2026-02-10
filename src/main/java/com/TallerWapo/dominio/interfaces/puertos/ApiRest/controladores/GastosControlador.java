@@ -19,7 +19,7 @@ public abstract class GastosControlador implements ControladoresBase {
     protected static final String rutaBase = "/api/gastos";
     protected static final String buscarTodos = "/buscarTodos";
     protected static final String buscarPorCita = "/buscarPorCita";
-    protected static final String crearNuevoGasto = "/crearNuevoGasto";
+    protected static final String crearNuevoGastoCita = "/crearNuevoGastoCita";
     protected static final String actualizarGasto = "/actualizarGasto";
     protected static final String eliminarGasto = "/eliminarGasto";
 
