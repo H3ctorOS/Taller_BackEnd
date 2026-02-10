@@ -21,6 +21,7 @@ public class GastosSQLDaoImp extends DaoSQLBase implements GastoDao {
     private final String GASTOS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "GASTOS_UPDATE");
     private final String GASTOS_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "GASTOS_DELETE");
     private final String GASTOS_INSERT_CITA_RELACION = XmlUtil.loadSql(ARCHIVO_SQL, "GASTOS_INSERT_CITA_RELACION");
+    private final String TOAL_GASTADO = XmlUtil.loadSql(ARCHIVO_SQL, "TOAL_GASTADO");
 
     public GastosSQLDaoImp(Sesion sesion) {
         super(sesion);
@@ -107,6 +108,23 @@ public class GastosSQLDaoImp extends DaoSQLBase implements GastoDao {
         if (filas == 0) return false;
         if (filas > 1) throw new SQLException("Se borraron más de un gasto con uuid: " + gasto.getUuid());
         return true;
+    }
+
+    @Override
+    public double togalGastado() throws Exception {
+        double total = 0.0;
+        try (Statement stmt = conexion.createStatement();
+             ResultSet rs = stmt.executeQuery(TOAL_GASTADO)) {
+
+            if (rs.next()) {
+                total = rs.getDouble(1);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error al calcular el total gastado", e);
+        }
+
+        return total;
     }
 
     private GastoBO mapearGasto(ResultSet rs) throws SQLException {

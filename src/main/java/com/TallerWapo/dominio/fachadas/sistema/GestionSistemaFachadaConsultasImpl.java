@@ -1,8 +1,6 @@
 package com.TallerWapo.dominio.fachadas.sistema;
 
 import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
-import com.TallerWapo.dominio.bo.contabilidad.GastoBO;
-import com.TallerWapo.dominio.bo.contabilidad.IngresoBO;
 import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
 import com.TallerWapo.dominio.dto.gestion.ResumenDatosAppDTO;
 import com.TallerWapo.dominio.fachadas.base.FachadaConsultaBase;
@@ -39,12 +37,8 @@ public class GestionSistemaFachadaConsultasImpl extends FachadaConsultaBase {
         List<VehiculoBO>  listaVehiculos = vehiculoDao.buscarTodos();
         resumenDatosAppDTO.setTotalVehiculos(listaVehiculos.size());
 
-        List<IngresoBO> listaIngresos = ingresosDao.buscarTodos();
-        resumenDatosAppDTO.setTotalIngresos(listaIngresos.size());
-
-        List<GastoBO>  listaGastos = gastoDao.buscarTodos();
-        resumenDatosAppDTO.setTotalGastos(listaGastos.size());
-
+        resumenDatosAppDTO.setTotalIngresos(ingresosDao.togalIngresado());
+        resumenDatosAppDTO.setTotalGastos(gastoDao.togalGastado());
 
         return  resumenDatosAppDTO;
     }

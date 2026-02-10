@@ -34,4 +34,8 @@
         INSERT INTO movimientos_asociaciones (tipo_movimiento, movimiento_id, tipo_entidad, entidad_id, observaciones)
         VALUES ('GASTO',?,'CITAS',?,?)
     ]]></query>
+
+    <query id="TOAL_GASTADO"><![CDATA[
+        SELECT SUM(importe) AS total_gastos FROM gastos;
+    ]]></query>
 </queries>

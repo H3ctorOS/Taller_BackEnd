@@ -12,4 +12,5 @@ public interface IngresosDao {
     boolean guardarRelacionCita(IngresoBO ingreso, CitaBO cita) throws Exception;
     boolean actualizar(IngresoBO ingreso) throws Exception;
     boolean borrar(IngresoBO ingreso) throws Exception;
+    double togalIngresado() throws Exception;
 }

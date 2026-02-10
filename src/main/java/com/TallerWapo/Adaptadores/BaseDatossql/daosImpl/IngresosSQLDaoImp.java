@@ -20,6 +20,7 @@ public class IngresosSQLDaoImp extends DaoSQLBase implements IngresosDao {
     private final String INGRESOS_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "INGRESOS_INSERT");
     private final String INGRESOS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "INGRESOS_UPDATE");
     private final String INGRESOS_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "INGRESOS_DELETE");
+    private final String TOTAL_INGRESADO = XmlUtil.loadSql(ARCHIVO_SQL, "TOTAL_INGRESADO");
 
     private final String INGRESOS_INSERT_CITA_RELACION = XmlUtil.loadSql(ARCHIVO_SQL, "INGRESOS_INSERT_CITA_RELACION");
 
@@ -114,8 +115,23 @@ public class IngresosSQLDaoImp extends DaoSQLBase implements IngresosDao {
         return true;
     }
 
+    @Override
+    public double togalIngresado() throws Exception {
+        double total = 0.0;
 
+        try (Statement stmt = conexion.createStatement();
+             ResultSet rs = stmt.executeQuery(TOTAL_INGRESADO)) {
 
+            if (rs.next()) {
+                total = rs.getDouble(1); // SUM(importe) se devuelve como la primera columna
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error al calcular el total ingresado", e);
+        }
+
+        return total;
+    }
 
 
     public IngresoBO mapearIngreso(ResultSet rs) throws SQLException {

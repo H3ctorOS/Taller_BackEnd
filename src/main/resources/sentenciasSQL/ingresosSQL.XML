@@ -35,4 +35,8 @@
         VALUES ('INGRESO',?,'CITAS',?,?)
     ]]></query>
 
+    <query id="TOTAL_INGRESADO"><![CDATA[
+        SELECT SUM(importe) AS total_ingresos FROM ingresos;
+    ]]></query>
+
 </queries>
