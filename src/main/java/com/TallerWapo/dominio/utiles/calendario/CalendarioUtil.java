@@ -1,5 +1,7 @@
 package com.TallerWapo.dominio.utiles.calendario;
 
+import com.TallerWapo.dominio.dto.calendario.SemanaSelectorDTO;
+import com.TallerWapo.dominio.dto.calendario.SemanasDelAnioDTO;
 import com.TallerWapo.dominio.utiles.calendario.complementos.SemanaISO;
 import com.TallerWapo.dominio.utiles.calendario.complementos.DiasNoLaborablesProvider;
 
@@ -9,9 +11,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.temporal.WeekFields;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Utilidad de calendario profesional.
@@ -188,6 +188,36 @@ public final class CalendarioUtil {
     /** Devuelve el año ISO de la semana actual */
     public static int obtenerAnioActualISO() {
         return obtenerAnioSemanaISO(LocalDate.now());
+    }
+
+    /**
+     * Genera un DTO con todas las semanas ISO de un año, organizadas por mes.
+     *
+     * Cada semana se representa con su número ISO y el año correspondiente,
+     * y se asigna al mes al que pertenece su lunes de referencia.
+     * Este DTO es útil para construir selectores de semana en el front-end.
+     *
+     * Ejemplo de salida:
+     *  - Mes 1 → [Semana 1, Semana 2, Semana 3, ...]
+     *  - Mes 2 → [Semana 5, Semana 6, ...]
+     *
+     * @param anio Año ISO para el que se quieren obtener las semanas
+     * @return SemanasDelAnioDTO que contiene un mapa de semanas por mes
+     */
+    public static SemanasDelAnioDTO obtenerSemanasDelAnio(int anio) {
+        Map<Integer, List<SemanaSelectorDTO>> semanasPorMes = new HashMap<>();
+        LocalDate fechaReferencia = LocalDate.of(anio, 1, 4); // semana 1
+
+        int totalSemanas = obtenerNumeroSemanasDelAnioISO(anio);
+
+        for (int semana = 1; semana <= totalSemanas; semana++) {
+            LocalDate lunes = obtenerLunesDeSemanaISO(semana, anio);
+            int mes = lunes.getMonthValue();
+            semanasPorMes.computeIfAbsent(mes, k -> new ArrayList<>())
+                    .add(new SemanaSelectorDTO(semana, lunes.getYear()));
+        }
+
+        return new SemanasDelAnioDTO(semanasPorMes);
     }
 
 }
