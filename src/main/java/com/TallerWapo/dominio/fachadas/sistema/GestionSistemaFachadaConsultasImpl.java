@@ -2,6 +2,7 @@ package com.TallerWapo.dominio.fachadas.sistema;
 
 import com.TallerWapo.dominio.bo.Clientes.ClienteBO;
 import com.TallerWapo.dominio.bo.vehiculos.VehiculoBO;
+import com.TallerWapo.dominio.dto.calendario.SemanasDelAnioDTO;
 import com.TallerWapo.dominio.dto.gestion.ResumenDatosAppDTO;
 import com.TallerWapo.dominio.fachadas.base.FachadaConsultaBase;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
@@ -10,6 +11,7 @@ import com.TallerWapo.dominio.interfaces.Daos.GastoDao;
 import com.TallerWapo.dominio.interfaces.Daos.IngresosDao;
 import com.TallerWapo.dominio.interfaces.Daos.VehiculosDao;
 import com.TallerWapo.dominio.utiles.MainUtil;
+import com.TallerWapo.dominio.utiles.calendario.CalendarioUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,5 +45,9 @@ public class GestionSistemaFachadaConsultasImpl extends FachadaConsultaBase {
         return  resumenDatosAppDTO;
     }
 
+    public SemanasDelAnioDTO obtenerSemanasDelAnio(int anio) {
+        logger.debug("Iniciando obtenerSemanasDelAnio");
+        return CalendarioUtil.obtenerSemanasDelAnio(anio);
+    }
 
 }

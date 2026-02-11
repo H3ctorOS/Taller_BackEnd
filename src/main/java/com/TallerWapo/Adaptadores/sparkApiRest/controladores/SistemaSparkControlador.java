@@ -66,6 +66,29 @@ public class SistemaSparkControlador extends SistemaControlador implements Spark
                 return gson.toJson(respuesta);
             });
 
+            /**
+             * Buscar semanas del aniu
+             */
+            get(semanasDelAnio, (req, res) -> {
+                res.type(tipoJSON);
+                logger.info("Buscando todas las semanas del anio");
+                RespuestaHttpBO respuesta;
+
+                try {
+                    String anio = req.queryParams("anio");
+                    respuesta = obtenerSemanasAnio(Integer.parseInt(anio));
+                    res.status(respuesta.getStatus());
+
+                } catch (Exception e) {
+                    logger.error("Error buscando las semanas del anio", e);
+                    res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
+                }
+
+                return gson.toJson(respuesta);
+            });
+
 
         });//el del init
     }

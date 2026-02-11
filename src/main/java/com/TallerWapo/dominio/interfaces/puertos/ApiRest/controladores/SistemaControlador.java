@@ -1,6 +1,7 @@
 package com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores;
 
 import com.TallerWapo.dominio.bo.RespuestaHttpBO;
+import com.TallerWapo.dominio.dto.calendario.SemanasDelAnioDTO;
 import com.TallerWapo.dominio.dto.gestion.ResumenDatosAppDTO;
 import com.TallerWapo.dominio.fachadas.sistema.GestionSistemaFachadaConsultasImpl;
 import com.TallerWapo.dominio.fachadas.sistema.GestionSistemaFachadaEjecutarImpl;
@@ -17,6 +18,7 @@ public abstract class SistemaControlador implements ControladoresBase {
     protected static final String rutaBase = "/api/gestion/sistema";
     protected static final String apagarEquipo = "/apagarEquipo";
     protected static final String estadoSistema = "/estado";
+    protected static final String semanasDelAnio = "/semanasDelAnio";
 
     protected static RespuestaHttpBO apagarEquipo() {
         logger.info("Orden apagar equipo");
@@ -45,6 +47,21 @@ public abstract class SistemaControlador implements ControladoresBase {
         respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
         respuesta.setMensaje("Sistema todo OK");
         respuesta.setObjeto(datos);
+
+        return respuesta;
+    }
+
+    protected static RespuestaHttpBO obtenerSemanasAnio(int anio) throws Exception {
+        logger.info("Buscando las semanas del anio: " + anio);
+
+        RespuestaHttpBO respuesta = new RespuestaHttpBO();
+        GestionSistemaFachadaConsultasImpl consultasSistema = new GestionSistemaFachadaConsultasImpl();
+
+        SemanasDelAnioDTO semanas = consultasSistema.obtenerSemanasDelAnio(anio);
+        respuesta.setIsOk(true);
+        respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
+        respuesta.setMensaje("OK");
+        respuesta.setObjeto(semanas);
 
         return respuesta;
     }
