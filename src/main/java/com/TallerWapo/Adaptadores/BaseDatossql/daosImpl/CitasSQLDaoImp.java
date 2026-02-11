@@ -13,6 +13,7 @@ import com.TallerWapo.dominio.interfaces.Daos.IngresosDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
     private final String CITAS_INSERT = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_INSERT");
     private final String CITAS_UPDATE = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_UPDATE");
     private final String CITAS_DELETE = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_DELETE");
+    private final String CITAS_ACTIVAS_DIA = XmlUtil.loadSql(ARCHIVO_SQL, "CITAS_ACTIVAS_DIA");
 
     public CitasSQLDaoImp(Sesion sesion) {
         super(sesion);
@@ -115,6 +117,24 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
         }
 
         return true;
+    }
+
+    @Override
+    public List<CitaBO> buscarAcivasDia(Long dia) throws Exception {
+        List<CitaBO> list = new ArrayList<>();
+
+        try (PreparedStatement ps = conexion.prepareStatement(CITAS_ACTIVAS_DIA)) {
+            ps.setLong(1, dia);
+            ps.setLong(2, dia);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapearCita(rs));
+                }
+            }
+        }
+
+        return list;
     }
 
     private CitaBO mapearCita(ResultSet rs) throws Exception {

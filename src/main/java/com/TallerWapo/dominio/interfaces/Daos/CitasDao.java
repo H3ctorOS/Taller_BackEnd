@@ -11,4 +11,5 @@ public interface CitasDao {
     boolean guardarNueva(CitaBO cita) throws Exception;
     boolean actualizar(CitaBO cita) throws Exception;
     boolean borrar(CitaBO cita) throws Exception;
+    List<CitaBO> buscarAcivasDia(Long dia) throws Exception;
 }

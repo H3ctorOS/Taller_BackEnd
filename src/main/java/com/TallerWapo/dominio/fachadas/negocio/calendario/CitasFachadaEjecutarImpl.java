@@ -1,7 +1,7 @@
-package com.TallerWapo.dominio.fachadas.negocio.vehiculos;
+package com.TallerWapo.dominio.fachadas.negocio.calendario;
 
 import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
-import com.TallerWapo.dominio.dto.CitaDTO;
+import com.TallerWapo.dominio.dto.calendario.CitaDTO;
 import com.TallerWapo.dominio.fachadas.base.FachadaEjecutarBase;
 import com.TallerWapo.dominio.factorias.ContextoDaos;
 import com.TallerWapo.dominio.interfaces.Daos.CitasDao;

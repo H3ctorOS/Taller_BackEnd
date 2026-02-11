@@ -1,4 +1,4 @@
-package com.TallerWapo.dominio.dto;
+package com.TallerWapo.dominio.dto.calendario;
 
 import com.TallerWapo.dominio.bo.vehiculos.CitaBO;
 import com.TallerWapo.dominio.dto.contabilidad.GastoDTO;

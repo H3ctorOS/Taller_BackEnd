@@ -1,9 +1,9 @@
 package com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores;
 
 import com.TallerWapo.dominio.bo.RespuestaHttpBO;
-import com.TallerWapo.dominio.dto.CitaDTO;
-import com.TallerWapo.dominio.fachadas.negocio.vehiculos.CitasFachadaConsultasImpl;
-import com.TallerWapo.dominio.fachadas.negocio.vehiculos.CitasFachadaEjecutarImpl;
+import com.TallerWapo.dominio.dto.calendario.CitaDTO;
+import com.TallerWapo.dominio.fachadas.negocio.calendario.CitasFachadaConsultasImpl;
+import com.TallerWapo.dominio.fachadas.negocio.calendario.CitasFachadaEjecutarImpl;
 import com.TallerWapo.dominio.interfaces.base.ControladoresBase;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import org.slf4j.Logger;

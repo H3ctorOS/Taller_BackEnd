@@ -114,6 +114,28 @@
         observaciones TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS festivos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fecha DATE NOT NULL UNIQUE,
+        descripcion TEXT,
+        observaciones TEXT
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_festivos_fecha ON festivos(fecha);
+
+
+    CREATE TABLE IF NOT EXISTS vacaciones (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          mecanico_id INTEGER NOT NULL,       -- referencia a la tabla mecanicos
+          fechaInicio DATE NOT NULL,
+          fechaFin DATE NOT NULL,
+          descripcion TEXT,
+          observaciones TEXT,
+          FOREIGN KEY (mecanico_id) REFERENCES mecanicos(id)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_vacaciones_fecha ON vacaciones(fechaInicio, fechaFin);
+
 
 
 --INDICES

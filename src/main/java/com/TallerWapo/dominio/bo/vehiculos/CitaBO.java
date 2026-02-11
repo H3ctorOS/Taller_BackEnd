@@ -2,7 +2,7 @@ package com.TallerWapo.dominio.bo.vehiculos;
 
 import com.TallerWapo.dominio.bo.contabilidad.GastoBO;
 import com.TallerWapo.dominio.bo.contabilidad.IngresoBO;
-import com.TallerWapo.dominio.dto.CitaDTO;
+import com.TallerWapo.dominio.dto.calendario.CitaDTO;
 import com.TallerWapo.dominio.interfaces.base.BoBase;
 
 import java.util.Date;

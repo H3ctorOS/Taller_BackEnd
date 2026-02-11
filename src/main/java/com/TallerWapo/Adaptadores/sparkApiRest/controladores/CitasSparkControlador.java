@@ -2,7 +2,7 @@ package com.TallerWapo.Adaptadores.sparkApiRest.controladores;
 
 import com.TallerWapo.Adaptadores.sparkApiRest.controladores.base.SparkController;
 import com.TallerWapo.dominio.bo.RespuestaHttpBO;
-import com.TallerWapo.dominio.dto.CitaDTO;
+import com.TallerWapo.dominio.dto.calendario.CitaDTO;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.EstadoRespuestaHTTP;
 import com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores.CitasControlador;
 import org.slf4j.Logger;
