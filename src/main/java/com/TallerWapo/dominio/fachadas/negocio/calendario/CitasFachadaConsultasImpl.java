@@ -60,15 +60,4 @@ public class CitasFachadaConsultasImpl extends FachadaConsultaBase {
         }
     }
 
-    public CitaSemanaDTO buscarPorSemanaActual() {
-        try {
-            int numeroSemana = CalendarioUtil.obtenerSemanaActualISO();
-            int anio = CalendarioUtil.obtenerAnioActualISO();
-            return CitasService.buscarCitaSemana(SESION, numeroSemana, anio);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

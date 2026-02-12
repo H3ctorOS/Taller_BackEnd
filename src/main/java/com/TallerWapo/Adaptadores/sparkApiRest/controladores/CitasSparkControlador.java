@@ -140,6 +140,35 @@ public class CitasSparkControlador extends CitasControlador implements SparkCont
 
                 return gson.toJson(respuesta);
             });
+
+            /**
+             * Buscar citas por semana del anio
+             */
+            get(buscarCitasSemanaAnio, (req, res) -> {
+                res.type(tipoJSON);
+                logger.info("Buscando citas por semana del anio");
+
+                RespuestaHttpBO respuesta;
+
+                try {
+                    String anio = req.queryParams("anio");
+                    String semana = req.queryParams("semana");
+
+                    respuesta = buscarCitasSemanaAnio(Integer.parseInt(anio),Integer.parseInt(semana));
+                    res.status(respuesta.getStatus());
+
+                } catch (Exception e) {
+                    logger.error("Error buscando citas por vehículo", e);
+                    res.status(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
+                    respuesta = new RespuestaHttpBO();
+                    respuesta.setMensaje(e.getMessage());
+                }
+
+                return gson.toJson(respuesta);
+            });
+
+
+
         });
     }
 }

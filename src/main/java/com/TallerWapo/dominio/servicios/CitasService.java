@@ -69,30 +69,34 @@ public class CitasService {
      * @param sesion sesión actual
      * @return DTO de la semana con fechas y citas
      */
-    public static CitaSemanaDTO buscarCitaSemana(Sesion sesion,int numeroSemana, int anio) throws Exception {
+    public static CitaSemanaDTO buscarCitaSemana(Sesion sesion, int numeroSemana, int anio) throws Exception {
 
         CitasDao citasDao = ContextoDaos.getCitaDao(sesion);
 
         // ── 1. Obtenemos el lunes de la semana
         LocalDate lunesSemana = CalendarioUtil.obtenerLunesDeSemanaISO(numeroSemana, anio);
 
-        Map<DayOfWeek, Long> fechas = new HashMap<>();
-        Map<DayOfWeek, List<CitaDTO>> citasPorDia = new HashMap<>();
+        Map<String, Long> fechas = new HashMap<>();
+        Map<String, List<CitaDTO>> citasPorDia = new HashMap<>();
 
         // ── 2. Recorremos lunes a viernes
         for (int i = 0; i < 5; i++) {
             LocalDate dia = lunesSemana.plusDays(i);
-            DayOfWeek dayOfWeek = dia.getDayOfWeek();
+            String nombreDia = CalendarioUtil.diaSemanaEsp(dia.getDayOfWeek());
 
-            fechas.put(dayOfWeek, dia.toEpochDay());
+            // ✅ Convertir a milisegundos
+            long milis = CalendarioUtil.toMillis(dia);
+
+            fechas.put(nombreDia, milis);
 
             // ── 3. Buscamos todas las citas activas de ese día
-            List<CitaBO> citasBO = citasDao.buscarAcivasDia(dia.toEpochDay());
-            citasPorDia.put(dayOfWeek, toDTOList(citasBO));
+            List<CitaBO> citasBO = citasDao.buscarAcivasDia(milis);
+            citasPorDia.put(nombreDia, toDTOList(citasBO));
         }
 
         // ── 4. Construimos el DTO
         return new CitaSemanaDTO(numeroSemana, fechas, citasPorDia);
     }
+
 
 }

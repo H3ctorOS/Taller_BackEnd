@@ -127,6 +127,10 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
             ps.setLong(1, dia);
             ps.setLong(2, dia);
 
+            // 🔹 LOG SIMPLE para debug:
+            System.out.println("DEBUG SQL: " + CITAS_ACTIVAS_DIA);
+            System.out.println("DEBUG PARAMS: dia=" + dia);
+
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     list.add(mapearCita(rs));

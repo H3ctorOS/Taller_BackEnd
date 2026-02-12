@@ -2,6 +2,7 @@ package com.TallerWapo.dominio.interfaces.puertos.ApiRest.controladores;
 
 import com.TallerWapo.dominio.bo.RespuestaHttpBO;
 import com.TallerWapo.dominio.dto.calendario.CitaDTO;
+import com.TallerWapo.dominio.dto.calendario.CitaSemanaDTO;
 import com.TallerWapo.dominio.fachadas.negocio.calendario.CitasFachadaConsultasImpl;
 import com.TallerWapo.dominio.fachadas.negocio.calendario.CitasFachadaEjecutarImpl;
 import com.TallerWapo.dominio.interfaces.base.ControladoresBase;
@@ -22,6 +23,8 @@ public abstract class CitasControlador implements ControladoresBase {
     protected static final String crearNuevaCita = "/crearNuevaCita";
     protected static final String actualizarCita = "/actualizarCita";
     protected static final String eliminarCita = "/eliminarCita";
+    protected static final String buscarCitasSemanaAnio = "/buscarCitasSemanaAnio";
+
 
     protected static RespuestaHttpBO buscarTodas() {
         logger.info("Buscando todas las citas");
@@ -128,6 +131,30 @@ public abstract class CitasControlador implements ControladoresBase {
             respuesta.setIsOk(false);
             respuesta.setStatus(EstadoRespuestaHTTP.INTERNAL_SERVER_ERROR.getCodigo());
             respuesta.setMensaje("Error eliminando cita: " + e.getMessage());
+        }
+
+        return respuesta;
+    }
+
+
+    protected static RespuestaHttpBO buscarCitasSemanaAnio(int anio, int semana) {
+        logger.info("Buscando citas de semana : " + semana + ", anio: " + anio);
+
+        RespuestaHttpBO respuesta = new RespuestaHttpBO();
+        CitasFachadaConsultasImpl fachada = new CitasFachadaConsultasImpl();
+        CitaSemanaDTO citas = fachada.buscarPorSemana(semana,anio);
+
+        if (citas != null) {
+            respuesta.setObjeto(citas);
+            respuesta.setIsOk(true);
+            respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
+            respuesta.setMensaje("Citas encontradas");
+
+        } else {
+            respuesta.setObjeto(null);
+            respuesta.setIsOk(true);
+            respuesta.setStatus(EstadoRespuestaHTTP.OK.getCodigo());
+            respuesta.setMensaje("Citas no encontradas");
         }
 
         return respuesta;
