@@ -190,34 +190,60 @@ public final class CalendarioUtil {
         return obtenerAnioSemanaISO(LocalDate.now());
     }
 
-    /**
-     * Genera un DTO con todas las semanas ISO de un año, organizadas por mes.
-     *
-     * Cada semana se representa con su número ISO y el año correspondiente,
-     * y se asigna al mes al que pertenece su lunes de referencia.
-     * Este DTO es útil para construir selectores de semana en el front-end.
-     *
-     * Ejemplo de salida:
-     *  - Mes 1 → [Semana 1, Semana 2, Semana 3, ...]
-     *  - Mes 2 → [Semana 5, Semana 6, ...]
-     *
-     * @param anio Año ISO para el que se quieren obtener las semanas
-     * @return SemanasDelAnioDTO que contiene un mapa de semanas por mes
-     */
-    public static SemanasDelAnioDTO obtenerSemanasDelAnio(int anio) {
-        Map<Integer, List<SemanaSelectorDTO>> semanasPorMes = new HashMap<>();
-        LocalDate fechaReferencia = LocalDate.of(anio, 1, 4); // semana 1
 
+    /**
+     * Devuelve un DTO con todas las semanas ISO de un año, organizadas por mes.
+     * Usa un cache interno para no recalcular las semanas repetidamente.
+     *
+     * @param anio Año ISO para generar las semanas
+     * @return SemanasDelAnioDTO con semanas por mes
+     */
+    private static final Map<Integer, SemanasDelAnioDTO> CACHE_SEMANAS_ANIO = new HashMap<>();
+    public static SemanasDelAnioDTO obtenerSemanasDelAnio(int anio) {
+        // ── Revisar cache
+        if (CACHE_SEMANAS_ANIO.containsKey(anio)) {
+            SemanasDelAnioDTO cached = CACHE_SEMANAS_ANIO.get(anio);
+
+            // ── Actualizamos solo la marca de la semana actual al vuelo
+            int semanaActual = CalendarioUtil.obtenerSemanaActualISO();
+            Map<Integer, List<SemanaSelectorDTO>> semanasActualizadas = new TreeMap<>();
+
+            cached.semanasPorMes().forEach((mes, lista) -> {
+                List<SemanaSelectorDTO> nuevaLista = new ArrayList<>();
+                for (SemanaSelectorDTO s : lista) {
+                    nuevaLista.add(new SemanaSelectorDTO(
+                            s.numeroSemana(),
+                            s.anio(),
+                            s.numeroSemana() == semanaActual
+                    ));
+                }
+                semanasActualizadas.put(mes, nuevaLista);
+            });
+
+            return new SemanasDelAnioDTO(semanasActualizadas);
+        }
+
+        // ── Generar nuevo DTO si no está en cache
+        Map<Integer, List<SemanaSelectorDTO>> semanasPorMes = new TreeMap<>();
         int totalSemanas = obtenerNumeroSemanasDelAnioISO(anio);
+        int semanaActual = CalendarioUtil.obtenerSemanaActualISO();
 
         for (int semana = 1; semana <= totalSemanas; semana++) {
             LocalDate lunes = obtenerLunesDeSemanaISO(semana, anio);
-            int mes = lunes.getMonthValue();
+            LocalDate jueves = lunes.plusDays(3); // referencia ISO correcta
+            int mes = jueves.getMonthValue();
+
             semanasPorMes.computeIfAbsent(mes, k -> new ArrayList<>())
-                    .add(new SemanaSelectorDTO(semana, lunes.getYear()));
+                    .add(new SemanaSelectorDTO(semana, lunes.getYear(), semana == semanaActual));
         }
 
-        return new SemanasDelAnioDTO(semanasPorMes);
+        SemanasDelAnioDTO dto = new SemanasDelAnioDTO(semanasPorMes);
+        CACHE_SEMANAS_ANIO.put(anio, dto); // Guardar en cache
+        return dto;
     }
+
+
+
+
 
 }
