@@ -13,7 +13,11 @@ import com.TallerWapo.dominio.interfaces.Daos.IngresosDao;
 import com.TallerWapo.dominio.utiles.XmlUtil;
 
 import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,17 +123,29 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
         return true;
     }
 
-    @Override
     public List<CitaBO> buscarAcivasDia(Long dia) throws Exception {
         List<CitaBO> list = new ArrayList<>();
 
-        try (PreparedStatement ps = conexion.prepareStatement(CITAS_ACTIVAS_DIA)) {
-            ps.setLong(1, dia);
-            ps.setLong(2, dia);
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDate fecha = Instant.ofEpochMilli(dia).atZone(zone).toLocalDate();
 
-            // 🔹 LOG SIMPLE para debug:
-            System.out.println("DEBUG SQL: " + CITAS_ACTIVAS_DIA);
-            System.out.println("DEBUG PARAMS: dia=" + dia);
+        long inicioDia = fecha.atStartOfDay(zone).toInstant().toEpochMilli();
+        long finDia = fecha.atTime(LocalTime.MAX).atZone(zone).toInstant().toEpochMilli();
+
+        try (PreparedStatement ps = conexion.prepareStatement(CITAS_ACTIVAS_DIA)) {
+
+            ps.setLong(1, finDia);
+            ps.setLong(2, inicioDia);
+
+            // 🔹 Formato legible
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            String inicioLegible = Instant.ofEpochMilli(inicioDia).atZone(zone).format(formatter);
+            String finLegible = Instant.ofEpochMilli(finDia).atZone(zone).format(formatter);
+
+            System.out.println("DEBUG DIA BUSCADO: " + fecha);
+            System.out.println("DEBUG RANGO: " + inicioLegible + " -> " + finLegible);
+
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -140,6 +156,7 @@ public class CitasSQLDaoImp extends DaoSQLBase implements CitasDao {
 
         return list;
     }
+
 
     private CitaBO mapearCita(ResultSet rs) throws Exception {
         CitaBO cita = new CitaBO();
